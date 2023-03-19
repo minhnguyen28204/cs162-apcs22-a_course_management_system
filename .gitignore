@@ -1,3 +1,6 @@
 .vs
 Debug
 .cbp
+App/App.layout
+App/App.cbp
+App/App.depend
