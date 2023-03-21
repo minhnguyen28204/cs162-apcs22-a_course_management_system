@@ -4,3 +4,5 @@ Debug
 App/App.layout
 App/App.cbp
 App/App.depend
+App/bin/Release/App.exe
+App/obj/Release/main.o
