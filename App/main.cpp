@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include "Student.h"
 
-
+int main(){
+    return 0;
+}
