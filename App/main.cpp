@@ -21,8 +21,10 @@ int main()
         float ScaleY = (float) WindowSize.y / TextureSize.y;     //Calculate scale.
 
         background.setTexture(BackgroundTexture);
-        background.setScale(ScaleX, ScaleY);      //Set scale.
+        background.setScale(ScaleX, ScaleY);
+        //Set scale.
     }
+    cout << "Hello :D";
 
     while(window.isOpen()){
         sf::Event event;
