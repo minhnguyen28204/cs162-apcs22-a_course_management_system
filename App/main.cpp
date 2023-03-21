@@ -22,9 +22,7 @@ int main()
 
         background.setTexture(BackgroundTexture);
         background.setScale(ScaleX, ScaleY);
-        //Set scale.
     }
-    cout << "Hello :D";
 
     while(window.isOpen()){
         sf::Event event;
