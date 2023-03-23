@@ -25,13 +25,12 @@ void MenuFunc(){
     ButtonLibrary LoginScreenButton;
 
     sf::Texture Logo;
-    if (!Logo.loadFromFile("Image/LOGO.png")){
+    if (!Logo.loadFromFile("Image/Background.png")){
         return;
     }
 
     sf::Sprite SLogo;
     SLogo.setTexture(Logo);
-    SLogo.setPosition(sf::Vector2f(407.5,100));
 
 
     // Create the "Login" button
