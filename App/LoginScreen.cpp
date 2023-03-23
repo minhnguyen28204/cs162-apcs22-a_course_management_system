@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 #include "LoginScreen.h"
+#include "Button.h"
+#include "TextField.h"
+#include "TextBox.h"
 #include <stdio.h>
 #include <conio.h>
 #include <SFML/Graphics.hpp>
@@ -14,71 +17,59 @@ using namespace std;
 #define RIGHT 77
 #define DOWN 80
 
-void MenuFunc(){
-    // Create the window
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "Button Library Example",sf::Style::Titlebar | sf::Style::Close);
-
-
+void MenuFunc(sf::RenderWindow &window, std::string &UserID, std::string &PasswordID, bool &Stop){
     bool Menu = true;
     bool Login = false;
+    bool GetPass = false;
 
-    ButtonLibrary LoginScreenButton;
+    sf::Font _font;
+    if (!_font.loadFromFile("resources/font.ttf")){
+        return;
+    }
 
     sf::Texture Logo;
     if (!Logo.loadFromFile("Image/Background.png")){
         return;
     }
-
     sf::Sprite SLogo;
     SLogo.setTexture(Logo);
 
+    ButtonLibrary MenuScreenButton;
+    ButtonLibrary LoginScreenButton;
 
-    // Create the "Login" button
-    Button loginButton(500, 375, 200, 50, "Login", [&]() {
-        // TODO: Implement the login functionality
-        Login = true;
+    Button LoginButton(500,375,200,50,"Login",[&](){
         Menu = false;
+        Login = true;
     });
-    LoginScreenButton.addButton(loginButton);
+    Button ExitButton(500,475,200,50,"Exit",[&](){
+                        Stop = true;
+                        window.close();
+                      });
+    MenuScreenButton.addButton(LoginButton);
+    MenuScreenButton.addButton(ExitButton);
 
-    // Create the "Exit" button
-    Button exitButton(500, 475, 200, 50, "Exit", [&window]() {
+    TextField UserInput(_font,24,sf::Color::Black,300,375,600,50);
+    TextField PasswordInput(_font,24,sf::Color::Black,300,475,600,50);
+
+    Button EnterButton(500,575,200,50,"Login",[&](){
+        UserID = UserInput.getText();
+        PasswordID = PasswordInput.getText();
         window.close();
     });
-    LoginScreenButton.addButton(exitButton);
+    LoginScreenButton.addButton(EnterButton);
 
-    // Create the "Student" button
-    Button Student_Choose(350,375,200,50,"Student", [&](){});
+    TextBox User(150,375,130,50,_font,"School ID");
+    TextBox Pass(150,475,130,50,_font,"Password");
 
-    // Create the "Academic Staff" button
-    Button Aca_Choose(650,375,200,50,"Academic Staff", [&](){});
-
-    // Main loop
-    while (window.isOpen())
-    {
+    while (window.isOpen()){
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-        // Handle events
-            if (event.type == sf::Event::MouseMoved)
-            {
-                loginButton.handleMouseMoved(event.mouseMove.x, event.mouseMove.y);
-                exitButton.handleMouseMoved(event.mouseMove.x, event.mouseMove.y);
-                Student_Choose.handleMouseMoved(event.mouseMove.x, event.mouseMove.y);
-                Aca_Choose.handleMouseMoved(event.mouseMove.x, event.mouseMove.y);
-            }
-            else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-            {
-                if (loginButton.contains(event.mouseButton.x, event.mouseButton.y))
-                {
-                    loginButton.onClick();
-                }
-                if (exitButton.contains(event.mouseButton.x, event.mouseButton.y)){
-                    exitButton.onClick();
-                }
-            }
-            else if (event.type == sf::Event::Closed)
-            {
+        while (window.pollEvent(event)){
+            if (Menu) MenuScreenButton.handleEvent(event);
+            if (Login) UserInput.handleEvent(event);
+            if (Login) PasswordInput.handleEvent(event);
+            if (Login) LoginScreenButton.handleEvent(event);
+            if (event.type == sf::Event::Closed){
+                Stop = true;
                 window.close();
             }
         }
@@ -86,17 +77,16 @@ void MenuFunc(){
         // Clear the window
         window.clear(sf::Color::White);
         window.draw(SLogo);
-        // Draw the button
         if (Menu){
-            window.draw(loginButton);
-            window.draw(exitButton);
+            MenuScreenButton.draw(window);
         }
         if (Login){
-            window.draw(Student_Choose);
-            window.draw(Aca_Choose);
-            window.draw(exitButton);
+            User.draw(window);
+            Pass.draw(window);
+            UserInput.draw(window);
+            PasswordInput.draw(window);
+            LoginScreenButton.draw(window);
         }
-
         // Display the window
         window.display();
     }
