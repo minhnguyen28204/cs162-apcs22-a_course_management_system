@@ -14,7 +14,7 @@ int main(){
         Checking(window,isLogin,ID,Stop);
         if (isLogin && !Stop){
             sf::RenderWindow window2(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-            Profile(window2,CurrentUser,ID);
+            Profile(window2,ID);
             break;
         }
         else if (!Stop){
