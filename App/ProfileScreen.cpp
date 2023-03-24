@@ -6,7 +6,7 @@ void Profile(sf::RenderWindow &window, Student &User){
     _font.loadFromFile("resources/font.ttf");
     sf::Text Title;
     Title.setFont(_font);
-    Title.setString("Welcome " + User.LastName);
+    Title.setString("Welcome " + User.LastName + " " + User.FirstName);
     Title.setPosition(30,30);
     Title.setCharacterSize(24);
     Title.setColor(sf::Color::Black);
