@@ -9,11 +9,12 @@ int main(){
     while(1){
         sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
         bool isLogin = false;
-        Student CurrentUser;
-        Checking(window,isLogin,CurrentUser,Stop);
+        User CurrentUser;
+        int ID;
+        Checking(window,isLogin,ID,Stop);
         if (isLogin && !Stop){
             sf::RenderWindow window2(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-            Profile(window2,CurrentUser);
+            Profile(window2,CurrentUser,ID);
             break;
         }
         else if (!Stop){
