@@ -3,6 +3,7 @@
 #include "CheckAccount.h"
 #include "ProfileScreen.h"
 #include "WrongPass.h"
+#include "ScrollableWindow.hpp"
 
 int main(){
     bool Stop = false;
@@ -13,8 +14,7 @@ int main(){
         int ID;
         Checking(window,isLogin,ID,Stop);
         if (isLogin && !Stop){
-            sf::RenderWindow window2(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-            Profile(window2,ID);
+            Profile(ID);
             break;
         }
         else if (!Stop){

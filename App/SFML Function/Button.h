@@ -70,25 +70,27 @@ private:
 class ButtonLibrary
 {
 public:
+    ButtonLibrary() : buttonCount_(0) {}
+
     void addButton(const Button& button)
     {
-        buttons_.push_back(button);
+        buttons_[buttonCount_++] = button;
     }
 
     void handleEvent(sf::Event event)
     {
         if (event.type == sf::Event::MouseMoved){
-            for(auto& button : buttons_){
-                button.handleMouseMoved(event.mouseMove.x, event.mouseMove.y);
+            for(int i = 0; i < buttonCount_; ++i){
+                buttons_[i].handleMouseMoved(event.mouseMove.x, event.mouseMove.y);
             }
         }
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
         {
-            for (auto& button : buttons_)
+            for (int i = 0; i < buttonCount_; ++i)
             {
-                if (button.contains(event.mouseButton.x, event.mouseButton.y))
+                if (buttons_[i].contains(event.mouseButton.x, event.mouseButton.y))
                 {
-                    button.onClick();
+                    buttons_[i].onClick();
                 }
             }
         }
@@ -96,12 +98,14 @@ public:
 
     void draw(sf::RenderTarget& target) const
     {
-        for (const auto& button : buttons_)
+        for (int i = 0; i < buttonCount_; ++i)
         {
-            target.draw(button);
+            target.draw(buttons_[i]);
         }
     }
 
 private:
-    std::vector<Button> buttons_;
+    static const int MAX_BUTTONS = 100;
+    Button buttons_[MAX_BUTTONS];
+    int buttonCount_;
 };

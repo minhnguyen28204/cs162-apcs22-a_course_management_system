@@ -10,7 +10,7 @@ void Checking(sf::RenderWindow &window, bool &isLogin, int &id, bool &Stop){
     MenuFunc(window,User,Password,Stop);
     long long x = -1;
     if (User.size()) x = stoi(User);
-    ifstream ifs("data.dat");
+    ifstream ifs("Data/data.dat");
     string ID, Pass;
     while (ifs >> ID){
         ifs >> Pass;
