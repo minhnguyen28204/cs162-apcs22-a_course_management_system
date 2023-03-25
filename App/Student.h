@@ -2,6 +2,8 @@
 #define STUDENT_H
 
 #include "User.h"
+#include <iostream>
+using namespace std;
 
 struct Student : User
 {

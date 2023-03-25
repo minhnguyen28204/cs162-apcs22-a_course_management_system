@@ -4,20 +4,13 @@
 #include <string>
 using namespace std;
 
-struct Date
-{
-    int year;
-    int day;
-    int month;
-};
-
 struct User
 {
     int ID;
 	string FirstName;
 	string LastName;
 	int Gender;
-	Date dob;
+	string dob;
 	long long Social_ID;
     void View_Profile();
 };

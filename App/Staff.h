@@ -5,7 +5,6 @@
 
 struct Staff : User
 {
-
     void View_ListClasses();
     void View_ListCourses();
     void View_StuS_In_AClass();

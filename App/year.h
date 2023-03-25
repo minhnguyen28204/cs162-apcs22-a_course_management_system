@@ -4,13 +4,14 @@
 #include "DoublyLinkedList.hpp"
 #include "Class.h"
 #include "Semester.h"
+#include "fstream"
+#include "sstream"
 
 struct Year
 {
     int year;
-    DLinkedList <Class> class_list; // haven't created linked list for classes yet
     DLinkedList <Semester> sem_list; // haven't created linked list for classes yet
-    void Create_A_Class(); // class linked list
+    void Create_A_Class(DLinkedList <Class>& classes_list); 
     void Create_A_Semester();
 };
 

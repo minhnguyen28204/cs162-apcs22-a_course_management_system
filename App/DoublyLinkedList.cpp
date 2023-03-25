@@ -17,7 +17,7 @@ DLinkedList<T>::DLinkedList(const DLinkedList &List){
     for (DLLNode < T > *cur = List.Head; cur; cur = cur->pNext){
         if (Tail){
             Tail->pNext = new DLLNode < T > (cur->data);
-            Tail->pNext->pRev = Tail;
+            Tail->pNext->pPrev = Tail;
             Tail = Tail->pNext;
         }
         else{
