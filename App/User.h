@@ -14,9 +14,8 @@ struct User
 	int Gender;
 	string dob;
 	long long Social_ID;
-    DLinkedList<Course> View_Course_Default();
-    DLinkedList<Course> View_Course(int &IDYear, int &IDSem);
+	inline int operator == (const User &other){
+        return (ID == other.ID);
+	}
 };
-void getUser(int &id, User &Who);
-//need list of users
 #endif
