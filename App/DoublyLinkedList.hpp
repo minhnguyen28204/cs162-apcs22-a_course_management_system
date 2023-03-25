@@ -20,6 +20,7 @@ struct DLinkedList{
     DLinkedList(const DLinkedList &List);
     ~DLinkedList();
     DLLNode<T>* GetByValue(const T &d);
+    void push_back(const T &d);
     void push_front(const T &d);
     void pop_front();
     bool isEmpty();

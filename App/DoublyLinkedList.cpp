@@ -37,6 +37,19 @@ DLLNode<T>* DLinkedList<T>::GetByValue(const T &d){
     return nullptr;
 }
 template < class T >
+void DLinkedList<T>::push_back(const T &d){
+    if (Head){
+        DLLNode < T > *cur = Head;
+        while (cur->pNext){
+            cur=cur->pNext;
+        }
+        DLLNode < T > *tmp = new DLLNode < T > (d);
+        cur->pNext = tmp;
+    } else {
+        Head = new DLLNode < T > (d);
+    }
+}
+template < class T >
 void DLinkedList<T>::push_front(const T &d){
     if (Head){
         DLLNode < T > *NN = new DLLNode < T > (d);
