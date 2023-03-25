@@ -2,6 +2,8 @@
 #define USER_H
 
 #include <string>
+#include "DoublyLinkedList.hpp"
+#include "Course.h"
 using namespace std;
 
 struct User
@@ -12,7 +14,9 @@ struct User
 	int Gender;
 	string dob;
 	long long Social_ID;
-    void View_Profile();
+    DLinkedList<Course> View_Course_Default();
+    DLinkedList<Course> View_Course(int &IDYear, int &IDSem);
 };
-
+void getUser(int &id, User &Who);
+//need list of users
 #endif

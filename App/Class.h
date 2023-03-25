@@ -3,6 +3,8 @@
 
 #include "Student.h"
 #include "DoublyLinkedList.hpp"
+#include <string>
+using namespace std;
 
 struct Class
 {

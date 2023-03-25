@@ -1,8 +1,8 @@
 #ifndef COURSE_H
 #define COURSE_H
 
-#include "Class.h"
 #include "ScoreBoard.h"
+using namespace std;
 
 struct Course
 {

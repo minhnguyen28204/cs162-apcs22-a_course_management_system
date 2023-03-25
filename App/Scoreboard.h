@@ -1,12 +1,11 @@
 #ifndef SCOREBOARD_H
 #define SCOREBOARD_H
 
-#include "Student.h"
 #include "DoublyLinkedList.hpp"
 
 struct Score
 {
-    Student stu_info;
+    int stu_info;
     double tot_mark;
     double fin_mark;
     double mid_mark;

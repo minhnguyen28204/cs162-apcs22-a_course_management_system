@@ -75,14 +75,14 @@ void Save_Semesters(string filename, DLinkedList <Year>& year_list)
         while(cur_semester)
         {
             fout << cur_semester->data.year << ',';
-            fout << cur_semester->data.Semester << ',';
+            fout << cur_semester->data.IDsemester << ',';
             fout << cur_semester->data.start_day << ',';
             fout << cur_semester->data.end_day << '\n';
             cur_semester = cur_semester->pNext;
         }
         cur_year = cur_year->pNext;
     }
-    fout.close();    
+    fout.close();
 }
 
 // export to file Years.CSV
@@ -93,7 +93,7 @@ void Save_Years(string filename, DLinkedList <Year>& year_list)
     DLLNode <Year> *cur_year = year_list.Head;
     while(cur_year)
     {
-        fout << cur_year->data.year << endl;
+        fout << cur_year->data.IDyear << endl;
         cur_year = cur_year->pNext;
     }
     fout.close();
