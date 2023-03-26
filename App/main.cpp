@@ -23,9 +23,19 @@ int main()
     class1.class_name = "22CTT1";
     class2.class_name = "22CTT2";
     class1.stu_list.push_front(stu1);
+    class1.stu_list.push_front(stu1);
+    class2.stu_list.push_front(stu2);
+    class2.stu_list.push_front(stu2);
     class2.stu_list.push_front(stu2);
     list_class.push_front(class1);
-    list_class.push_front(class2);
+    //delete list_class.Head;
+    //list_class.Head->data.stu_list.Delete();
+    //list_class.Head->pNext->data.stu_list.Delete();
+    //cout << list_class.Head->data.stu_list.Head;
+    //cout << 1;
+    //list_class.Delete();
+    //-cur=cur->pNext;
+    //cout << 1 << ' ' << cur->data.ID;
 
     Save_Classes("classes.CSV", list_class);
 

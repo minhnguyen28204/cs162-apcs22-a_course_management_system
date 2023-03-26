@@ -3,7 +3,6 @@
 
 #include <string>
 #include "DoublyLinkedList.hpp"
-#include "Course.h"
 using namespace std;
 
 struct User
@@ -14,6 +13,7 @@ struct User
 	int Gender;
 	string dob;
 	long long Social_ID;
+    bool IsStudent;
 	inline int operator == (const User &other){
         return (ID == other.ID);
 	}

@@ -23,8 +23,9 @@ struct DLinkedList{
     void push_back(const T &d);
     void push_front(const T &d);
     void pop_front();
+    void Delete();
     bool isEmpty();
-    void remove(const std::function < bool(T) > &equalK);
+    void remove(const T &d);
     int size();
 };
 

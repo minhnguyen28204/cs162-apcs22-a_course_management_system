@@ -14,7 +14,7 @@ struct Score
 
 struct Scoreboard
 {
-    DLinkedList <Score> *pScore; // haven't has score list yet.
+    DLinkedList <Score> ListScore; // haven't has score list yet.
     bool unlocked; // has been puplished or not (so that the student can view it or not)
 };
 
