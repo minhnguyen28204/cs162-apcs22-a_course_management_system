@@ -1,12 +1,10 @@
 #ifndef SAFE_H
 #define SAFE_H
-
-#include <string>
-#include <fstream>
-#include "DoublyLinkedList.hpp"
 #include "Class.h"
 #include "Course.h"
+#include <string>
 #include "Year.h"
+
 using namespace std;
 
 void Save_Classes(string filename, DLinkedList <Class>& classes_list);

@@ -37,11 +37,14 @@ DLinkedList<Course> View_Course(User &CurUser, int IDYear, int IDSem, DLinkedLis
         }
         return Data;
 };
-void getUser(int &id, User &Who, DLinkedList<User>& ListUser){
-    User cur;
-    cur.ID =  id;
-    // haven't checked case this id is not in List
-    Who = ListUser.GetByValue(cur) -> data;
+void getUser(int &id, User &Who){
+    ifstream fi("Information/Users.txt");
+    while (fi >> Who.ID >> Who.FirstName >> Who.LastName >> Who.Gender >> Who.dob >> Who.IsStudent){
+        if (Who.ID == id) {
+            fi.close();
+            return;
+        }
+    }
 }
 
 #endif // VOID_OF_USER_CPP

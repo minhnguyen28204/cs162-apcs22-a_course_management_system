@@ -5,7 +5,7 @@
 using namespace std;
 
 bool Check(std::string &user, std::string &password){
-    ifstream ifs("Infomation/Account.dat");
+    ifstream ifs("Information/Account.dat");
     string ID, pass;
     while (ifs>>ID){
         ifs>>pass;
@@ -17,12 +17,18 @@ bool Check(std::string &user, std::string &password){
     ifs.close();
     return false;
 }
+void ToInt(int &ID, std::string user){
+    for(int i=0; i<user.size(); i++){
+        ID = ID*10 + (user[i]-'0');
+    }
+}
 
 void LoginScreen(std::string &user, std::string &password){
     cout << "-------------------------------------------------------------\n";
     cout << "|             Course Management System                      |\n";
     cout << "-------------------------------------------------------------\n";
-    cin.ignore();
+    char c;
+    while ((c=cin.get())!='\n');
     system("cls");
     while (1){
         cout << "Username: ";
@@ -35,6 +41,9 @@ void LoginScreen(std::string &user, std::string &password){
         }
         else{
             cout << "Wrong password!\n";
+            char c;
+            while ((c=cin.get())!='\n');
         }
+        system("cls");
     }
 }

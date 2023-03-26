@@ -1,11 +1,12 @@
 #include "Save.h"
+#include <string>
+#include <fstream>
+#include "DoublyLinkedList.hpp"
+#include "Class.h"
+#include "Course.h"
+#include "Year.h"
 #include "Login/LoginScreen.h"
-
-void ToInt(int &ID, std::string user){
-    for(int i=0; i<user.size(); i++){
-        ID = ID*10 + (user[i]-'0');
-    }
-}
+#include "VoidOfUser.h"
 
 int main()
 {
@@ -13,6 +14,7 @@ int main()
     LoginScreen(user,Password);
     int ID = 0; ToInt(ID,user);
     User Who;
+    getUser(ID,Who);
     DLinkedList <Class> list_class;
     Student stu1, stu2;
     Class class1, class2;
