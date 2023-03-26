@@ -1,7 +1,18 @@
 #include "Save.h"
+#include "Login/LoginScreen.h"
+
+void ToInt(int &ID, std::string user){
+    for(int i=0; i<user.size(); i++){
+        ID = ID*10 + (user[i]-'0');
+    }
+}
 
 int main()
 {
+    string user, Password;
+    LoginScreen(user,Password);
+    int ID = 0; ToInt(ID,user);
+    User Who;
     DLinkedList <Class> list_class;
     Student stu1, stu2;
     Class class1, class2;
