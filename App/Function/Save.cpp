@@ -37,10 +37,8 @@ void Save_Courses(string filename, DLinkedList <Course>& courses_list)
     ofstream fout(filename);
     string header = "Year,Semester,CourseID,CourseName,ClassName,TeacherName,CreditsNum,StudentsMax,DayOfWeek,Session,EnrolledStudents\n";
     DLLNode <Course> *cur_course = courses_list.Head;
-    DLLNode <int> *cur_id = cur_course->data.ID_list.Head;
     while(cur_course)
     {
-        cur_id = cur_course->data.ID_list.Head;
         fout << cur_course->data.year << ',';
         fout << cur_course->data.semester << ',';
         fout << cur_course->data.ID << ',';
@@ -51,11 +49,7 @@ void Save_Courses(string filename, DLinkedList <Course>& courses_list)
         fout << cur_course->data.max_students << ',';
         fout << cur_course->data.day_of_week << ',';
         fout << cur_course->data.session << ',';
-        while(cur_id)
-        {
-            fout << cur_id->data << ',';
-            cur_id = cur_id->pNext;
-        }
+
         fout << endl;
         cur_course = cur_course->pNext;
     }

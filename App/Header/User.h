@@ -14,8 +14,8 @@ struct User
 	string dob;
 	long long Social_ID;
     bool IsStudent;
-	inline int operator == (const User &other){
-        return (ID == other.ID);
+	inline int operator == (const User& other) {
+		return (ID == other.ID);
 	}
 };
 #endif

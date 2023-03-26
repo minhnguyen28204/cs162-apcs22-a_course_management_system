@@ -11,6 +11,7 @@ struct Year
 {
     int IDyear;
     DLinkedList <Semester> sem_list; // haven't created linked list for classes yet
+    DLinkedList <Class> classes_list;
     inline int operator == (const Year& other){
         return (IDyear==other.IDyear);
     }
