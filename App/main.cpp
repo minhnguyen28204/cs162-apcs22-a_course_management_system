@@ -106,7 +106,7 @@ int main()
     DLinkedList <Year> listyear;
     listyear.push_front(y1);
     listyear.push_front(y2);
-    if(Save_Data("D:/SystemData", listyear)) cout << "Successfull!" << endl;
+    if(Save_Data("SystemData", listyear)) cout << "Successfull!" << endl;
     else cout << "Failed! " << endl;
 
     return 0;
