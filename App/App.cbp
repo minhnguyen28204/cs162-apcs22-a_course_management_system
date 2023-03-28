@@ -69,6 +69,7 @@
 		<Unit filename="Function/LoginScreen.cpp" />
 		<Unit filename="Function/ProfileScreen.cpp" />
 		<Unit filename="Function/Student.cpp" />
+		<Unit filename="Function/StudentMainMenu.cpp" />
 		<Unit filename="Function/User.cpp" />
 		<Unit filename="Function/VoidOfUser.cpp" />
 		<Unit filename="Function/WrongPass.cpp" />
@@ -85,6 +86,7 @@
 		<Unit filename="Header/Semester.h" />
 		<Unit filename="Header/Staff.h" />
 		<Unit filename="Header/Student.h" />
+		<Unit filename="Header/StudentMainMenu.h" />
 		<Unit filename="Header/User.h" />
 		<Unit filename="Header/VoidOfUser.h" />
 		<Unit filename="Header/VoidOfYear.h" />
@@ -105,6 +107,7 @@
 		<Unit filename="Login/LoginScreen.cpp" />
 		<Unit filename="Login/LoginScreen.h" />
 		<Unit filename="SFML Function/Button.h" />
+		<Unit filename="SFML Function/PasswordField.hpp" />
 		<Unit filename="SFML Function/TextBox.cpp" />
 		<Unit filename="SFML Function/TextBox.h" />
 		<Unit filename="SFML Function/TextField.cpp" />

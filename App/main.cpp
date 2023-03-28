@@ -10,31 +10,29 @@
 #include "Login/LoginScreen.h"
 #include "VoidOfUser.h"
 #include "Export.h"
+#include "StudentMainMenu.h"
 #include <SFML/Graphics.hpp>
 #define y1 kdbfksdjfbkdjfb
 
-int main()
-{
-    /*
-    bool Stop = false;
+int main(){
+    bool Stop = false, isLogin = false;
+    int ID;
     while(1){
         sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-        bool isLogin = false;
         User CurrentUser;
-        int ID;
         Checking(window,isLogin,ID,Stop);
-        if (isLogin && !Stop){
-            Profile(ID);
-            break;
-        }
-        else if (!Stop){
-            sf::RenderWindow window3(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-            WP(window3,Stop);
+        if (!isLogin && !Stop){
+            sf::RenderWindow window2(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
+            WP(window2,Stop);
         }
         if (Stop) break;
     }
-    return 0;
-    */
+    User CurrAccount;
+    getUser(ID,CurrAccount);
+    sf::RenderWindow MainMenu(sf::VideoMode(1200,800), "Main Menu",sf::Style::Titlebar | sf::Style::Close);
+    if (CurrAccount.IsStudent){
+        StudentScreen(MainMenu,CurrAccount);
+    }
     return 0;
     Score sc_st1;
     Score sc_st2;
@@ -105,9 +103,10 @@ int main()
     y2.sem_list.push(s1);
     y2.sem_list.push(s2);
     DLinkedList <Year> listyear;
-    listyear.push(y1);
-    listyear.push(y2);
-    if(Save_Data("D:/SystemData", listyear)) cout << "Successfull!" << endl;
+    listyear.push_front(y1);
+    listyear.push_front(y2);
+    if(Save_Data("SystemData", listyear)) cout << "Successfull!" << endl;
+
     else cout << "Failed! " << endl;
 
     return 0;

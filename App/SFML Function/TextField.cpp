@@ -1,6 +1,6 @@
 #include "TextField.h"
 
-TextField::TextField(sf::Font& font, unsigned int size, sf::Color color, float x, float y, float width, float height)
+TextField::TextField(sf::Font& font, unsigned int size, sf::Color _color, float x, float y, float width, float height, bool showText = true)
     : m_selected(false), m_cursorVisible(false)
 {
     m_background.setSize(sf::Vector2f(width, height));
@@ -18,13 +18,32 @@ TextField::TextField(sf::Font& font, unsigned int size, sf::Color color, float x
     m_cursor.setFillColor(color);
     m_cursor.setPosition(x + 10, y + 10);
 
+    pos_x = x;
+    pos_y = y;
+    _font = font;
+    Size = size;
+    color = _color;
+
+    ShowTxt = showText;
+
     handleEvent(sf::Event()); // To initialize the text field with an empty string
 }
 
 void TextField::draw(sf::RenderWindow& window)
 {
     window.draw(m_background);
-    window.draw(m_text);
+    if (ShowTxt==true) window.draw(m_text);
+    else{
+        sf::Text tmp;
+        std::string temp = "";
+        for(int i=0; i<m_text.getString().getSize(); i++) temp += "*";
+        tmp.setString(temp);
+        tmp.setFont(_font);
+        tmp.setCharacterSize(Size);
+        tmp.setColor(color);
+        tmp.setPosition(pos_x+10,pos_y+10);
+        window.draw(tmp);
+    }
 
     if (m_selected && m_cursorVisible)
     {
@@ -68,7 +87,18 @@ void TextField::handleEvent(sf::Event event)
             m_cursorClock.restart();
         }
 
-        m_cursor.setPosition(m_text.getPosition().x + m_text.getLocalBounds().width + 5, m_text.getPosition().y);
+        if (ShowTxt) m_cursor.setPosition(m_text.getPosition().x + m_text.getLocalBounds().width + 4, m_text.getPosition().y);
+        else{
+            sf::Text tmp;
+            std::string temp = "";
+            for(int i=0; i<m_text.getString().getSize(); i++) temp += "*";
+            tmp.setString(temp);
+            tmp.setFont(_font);
+            tmp.setCharacterSize(Size);
+            tmp.setColor(color);
+            tmp.setPosition(pos_x+10,pos_y+10);
+            m_cursor.setPosition(tmp.getPosition().x + tmp.getLocalBounds().width + 4, tmp.getPosition().y);
+        }
     }
     else
     {
