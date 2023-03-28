@@ -15,6 +15,7 @@
 #define y1 kdbfksdjfbkdjfb
 
 int main(){
+    /*
     bool Stop = false, isLogin = false;
     int ID;
     while(1){
@@ -33,7 +34,7 @@ int main(){
     if (CurrAccount.IsStudent){
         StudentScreen(MainMenu,CurrAccount);
     }
-    return 0;
+    */
     Score sc_st1;
     Score sc_st2;
     Score sc_st3;
@@ -103,8 +104,8 @@ int main(){
     y2.sem_list.push(s1);
     y2.sem_list.push(s2);
     DLinkedList <Year> listyear;
-    listyear.push_front(y1);
-    listyear.push_front(y2);
+    listyear.push(y1);
+    listyear.push(y2);
     if(Save_Data("SystemData", listyear)) cout << "Successfull!" << endl;
 
     else cout << "Failed! " << endl;

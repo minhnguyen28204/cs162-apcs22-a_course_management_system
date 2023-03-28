@@ -23,6 +23,9 @@ struct Course
     void Export_Students(); // Export a list of students in a course to a CSV file
     void Import_Scoreboard(); // Import from CSV file
     void view_scoreboard(); // if staff puplished, student can see it
+    inline int operator == (const Course &other){
+        return (course_name==other.course_name);
+    }
     bool operator>(const Course& other) const
     {
         return course_name > other.course_name;

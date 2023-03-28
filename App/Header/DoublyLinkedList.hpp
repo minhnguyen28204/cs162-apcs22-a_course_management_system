@@ -29,6 +29,9 @@ struct DLinkedList{
     bool isEmpty();
     void remove(const T &d);
     int size();
+    operator = (const DLinkedList &List){
+        Head  = List.Head;
+    }
 };
 
 #include "DoublyLinkedList.cpp"

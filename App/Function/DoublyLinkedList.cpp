@@ -2,6 +2,7 @@
 #define __DOUBLY_LINKED_LIST_CPP
 #include "DoublyLinkedList.hpp"
 using namespace std;
+#include <iostream>
 
 //DLLNode
 template < class T >
@@ -104,7 +105,7 @@ void DLinkedList<T>::remove(const T &d){
     }
     else{
         DLLNode < T > *cur = Head;
-        while (cur->pNext && cur->pNext->data!=d) cur = cur->pNext;
+        while (cur->pNext && !(cur->pNext->data==d)) cur = cur->pNext;
         if (cur->pNext){
             DLLNode < T > *N = cur->pNext;
             cur->pNext = N->pNext;
@@ -125,6 +126,7 @@ void DLinkedList<T>::Delete(){
 }
 template < class T >
 DLinkedList<T>::~DLinkedList(){
+    if (isEmpty()) return;
     while (!isEmpty()) pop_front();
 }
 

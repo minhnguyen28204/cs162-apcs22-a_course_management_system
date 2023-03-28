@@ -15,6 +15,9 @@ struct Score
     double fin_mark;
     double mid_mark;
     double other_mark;
+    bool operator == (const Score &other) const{
+        return (No==other.No);
+    }
     bool operator > (const Score &other) const{
         return (No>other.No);
     }
