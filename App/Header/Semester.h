@@ -12,6 +12,9 @@ struct Semester
     inline int operator == (const Semester& other){
         return (IDsemester==other.IDsemester);
     }
+    bool operator > (const Semester &other) const{
+        return (IDsemester>other.IDsemester);
+    }
     // add a course to list of course above
     void Add_A_Course();
     void Delete_A_Course();

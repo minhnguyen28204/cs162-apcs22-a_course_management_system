@@ -15,6 +15,9 @@ struct Year
     inline int operator == (const Year& other){
         return (IDyear==other.IDyear);
     }
+    bool operator > (const Year &other) const{
+        return (IDyear>other.IDyear);
+    }
 };
 
 
