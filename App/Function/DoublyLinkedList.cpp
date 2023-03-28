@@ -1,6 +1,7 @@
 #ifndef __DOUBLY_LINKED_LIST_CPP
 #define __DOUBLY_LINKED_LIST_CPP
 #include "DoublyLinkedList.hpp"
+using namespace std;
 
 //DLLNode
 template < class T >
@@ -37,6 +38,19 @@ DLLNode<T>* DLinkedList<T>::GetByValue(const T &d){
     return nullptr;
 }
 template < class T >
+void DLinkedList<T>::push_back(const T &d){
+    if (Head){
+        DLLNode < T > *cur = Head;
+        while (cur->pNext){
+            cur=cur->pNext;
+        }
+        DLLNode < T > *tmp = new DLLNode < T > (d);
+        cur->pNext = tmp;
+    } else {
+        Head = new DLLNode < T > (d);
+    }
+}
+template < class T >
 void DLinkedList<T>::push_front(const T &d){
     if (Head){
         DLLNode < T > *NN = new DLLNode < T > (d);
@@ -57,21 +71,20 @@ void DLinkedList<T>::pop_front(){
     Head = Head->pNext;
     if (Head) Head->pPrev=nullptr;
     delete cur;
-
 }
 template < class T >
 bool DLinkedList<T>::isEmpty(){
     return size() == 0;
 }
 template < class T >
-void DLinkedList<T>::remove(const std::function < bool(T) > &equalK){
+void DLinkedList<T>::remove(const T &d){
     if (isEmpty()) return;
-    if (equalK(Head->data)){
+    if (Head->data == d){
         pop_front();
     }
     else{
         DLLNode < T > *cur = Head;
-        while (cur->pNext && !equalK(cur->pNext->data)) cur = cur->pNext;
+        while (cur->pNext && cur->pNext->data!=d) cur = cur->pNext;
         if (cur->pNext){
             DLLNode < T > *N = cur->pNext;
             cur->pNext = N->pNext;
@@ -84,6 +97,11 @@ void DLinkedList<T>::remove(const std::function < bool(T) > &equalK){
 template < class T >
 int DLinkedList<T>::size(){
     return ListSize;
+}
+template < class T >
+void DLinkedList<T>::Delete(){
+    while (!isEmpty()) pop_front();
+
 }
 template < class T >
 DLinkedList<T>::~DLinkedList(){

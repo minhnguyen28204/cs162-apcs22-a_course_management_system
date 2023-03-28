@@ -16,7 +16,7 @@ struct Course
     int max_students;
     string day_of_week;
     string session; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
-    DLinkedList <int> ID_list;
+    DLinkedList <Student> stu_list;
     Scoreboard sco_board;
     void Update_Info(); // update a course info
     void Remove_A_Student();
