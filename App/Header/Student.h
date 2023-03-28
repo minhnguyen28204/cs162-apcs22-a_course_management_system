@@ -10,6 +10,9 @@ struct Student : User
 	int No;
 	void View_Stu_Courses();
 	void View_Stu_Grade();
+	bool operator > (const Student &other) const{
+        return (ID>other.ID);
+    }
 };
 
 #endif

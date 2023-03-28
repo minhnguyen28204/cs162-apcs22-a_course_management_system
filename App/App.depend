@@ -702,14 +702,3 @@
 1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\wrongpass.h
 	<SFML/Graphics.hpp>
 
-1679992841 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\passwordfield.hpp
-	<SFML/Graphics.hpp>
-	<string>
-
-1679997040 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
-	"StudentMainMenu.h"
-
-1679997040 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\studentmainmenu.h
-	<SFML/Graphics.hpp>
-	"User.h"
-

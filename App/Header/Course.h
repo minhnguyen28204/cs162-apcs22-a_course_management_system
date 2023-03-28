@@ -6,8 +6,6 @@ using namespace std;
 
 struct Course
 {
-    int year;
-    int semester;
     string ID;
     string course_name;
     string class_name;
@@ -25,6 +23,11 @@ struct Course
     void Export_Students(); // Export a list of students in a course to a CSV file
     void Import_Scoreboard(); // Import from CSV file
     void view_scoreboard(); // if staff puplished, student can see it
+    bool operator>(const Course& other) const
+    {
+        return course_name > other.course_name;
+    }
+
 };
 
 #endif

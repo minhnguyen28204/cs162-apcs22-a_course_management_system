@@ -33,7 +33,7 @@ DLinkedList<Course> View_Course(User& CurUser, int IDYear, int IDSem, DLinkedLis
     NewStu.ID = CurUser.ID;
     while (cur3) {
         if ((cur3->data).stu_list.GetByValue(NewStu)) {
-            Data.push_front(cur3->data);
+            Data.push(cur3->data);
         }
         cur3 = cur3->pNext;
     }

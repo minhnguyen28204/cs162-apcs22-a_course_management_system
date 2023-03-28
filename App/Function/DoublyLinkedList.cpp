@@ -38,30 +38,40 @@ DLLNode<T>* DLinkedList<T>::GetByValue(const T &d){
     return nullptr;
 }
 template < class T >
-void DLinkedList<T>::push_back(const T &d){
+void DLinkedList<T>::push(const T &d){
+    ListSize++;
     if (Head){
         DLLNode < T > *cur = Head;
-        while (cur->pNext){
+        if (cur->data>d){
+            DLLNode < T > *NN = new DLLNode < T > (d);
+            NN->pNext = Head;
+            Head->pPrev = NN;
+            Head = NN;
+            return;
+        }
+        DLLNode < T > *Pos = Head;
+        while (cur->pNext && d>cur->pNext->data) {
+            Pos=cur;
             cur=cur->pNext;
         }
-        DLLNode < T > *tmp = new DLLNode < T > (d);
-        cur->pNext = tmp;
+        cur = new DLLNode < T > (d);
+        cur->pNext = Pos->pNext;
+        cur->pPrev = Pos;
+        if (cur->pNext) cur->pNext->pPrev = cur;
+        Pos->pNext = cur;
     } else {
         Head = new DLLNode < T > (d);
     }
 }
 template < class T >
-void DLinkedList<T>::push_front(const T &d){
-    if (Head){
-        DLLNode < T > *NN = new DLLNode < T > (d);
-        NN->pNext = Head;
-        Head->pPrev = NN;
-        Head = NN;
-    }
-    else{
-        Head = new DLLNode < T > (d);
-    }
-    ListSize++;
+DLLNode<T>* DLinkedList<T>::front(){
+    return Head;
+}
+template < class T >
+DLLNode<T>* DLinkedList<T>::back(){
+    DLLNode<T> *cur = Head;
+    while (cur->pNext) cur=cur->pNext;
+    return cur;
 }
 template < class T >
 void DLinkedList<T>::pop_front(){
@@ -70,6 +80,16 @@ void DLinkedList<T>::pop_front(){
     DLLNode < T > *cur = Head;
     Head = Head->pNext;
     if (Head) Head->pPrev=nullptr;
+    delete cur;
+}
+template < class T >
+void DLinkedList<T>::pop_back(){
+    if (isEmpty()) return;
+    ListSize--;
+    DLLNode < T > *cur = Head;
+    while (cur->pNext) cur=cur->pNext;
+    if (cur->pPrev) cur->pPrev->pNext = nullptr;
+    else Head=nullptr;
     delete cur;
 }
 template < class T >

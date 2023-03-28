@@ -17,5 +17,8 @@ struct User
 	inline int operator == (const User& other) {
 		return (ID == other.ID);
 	}
+	inline int operator > (const User& other) {
+		return (ID > other.ID);
+	}
 };
 #endif
