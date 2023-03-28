@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="App" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/App" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="Header" />
+					<Add directory="Infomation" />
+					<Add directory="SFML Function" />
+					<Add directory="Function" />
+					<Add directory="Data" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics-s-d" />
+					<Add library="sfml-window-s-d" />
+					<Add library="sfml-system-s-d" />
+					<Add library="opengl32" />
+					<Add library="freetype" />
+					<Add library="winmm" />
+					<Add library="gdi32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/App" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DSFML_STATIC" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="sfml-graphics-s" />
+					<Add library="sfml-window-s" />
+					<Add library="sfml-system-s" />
+					<Add library="opengl32" />
+					<Add library="freetype" />
+					<Add library="winmm" />
+					<Add library="gdi32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DSFML_STATIC" />
+			<Add directory="C:/Users/suyun/Downloads/SFML-2.5.1/include" />
+			<Add directory="SFML Function" />
+			<Add directory="Main Function" />
+			<Add directory="Variables" />
+		</Compiler>
+		<Linker>
+			<Add directory="C:/Users/suyun/Downloads/SFML-2.5.1/lib" />
+		</Linker>
+		<Unit filename="Function/CheckAccount.cpp" />
+		<Unit filename="Function/DoublyLinkedList.cpp" />
+		<Unit filename="Function/Export.cpp" />
+		<Unit filename="Function/Import.cpp" />
+		<Unit filename="Function/LoginScreen.cpp" />
+		<Unit filename="Function/ProfileScreen.cpp" />
+		<Unit filename="Function/Student.cpp" />
+		<Unit filename="Function/User.cpp" />
+		<Unit filename="Function/VoidOfUser.cpp" />
+		<Unit filename="Function/WrongPass.cpp" />
+		<Unit filename="Function/year.cpp" />
+		<Unit filename="Header/CheckAccount.h" />
+		<Unit filename="Header/Class.h" />
+		<Unit filename="Header/Course.h" />
+		<Unit filename="Header/DoublyLinkedList.hpp" />
+		<Unit filename="Header/Export.h" />
+		<Unit filename="Header/Import.h" />
+		<Unit filename="Header/LoginScreen.h" />
+		<Unit filename="Header/ProfileScreen.h" />
+		<Unit filename="Header/Scoreboard.h" />
+		<Unit filename="Header/Semester.h" />
+		<Unit filename="Header/Staff.h" />
+		<Unit filename="Header/Student.h" />
+		<Unit filename="Header/User.h" />
+		<Unit filename="Header/VoidOfUser.h" />
+		<Unit filename="Header/VoidOfYear.h" />
+		<Unit filename="Header/WrongPass.h" />
+		<Unit filename="Header/year.h" />
+		<Unit filename="Infomation/ID.text" />
+		<Unit filename="Infomation/classes.CSV" />
+		<Unit filename="Infomation/courses.CSV" />
+		<Unit filename="Infomation/semesters.csv" />
+		<Unit filename="Infomation/years.csv" />
+		<Unit filename="Information/Account.dat" />
+		<Unit filename="Information/ID.text" />
+		<Unit filename="Information/Users.txt" />
+		<Unit filename="Information/classes.CSV" />
+		<Unit filename="Information/courses.CSV" />
+		<Unit filename="Information/semesters.csv" />
+		<Unit filename="Information/years.csv" />
+		<Unit filename="Login/LoginScreen.cpp" />
+		<Unit filename="Login/LoginScreen.h" />
+		<Unit filename="SFML Function/Button.h" />
+		<Unit filename="SFML Function/TextBox.cpp" />
+		<Unit filename="SFML Function/TextBox.h" />
+		<Unit filename="SFML Function/TextField.cpp" />
+		<Unit filename="SFML Function/TextField.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
