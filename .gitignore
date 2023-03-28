@@ -6,3 +6,4 @@ App/obj/Release/main.o
 *.o
 .vscode
 main.exe
+*.depend
