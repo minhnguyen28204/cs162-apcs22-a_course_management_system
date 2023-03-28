@@ -1,59 +1,85 @@
 #include "Export.h"
 
-void Save_Data(const string& folder_path, DLinkedList <Year>& year_list)
+bool Save_Data(const string& folder_path, DLinkedList <Year>& year_list)
 {
-    filesystem::create_directory(folder_path);
-    Save_Years(folder_path, year_list);
+    struct stat db;
+    if(stat(folder_path.c_str(), &db) != 0)
+    if(mkdir(folder_path.c_str()) == -1) return false;
+
+    if(!Save_Years(folder_path, year_list)) return false;
+    return true;
 }
 
-void Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
+bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
 {
     ofstream fout(folder_path + "/years.CSV");
-    if(year_list.isEmpty()) return;
+    if(!fout.is_open()) return false;
+    fout << "Year\n";
     DLLNode <Year> *cur = year_list.Head;
-    fout << "year" << endl;
     while(cur)
     {
         fout << cur->data.IDyear << endl;
         string yf_path = folder_path + "/" + to_string(cur->data.IDyear) + "-" + to_string(cur->data.IDyear + 1);
-        filesystem::create_directories(yf_path);
+        
+        struct stat db;
+        if(stat(yf_path.c_str(), &db) != 0)
+        if(mkdir(yf_path.c_str()) == -1) return false;
+
         string sem_path = yf_path + "/semesters";
-        filesystem::create_directories(sem_path);
-        Save_Semesters(sem_path, cur->data.sem_list);
+
+        if(stat(sem_path.c_str(), &db) != 0)
+        if(mkdir(sem_path.c_str()) == -1) return false;
+
+        if(!Save_Semesters(sem_path, cur->data.sem_list)) return false;
+
         string cla_path = yf_path + "/classes";
-        filesystem::create_directories(cla_path);
-        Save_Classes(cla_path, cur->data.classes_list);
+
+        if(stat(cla_path.c_str(), &db) != 0)
+        if(mkdir(cla_path.c_str()) == -1) return false;
+
+        if(!Save_Classes(cla_path, cur->data.classes_list)) return false;
         cur = cur->pNext;
     }
     fout.close();
+    return true;
 }
 
-void Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list)
+bool Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list)
 {
     ofstream fout(yf_path + "/semesters.CSV");
-    if(semester_list.isEmpty()) return;
+    if(!fout.is_open()) return false;
+
     DLLNode <Semester> *cur = semester_list.Head;
-    string header = "Year,Semester,StartDate,EndDate\n";
+    string header = "Semester,StartDate,EndDate\n";
     fout << header;
+
     while(cur)
     {
         fout << cur->data.IDsemester << ',';
         fout << cur->data.start_day << ',';
         fout << cur->data.end_day << '\n';
         string sf_path = yf_path + "/semester" + to_string(cur->data.IDsemester);
-        filesystem::create_directories(sf_path);
+
+        struct stat db;
+        if(stat(sf_path.c_str(), &db) != 0)
+        if(mkdir(sf_path.c_str()) == -1) return false;
+
         string cou_path = sf_path + "/courses";
-        filesystem::create_directories(cou_path);
-        Save_Courses(cou_path, cur->data.course_list);
+
+        if(stat(cou_path.c_str(), &db) != 0)
+        if(mkdir(cou_path.c_str()) == -1) return false;
+        
+        if(!Save_Courses(cou_path, cur->data.course_list)) return false;
         cur = cur->pNext;
     }
     fout.close();
+    return true;
 }
 
-void Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
+bool Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
 {
     ofstream fout(yf_path + "/classes.CSV");
-    if(class_list.isEmpty()) return;
+    if(!fout.is_open()) return false;
     DLLNode <Class> *cur = class_list.Head;
     string header = "Class\n";
     fout << header;
@@ -61,19 +87,24 @@ void Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
     {
         fout << cur->data.class_name << endl;
         string cf_name = yf_path + "/" + cur->data.class_name;
-        filesystem::create_directory(cf_name);
-        Save_Students(cf_name, cur->data.stu_list);
+        
+        struct stat db;
+        if(stat(cf_name.c_str(), &db) != 0)
+        if(mkdir(cf_name.c_str()) == -1) return false;
+
+        if(!Save_Students(cf_name, cur->data.stu_list)) return false;
         cur = cur->pNext;
     }
     fout.close();
+    return true;
 }
 
-void Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
+bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
 {
-    if(student_list.isEmpty()) return;
     DLLNode <Student> *cur = student_list.Head;
     string file_name = cf_name + "/students.CSV";
     ofstream fout(file_name);
+    if(!fout.is_open()) return false;
     string header = "No,ID,FirstName,LastName,Gender,dob,Social_ID\n";
     fout << header;
     while(cur)
@@ -88,12 +119,13 @@ void Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
         cur = cur->pNext;
     }
     fout.close();
+    return true;
 }
 
-void Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
+bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
 {
     ofstream fout(sf_path + "/courses.CSV");
-    if(course_list.isEmpty()) return;
+    if(!fout.is_open()) return false;
     string header = "CourseID,CourseName,ClassName,TeacherName,CreditsNum,StudentsMax,DayOfWeek,Session\n";
     fout << header;
     DLLNode <Course> *cur = course_list.Head;
@@ -107,19 +139,27 @@ void Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
         fout << cur->data.max_students << ',';
         fout << cur->data.day_of_week << ',';
         fout << cur->data.session << endl;
+        
         string course_path = sf_path + "/" + cur->data.course_name;
-        filesystem::create_directory(course_path);
-        Save_Students(course_path, cur->data.stu_list);
-        Save_Scoreboards(course_path, cur->data.sco_board);
+        struct stat db;
+        
+        if(stat(course_path.c_str(), &db) != 0)
+        if(mkdir(course_path.c_str()) == -1) return false;
+        
+        if(!Save_Students(course_path, cur->data.stu_list)) return false;
+        if(!Save_Scoreboards(course_path, cur->data.sco_board)) return false;
         cur = cur->pNext;
     }
     fout.close();
+    return true;
 }
 
-void Save_Scoreboards(const string& course_path, Scoreboard& sco_board)
+bool Save_Scoreboards(const string& course_path, Scoreboard& sco_board)
 {
-    if(sco_board.score_list.isEmpty()) return;
     ofstream fout(course_path + "/scoreboard.CSV");
+    if(!fout.is_open()) return false;
+    string header = "No,ID,first_name,last_name,total_mark,final_mark,mid_mark,other_mark\n";
+    fout << header;
     DLLNode <Score> *cur = sco_board.score_list.Head;
     while(cur)
     {
@@ -134,5 +174,6 @@ void Save_Scoreboards(const string& course_path, Scoreboard& sco_board)
         cur = cur->pNext;
     }
     fout.close();
+    return true;
 }
 
