@@ -1,16 +1,21 @@
 #include <string>
 #include <fstream>
 #include "DoublyLinkedList.hpp"
+#include "CheckAccount.h"
+#include "ProfileScreen.h"
+#include "WrongPass.h"
 #include "Class.h"
 #include "Course.h"
 #include "Year.h"
 #include "Login/LoginScreen.h"
 #include "VoidOfUser.h"
 #include "Export.h"
+#include <SFML/Graphics.hpp>
 #define y1 kdbfksdjfbkdjfb
 
 int main()
 {
+    /*
     bool Stop = false;
     while(1){
         sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
@@ -28,6 +33,8 @@ int main()
         }
         if (Stop) break;
     }
+    return 0;
+    */
     Score sc_st1;
     Score sc_st2;
     Score sc_st3;
