@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "TextField.h"
 #include "TextBox.h"
+#include "PasswordField.hpp"
 #include <stdio.h>
 #include <conio.h>
 #include <SFML/Graphics.hpp>
@@ -37,19 +38,20 @@ void MenuFunc(sf::RenderWindow &window, std::string &UserID, std::string &Passwo
     ButtonLibrary MenuScreenButton;
     ButtonLibrary LoginScreenButton;
 
-    Button LoginButton(500,375,200,50,"Login",[&](){
+    Button LoginButton(500,400,200,50,"Login",[&](){
         Menu = false;
         Login = true;
     });
-    Button ExitButton(500,475,200,50,"Exit",[&](){
+    Button ExitButton(500,550,200,50,"Exit",[&](){
                         Stop = true;
                         window.close();
                       });
     MenuScreenButton.addButton(LoginButton);
     MenuScreenButton.addButton(ExitButton);
 
-    TextField UserInput(_font,24,sf::Color::Black,300,375,600,50);
-    TextField PasswordInput(_font,24,sf::Color::Black,300,475,600,50);
+    TextField UserInput(_font,24,sf::Color::Black,300,375,600,50,true);
+    TextField PasswordInput(_font,24,sf::Color::Black,300,475,600,50,false);
+    //PasswordField PasswordInput(sf::Vector2f(300,475),sf::Vector2f(600,50),_font,24,sf::Color::Black);
 
     Button EnterButton(500,575,200,50,"Login",[&](){
         UserID = UserInput.getText();
@@ -68,6 +70,13 @@ void MenuFunc(sf::RenderWindow &window, std::string &UserID, std::string &Passwo
             if (Login) UserInput.handleEvent(event);
             if (Login) PasswordInput.handleEvent(event);
             if (Login) LoginScreenButton.handleEvent(event);
+            if (Login){
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
+                    UserID = UserInput.getText();
+                    PasswordID = PasswordInput.getText();
+                    window.close();
+                }
+            }
             if (event.type == sf::Event::Closed){
                 Stop = true;
                 window.close();

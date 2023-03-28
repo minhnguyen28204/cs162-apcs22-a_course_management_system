@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1679985892 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+1679997011 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
 	<string>
 	<fstream>
 	"DoublyLinkedList.hpp"
@@ -12,6 +12,7 @@
 	"Login/LoginScreen.h"
 	"VoidOfUser.h"
 	"Export.h"
+	"StudentMainMenu.h"
 	<SFML/Graphics.hpp>
 
 1525812018 c:\users\suyun\downloads\sfml-2.5.1\include\sfml\graphics.hpp
@@ -504,10 +505,10 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1679985497 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
+1679995061 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
 	"TextField.h"
 
-1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
+1679993493 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
 	<SFML/Graphics.hpp>
 	<string>
 
@@ -626,7 +627,7 @@
 1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\student.cpp
 	"Student.h"
 
-1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
+1679991489 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
 	"VoidOfUser.h"
 	"DoublyLinkedList.hpp"
 
@@ -659,7 +660,7 @@
 	<sys/stat.h>
 	<fstream>
 
-1679985497 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\checkaccount.cpp
+1679990178 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\checkaccount.cpp
 	"CheckAccount.h"
 	"LoginScreen.h"
 	"Student.h"
@@ -672,12 +673,13 @@
 1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\loginscreen.h
 	<SFML/Graphics.hpp>
 
-1679986109 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
+1679995643 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
 	<bits/stdc++.h>
 	"LoginScreen.h"
 	"Button.h"
 	"TextField.h"
 	"TextBox.h"
+	"PasswordField.hpp"
 	<stdio.h>
 	<conio.h>
 	<SFML/Graphics.hpp>
@@ -693,10 +695,21 @@
 	<SFML/Graphics.hpp>
 	"Student.h"
 
-1679985497 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\wrongpass.cpp
+1679990628 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\wrongpass.cpp
 	"WrongPass.h"
 	"Button.h"
 
 1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\wrongpass.h
 	<SFML/Graphics.hpp>
+
+1679992841 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\passwordfield.hpp
+	<SFML/Graphics.hpp>
+	<string>
+
+1679997040 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+	"StudentMainMenu.h"
+
+1679997040 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\studentmainmenu.h
+	<SFML/Graphics.hpp>
+	"User.h"
 

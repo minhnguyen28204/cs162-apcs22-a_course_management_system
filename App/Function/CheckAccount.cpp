@@ -14,7 +14,7 @@ void Checking(sf::RenderWindow &window, bool &isLogin, int &id, bool &Stop){
     string ID, Pass;
     while (ifs >> ID){
         ifs >> Pass;
-        if (ID == User && Pass == Password) id = x, isLogin = true;
+        if (ID == User && Pass == Password) id = x, isLogin = true, Stop = true;
     }
     ifs.close();
 }
