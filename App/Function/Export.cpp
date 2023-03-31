@@ -12,15 +12,14 @@ bool Save_Data(const string& folder_path, DLinkedList <Year>& year_list)
 
 bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
 {
-    ofstream fout(folder_path + "/years.CSV");
+    ofstream fout(folder_path + "/years.dat");
     if(!fout.is_open()) return false;
-    fout << "Year\n";
     DLLNode <Year> *cur = year_list.Head;
     while(cur)
     {
         fout << cur->data.IDyear << endl;
         string yf_path = folder_path + "/" + to_string(cur->data.IDyear) + "-" + to_string(cur->data.IDyear + 1);
-
+        
         struct stat db;
         if(stat(yf_path.c_str(), &db) != 0)
         if(mkdir(yf_path.c_str()) == -1) return false;
@@ -46,30 +45,23 @@ bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
 
 bool Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list)
 {
-    ofstream fout(yf_path + "/semesters.CSV");
+    ofstream fout(yf_path + "/semesters.dat");
     if(!fout.is_open()) return false;
 
     DLLNode <Semester> *cur = semester_list.Head;
-    string header = "Semester,StartDate,EndDate\n";
-    fout << header;
 
     while(cur)
     {
-        fout << cur->data.IDsemester << ',';
-        fout << cur->data.start_day << ',';
+        fout << cur->data.IDsemester << '\n';
+        fout << cur->data.start_day << '\n';
         fout << cur->data.end_day << '\n';
         string sf_path = yf_path + "/semester" + to_string(cur->data.IDsemester);
 
         struct stat db;
         if(stat(sf_path.c_str(), &db) != 0)
         if(mkdir(sf_path.c_str()) == -1) return false;
-
-        string cou_path = sf_path + "/courses";
-
-        if(stat(cou_path.c_str(), &db) != 0)
-        if(mkdir(cou_path.c_str()) == -1) return false;
-
-        if(!Save_Courses(cou_path, cur->data.course_list)) return false;
+        
+        if(!Save_Courses(sf_path, cur->data.course_list)) return false;
         cur = cur->pNext;
     }
     fout.close();
@@ -78,16 +70,15 @@ bool Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list
 
 bool Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
 {
-    ofstream fout(yf_path + "/classes.CSV");
+    ofstream fout(yf_path + "/classes.dat");
     if(!fout.is_open()) return false;
     DLLNode <Class> *cur = class_list.Head;
-    string header = "Class\n";
-    fout << header;
+
     while(cur)
     {
         fout << cur->data.class_name << endl;
         string cf_name = yf_path + "/" + cur->data.class_name;
-
+        
         struct stat db;
         if(stat(cf_name.c_str(), &db) != 0)
         if(mkdir(cf_name.c_str()) == -1) return false;
@@ -102,19 +93,18 @@ bool Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
 bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
 {
     DLLNode <Student> *cur = student_list.Head;
-    string file_name = cf_name + "/students.CSV";
+    string file_name = cf_name + "/students.dat";
     ofstream fout(file_name);
     if(!fout.is_open()) return false;
-    string header = "No,ID,FirstName,LastName,Gender,dob,Social_ID\n";
-    fout << header;
+
     while(cur)
     {
-        fout << cur->data.No << ',';
-        fout << cur->data.ID << ',';
-        fout << cur->data.FirstName << ',';
-        fout << cur->data.LastName << ',';
-        fout << cur->data.Gender << ',';
-        fout << cur->data.dob << ',';
+        fout << cur->data.No << '\n';
+        fout << cur->data.ID << '\n';
+        fout << cur->data.FirstName << '\n';
+        fout << cur->data.LastName << '\n';
+        fout << cur->data.Gender << '\n';
+        fout << cur->data.dob << '\n';
         fout << cur->data.Social_ID << '\n';
         cur = cur->pNext;
     }
@@ -124,53 +114,51 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
 
 bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
 {
-    ofstream fout(sf_path + "/courses.CSV");
+    ofstream fout(sf_path + "/courses.dat");
     if(!fout.is_open()) return false;
-    string header = "CourseID,CourseName,ClassName,TeacherName,CreditsNum,StudentsMax,DayOfWeek,Session\n";
-    fout << header;
+
     DLLNode <Course> *cur = course_list.Head;
     while(cur)
     {
-        fout << cur->data.ID << ',';
-        fout << cur->data.course_name << ',';
-        fout << cur->data.class_name << ',';
-        fout << cur->data.teacher_name << ',';
-        fout << cur->data.credits_num << ',';
-        fout << cur->data.max_students << ',';
-        fout << cur->data.day_of_week << ',';
-        fout << cur->data.session << endl;
-
-        string course_path = sf_path + "/" + cur->data.course_name;
+        fout << cur->data.ID << '\n';
+        fout << cur->data.course_name << '\n';
+        fout << cur->data.class_name << '\n';
+        fout << cur->data.teacher_name << '\n';
+        fout << cur->data.credits_num << '\n';
+        fout << cur->data.max_students << '\n';
+        fout << cur->data.day_of_week << '\n';
+        fout << cur->data.session << '\n';
+        
+        string course_path = sf_path + "/" + cur->data.ID + "_" + cur->data.class_name;
         struct stat db;
-
+        
         if(stat(course_path.c_str(), &db) != 0)
         if(mkdir(course_path.c_str()) == -1) return false;
-
+        
         if(!Save_Students(course_path, cur->data.stu_list)) return false;
-        if(!Save_Scoreboards(course_path, cur->data.sco_board)) return false;
+        if(!Save_Scoreboards(course_path, cur->data.score_list)) return false;
         cur = cur->pNext;
     }
     fout.close();
     return true;
 }
 
-bool Save_Scoreboards(const string& course_path, Scoreboard& sco_board)
+bool Save_Scoreboards(const string& course_path, DLinkedList <Score>& sco_list)
 {
-    ofstream fout(course_path + "/scoreboard.CSV");
+    ofstream fout(course_path + "/scoreboard.dat");
     if(!fout.is_open()) return false;
-    string header = "No,ID,first_name,last_name,total_mark,final_mark,mid_mark,other_mark\n";
-    fout << header;
-    DLLNode <Score> *cur = sco_board.score_list.Head;
+
+    DLLNode <Score> *cur = sco_list.Head;
     while(cur)
     {
-        fout << cur->data.No << ',';
-        fout << cur->data.stu_id << ',';
-        fout << cur->data.first_name << ',';
-        fout << cur->data.last_name << ',';
-        fout << cur->data.tot_mark << ',';
-        fout << cur->data.fin_mark << ',';
-        fout << cur->data.mid_mark << ',';
-        fout << cur->data.other_mark << endl;
+        fout << cur->data.No << '\n';
+        fout << cur->data.stu_id << '\n';
+        fout << cur->data.first_name << '\n';
+        fout << cur->data.last_name << '\n';
+        fout << cur->data.tot_mark << '\n';
+        fout << cur->data.fin_mark << '\n';
+        fout << cur->data.mid_mark << '\n';
+        fout << cur->data.other_mark << '\n';
         cur = cur->pNext;
     }
     fout.close();

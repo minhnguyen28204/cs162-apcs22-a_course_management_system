@@ -2,7 +2,6 @@
 #define __DOUBLY_LINKED_LIST_CPP
 #include "DoublyLinkedList.hpp"
 using namespace std;
-#include <iostream>
 
 //DLLNode
 template < class T >
