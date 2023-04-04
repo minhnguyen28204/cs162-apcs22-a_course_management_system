@@ -42,10 +42,7 @@ DLinkedList<Course> View_Course(User& CurUser, int IDYear, int IDSem, DLinkedLis
 void getUser(int &id, User &Who){
     ifstream fi("Information/Users.txt");
     while (fi >> Who.ID >> Who.FirstName >> Who.LastName >> Who.Gender >> Who.dob >> Who.Social_ID >> Who.IsStudent){
-        //std::cout << Who.ID << Who.FirstName << Who.LastName << Who.Gender << Who.dob << Who.Social_ID << Who.IsStudent << '\n';
-        //std::cout << Who.ID << ' ' << id << endl;
         if (Who.ID == id) {
-            //cout << Who.ID << '\n';
             fi.close();
             return;
         }

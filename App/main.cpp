@@ -28,12 +28,12 @@ int main(){
         User CurrAccount;
         getUser(ID,CurrAccount);
         sf::RenderWindow MainMenu(sf::VideoMode(1200,800), "Main Menu",sf::Style::Titlebar | sf::Style::Close);
-        bool Dangxuat = false;
+        bool LogOut = false;
         if (CurrAccount.IsStudent){
 
-            StudentScreen(MainMenu,CurrAccount,Dangxuat);
+            StudentScreen(MainMenu,CurrAccount,LogOut);
         }
-        if (Dangxuat==false) break;
+        if (LogOut==false) break;
     }
     return 0;
 }
