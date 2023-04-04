@@ -14,6 +14,9 @@ struct Class
     void Add_A_Student();
     void Quick_Input();
     void View_ScoreBoard_Class();
+    inline int operator == (const Class& other) {
+		return (class_name == other.class_name);
+	}
     bool operator > (const Class &other) const{
         return (class_name>other.class_name);
     }
