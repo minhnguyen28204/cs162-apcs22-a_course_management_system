@@ -2,4 +2,4 @@
 #include <SFML/Graphics.hpp>
 #include "Student.h"
 
-void Checking(sf::RenderWindow &window, bool &isLogin, int &ID, bool &Stop);
+void Checking(string User, string Password, bool &isLogin, int &id, bool &Stop);

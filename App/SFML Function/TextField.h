@@ -11,6 +11,7 @@ public:
 
     void draw(sf::RenderWindow& window);
     void handleEvent(sf::Event event);
+    void clear_str();
     std::string getText() const;
 
 private:

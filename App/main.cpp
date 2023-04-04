@@ -1,8 +1,7 @@
 #include <string>
 #include <fstream>
 #include "DoublyLinkedList.hpp"
-#include "CheckAccount.h"
-#include "ProfileScreen.h"
+#include "LoginScreen.h"
 #include "WrongPass.h"
 #include "Class.h"
 #include "Course.h"
@@ -15,16 +14,21 @@
 #define y1 kdbfksdjfbkdjfb
 
 int main(){
+<<<<<<< Updated upstream
     bool Stop = false, isLogin = false;
     int ID;
+=======
+>>>>>>> Stashed changes
     while(1){
-        sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-        User CurrentUser;
-        Checking(window,isLogin,ID,Stop);
-        if (!isLogin && !Stop){
-            sf::RenderWindow window2(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
-            WP(window2,Stop);
+        bool Stop = false, isLogin = false;
+        int ID;
+        while(1){
+            sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
+            User CurrentUser;
+            MenuFunc(window,isLogin,ID,Stop);
+            if (Stop) break;
         }
+<<<<<<< Updated upstream
         if (Stop) break;
     }
     User CurrAccount;
@@ -108,6 +112,18 @@ int main(){
     if(Save_Data("SystemData", listyear)) cout << "Successfull!" << endl;
 
     else cout << "Failed! " << endl;
+=======
+        if (!isLogin) return 0;
+        User CurrAccount;
+        getUser(ID,CurrAccount);
+        sf::RenderWindow MainMenu(sf::VideoMode(1200,800), "Main Menu",sf::Style::Titlebar | sf::Style::Close);
+        bool Dangxuat = false;
+        if (CurrAccount.IsStudent){
+>>>>>>> Stashed changes
 
+            StudentScreen(MainMenu,CurrAccount,Dangxuat);
+        }
+        if (Dangxuat==false) break;
+    }
     return 0;
 }

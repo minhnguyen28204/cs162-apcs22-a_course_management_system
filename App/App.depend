@@ -1,10 +1,13 @@
 # depslib dependency file v1.0
+<<<<<<< Updated upstream
 1679997011 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+=======
+1680529576 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+>>>>>>> Stashed changes
 	<string>
 	<fstream>
 	"DoublyLinkedList.hpp"
-	"CheckAccount.h"
-	"ProfileScreen.h"
+	"LoginScreen.h"
 	"WrongPass.h"
 	"Class.h"
 	"Course.h"
@@ -498,17 +501,24 @@
 1679653943 e:\cs162\project\cs162-apcs22-a_course_management_system\app\user.h
 	<string>
 
-1679985497 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textbox.cpp
-	"textbox.h"
+1680527224 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textbox.cpp
+	"TextBox.h"
 
-1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textbox.h
+1680147254 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textbox.h
 	<SFML/Graphics.hpp>
 	<string>
 
+<<<<<<< Updated upstream
 1679995061 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
 	"TextField.h"
 
 1679993493 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
+=======
+1680525791 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
+	"TextField.h"
+
+1680525768 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
+>>>>>>> Stashed changes
 	<SFML/Graphics.hpp>
 	<string>
 
@@ -550,7 +560,7 @@
 	<functional>
 	<string>
 
-1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\button.h
+1680533724 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\button.h
 	<SFML/Graphics.hpp>
 	<functional>
 
@@ -660,26 +670,34 @@
 	<sys/stat.h>
 	<fstream>
 
+<<<<<<< Updated upstream
 1679990178 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\checkaccount.cpp
+=======
+1680528524 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\checkaccount.cpp
+>>>>>>> Stashed changes
 	"CheckAccount.h"
-	"LoginScreen.h"
 	"Student.h"
 	<bits/stdc++.h>
 
-1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\checkaccount.h
+1680528575 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\checkaccount.h
 	<SFML/Graphics.hpp>
 	"Student.h"
 
-1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\loginscreen.h
+1680528657 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\loginscreen.h
 	<SFML/Graphics.hpp>
 
+<<<<<<< Updated upstream
 1679995643 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
+=======
+1680533617 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
+>>>>>>> Stashed changes
 	<bits/stdc++.h>
 	"LoginScreen.h"
 	"Button.h"
 	"TextField.h"
 	"TextBox.h"
 	"PasswordField.hpp"
+	"CheckAccount.h"
 	<stdio.h>
 	<conio.h>
 	<SFML/Graphics.hpp>
@@ -695,10 +713,49 @@
 	<SFML/Graphics.hpp>
 	"Student.h"
 
-1679990628 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\wrongpass.cpp
+1680513108 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\wrongpass.cpp
 	"WrongPass.h"
 	"Button.h"
 
 1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\wrongpass.h
 	<SFML/Graphics.hpp>
 
+<<<<<<< Updated upstream
+=======
+1679997764 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\passwordfield.hpp
+	<SFML/Graphics.hpp>
+	<string>
+
+1680533785 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+	"StudentMainMenu.h"
+	"TextBox.h"
+	"TextField.h"
+	"ClickableText.hpp"
+	"Button.h"
+	<string>
+	"ChangePass.h"
+
+1680527698 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\studentmainmenu.h
+	<SFML/Graphics.hpp>
+	"User.h"
+
+1680510713 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\clickabletext.hpp
+	<SFML/Graphics.hpp>
+	<string>
+
+1680510713 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\clickabletext.cpp
+	"ClickableText.hpp"
+
+1680524855 e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\changepass.h
+	<string>
+	<fstream>
+
+1680525644 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\changepass.cpp
+	<string>
+	<fstream>
+
+1680524855 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\changepass.h
+	<string>
+	<fstream>
+
+>>>>>>> Stashed changes
