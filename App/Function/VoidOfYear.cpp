@@ -1,5 +1,6 @@
 #include "VoidOfYear.h"
-void CreateNewYear(DLinkedList<Year> &ListYear, Year &NewYear){
+bool CreateNewYear(DLinkedList<Year> &ListYear, Year &NewYear){
+    if (ListYear.GetByValue(NewYear)!=nullptr) return false;
     ListYear.push(NewYear);
     return true;
 }

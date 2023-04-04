@@ -805,10 +805,12 @@
 	<sys/stat.h>
 	<fstream>
 
+1680598956 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\class.h
 	"Student.h"
 	"DoublyLinkedList.hpp"
 	<string>
 
+1680598927 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\course.h
 	"ScoreBoard.h"
 
 1680570315 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\scoreboard.h
