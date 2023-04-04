@@ -49,3 +49,7 @@ void RemoveStudent(Course& CourseList, Student deleteStudent)
         }
     }
 }
+void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse)
+{
+    CourseList.remove(DeleteCourse);
+}
