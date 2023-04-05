@@ -13,5 +13,5 @@ void UpdateCourseMax_Students(Course& CourseList, int newMax_Students);
 void UpdateDay_Of_Week(Course& CourseList, string newDay_Of_Week);
 void UpdateSession(Course& CourseList, string newSession);
 void AddStudent(Course& CourseList, Student newStudent);
-void RemoveStudent(Course& CourseList, Student deleteStudent);
+void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent);
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse);

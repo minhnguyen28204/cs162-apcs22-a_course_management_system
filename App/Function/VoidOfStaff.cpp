@@ -37,21 +37,9 @@ void AddStudent(Course& CourseList, Student newStudent)
     if (CourseList.stu_list.GetByValue(newStudent)) return;
     CourseList.stu_list.push(newStudent);
 }
-void RemoveStudent(Course& CourseList, Student deleteStudent)
+void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent)
 {
-    if (!CourseList.stu_list.GetByValue(deleteStudent)) {
-        return;
-    }
-    DLLNode <Student>* temp = CourseList.stu_list.Head;
-    while (temp->pNext)
-    {
-        if (temp->data.ID == deleteStudent.ID)
-        {
-            DLLNode <Student>* deleteStu = temp->pNext;
-            temp->pNext = temp->pNext->pNext;
-            delete deleteStu;
-        }
-    }
+    StudentList.remove(DeleteStudent);
 }
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse)
 {
