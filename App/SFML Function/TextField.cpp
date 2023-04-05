@@ -33,6 +33,15 @@ void TextField::clear_str(){
     m_text.setString("");
 }
 
+void TextField::Tab_handle(){
+    if (m_selected) m_selected = false;
+    else m_selected = true;
+}
+
+bool TextField::cur_state(){
+    return m_selected;
+}
+
 void TextField::draw(sf::RenderWindow& window)
 {
     window.draw(m_background);

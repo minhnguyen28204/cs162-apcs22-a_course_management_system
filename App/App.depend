@@ -1,7 +1,19 @@
 # depslib dependency file v1.0
 95 <<<<<<< Updated upstream
 
-1680529576 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+1680569182 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+	<string>
+	<fstream>
+	"DoublyLinkedList.hpp"
+	"LoginScreen.h"
+	"Class.h"
+	"Course.h"
+	"Year.h"
+	"Login/LoginScreen.h"
+	"VoidOfUser.h"
+	"Export.h"
+	"StudentMainMenu.h"
+	<SFML/Graphics.hpp>
 
 1680524855 shed changes
 	<string>
@@ -527,10 +539,10 @@
 
 1679985497 ated upstream
 
-1680568434 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
+1680599916 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
 	"TextField.h"
 
-1680568434 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
+1680599936 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
 	<SFML/Graphics.hpp>
 	<string>
 
@@ -593,7 +605,8 @@
 1679733916 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\scrollablewindow.cpp
 	"ScrollableWindow.hpp"
 
-1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\import.cpp
+1680594134 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\import.cpp
+	"Import.h"
 
 1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\user.cpp
 
@@ -603,12 +616,13 @@
 	<string>
 	"Year.h"
 
-1680568433 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\doublylinkedlist.hpp
+1680699517 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\doublylinkedlist.hpp
 	<functional>
 	"DoublyLinkedList.cpp"
 
-1680568433 e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
+1680603669 e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
 	"DoublyLinkedList.hpp"
+	<iostream>
 
 1680568433 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\class.h
 	"Student.h"
@@ -623,8 +637,9 @@
 	<string>
 	"DoublyLinkedList.hpp"
 
-1680568433 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\course.h
+1680594292 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\course.h
 	"ScoreBoard.h"
+	"Student.h"
 
 1680568433 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\scoreboard.h
 	"DoublyLinkedList.hpp"
@@ -640,8 +655,9 @@
 1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\semester.h
 	"Course.h"
 
-1680568433 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
+1680603669 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
 	"DoublyLinkedList.hpp"
+	<iostream>
 
 1679734435 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\save.cpp
 	"Save.h"
@@ -649,11 +665,11 @@
 1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\student.cpp
 	"Student.h"
 
-1679997764 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
+1680697528 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
 	"VoidOfUser.h"
 	"DoublyLinkedList.hpp"
 
-1679985408 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofuser.h
+1680596148 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofuser.h
 	"User.h"
 	"Year.h"
 
@@ -668,10 +684,10 @@
 
 1679985408 e:\cs162\project\cs162-apcs22-a_course_management_system\app\login\loginscreen.h
 
-1679985578 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\export.cpp
+1680594375 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\export.cpp
 	"Export.h"
 
-1679985408 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\export.h
+1680594411 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\export.h
 	<string>
 	"DoublyLinkedList.hpp"
 	"Class.h"
@@ -694,7 +710,7 @@
 1680568434 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\loginscreen.h
 	<SFML/Graphics.hpp>
 
-1680568434 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
+1680600193 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
 	<bits/stdc++.h>
 	"LoginScreen.h"
 	"Button.h"
@@ -728,7 +744,7 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1680568434 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+1680700625 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
 	"StudentMainMenu.h"
 	"TextBox.h"
 	"TextField.h"
@@ -736,6 +752,11 @@
 	"Button.h"
 	<string>
 	"ChangePass.h"
+	"VoidOfUser.h"
+	"Import.h"
+	"DoublyLinkedList.hpp"
+	"ListOfText.hpp"
+	<vector>
 
 1680568434 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\studentmainmenu.h
 	<SFML/Graphics.hpp>
@@ -759,4 +780,20 @@
 1680568434 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\changepass.h
 	<string>
 	<fstream>
+
+1680594166 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\import.h
+	"DoublyLinkedList.hpp"
+	<string>
+	<fstream>
+	"year.h"
+	"Semester.h"
+	"Course.h"
+	"Class.h"
+
+1680700051 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.hpp
+	<SFML/Graphics.hpp>
+	<string>
+
+1680700085 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.cpp
+	"ListOfText.hpp"
 

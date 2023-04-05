@@ -105,6 +105,12 @@ void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop){
                     is_login = isLogin;
                     clicked = true;
                 }
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Tab){
+                    if (UserInput.cur_state() || PasswordInput.cur_state()){
+                        UserInput.Tab_handle();
+                        PasswordInput.Tab_handle();
+                    }
+                }
             }
             if (event.type == sf::Event::Closed){
                 Stop = true;

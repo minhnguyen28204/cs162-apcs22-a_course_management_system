@@ -12,6 +12,8 @@ public:
     void draw(sf::RenderWindow& window);
     void handleEvent(sf::Event event);
     void clear_str();
+    void Tab_handle();
+    bool cur_state();
     std::string getText() const;
 
 private:

@@ -107,6 +107,8 @@
 		<Unit filename="SFML Function/Button.h" />
 		<Unit filename="SFML Function/ClickableText.cpp" />
 		<Unit filename="SFML Function/ClickableText.hpp" />
+		<Unit filename="SFML Function/ListOfText.cpp" />
+		<Unit filename="SFML Function/ListOfText.hpp" />
 		<Unit filename="SFML Function/PasswordField.hpp" />
 		<Unit filename="SFML Function/TextBox.cpp" />
 		<Unit filename="SFML Function/TextBox.h" />
