@@ -4,9 +4,13 @@ void UpdateCourseID(Course& CourseList, string newID)
 {
     CourseList.ID = newID;
 }
-void UpdateCourseName(Course& CourseList, string newName)
+void UpdateCourseName(Course& CourseList, string newCourseName)
 {
-    CourseList.class_name = newName;
+    CourseList.course_name = newCourseName;
+}
+void UpdateClassName(Course& CourseList, string newClassName)
+{
+    CourseList.class_name = newClassName;
 }
 void UpdateCourseTeacher(Course& CourseList, string newTeacher)
 {

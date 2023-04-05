@@ -1,8 +1,12 @@
+#pragma once
 #include "Course.h"
 #include "Student.h"
 #include "DoublyLinkedList.hpp"
+#include <string>
+using namespace std;
 void UpdateCourseID(Course& CourseList, string newID);
-void UpdateCourseName(Course& CourseList, string newName);
+void UpdateCourseName(Course& CourseList, string newCourseName);
+void UpdateClassName(Course& CourseList, string newClassName);
 void UpdateCourseTeacher(Course& CourseList, string newTeacher);
 void UpdateCourseCredits_Num(Course& CourseList, int newCredits_Num);
 void UpdateCourseMax_Students(Course& CourseList, int newMax_Students);
