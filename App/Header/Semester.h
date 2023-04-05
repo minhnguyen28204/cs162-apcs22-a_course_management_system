@@ -16,8 +16,9 @@ struct Semester
         return (IDsemester>other.IDsemester);
     }
     // add a course to list of course above
-    void Add_A_Course();
-    void Delete_A_Course();
 };
+
+void Add_A_Course(Semester& sem, Course& cou);
+void Delete_A_Course();
 
 #endif
