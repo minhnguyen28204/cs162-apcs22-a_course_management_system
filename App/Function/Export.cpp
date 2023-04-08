@@ -122,6 +122,30 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
     return true;
 }
 
+bool Save_StudentsCSV(const string& cf_name, DLinkedList <Student>& student_list)
+{
+    DLLNode <Student>* cur = student_list.Head;
+    string file_name = cf_name + "/students.csv";
+    ofstream fout(file_name);
+    if (!fout.is_open()) return false;
+
+    fout << "No,ID,FirstName,LastName,Gender,dob,Social_ID\n";
+
+    while (cur)
+    {
+        fout << cur->data.No << ',';
+        fout << cur->data.ID << ',';
+        fout << cur->data.FirstName << ',';
+        fout << cur->data.LastName << ',';
+        fout << cur->data.Gender << ',';
+        fout << cur->data.dob << ',';
+        fout << cur->data.Social_ID << '\n';
+        cur = cur->pNext;
+    }
+    fout.close();
+    return true;
+}
+
 bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
 {
     ofstream fout(sf_path + "/courses.CSV");
