@@ -20,10 +20,4 @@ struct Score
     }
 };
 
-struct Scoreboard
-{
-    DLinkedList <Score> score_list; // haven't has score list yet.
-    bool unlocked; // has been puplished or not (so that the student can view it or not)
-};
-
 #endif

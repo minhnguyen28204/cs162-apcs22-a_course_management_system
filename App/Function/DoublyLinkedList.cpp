@@ -54,6 +54,7 @@ void DLinkedList<T>::push(const T &d){
             Pos=cur;
             cur=cur->pNext;
         }
+        Pos=cur;
         cur = new DLLNode < T > (d);
         cur->pNext = Pos->pNext;
         cur->pPrev = Pos;
@@ -62,6 +63,21 @@ void DLinkedList<T>::push(const T &d){
     } else {
         Head = new DLLNode < T > (d);
     }
+}
+template < class T>
+void DLinkedList<T>::push_back(const T &d){
+    ListSize++;
+    if (Head==nullptr) {
+        Head = new DLLNode < T > (d);
+        return;
+    }
+    DLLNode<T> *cur = Head;
+    while (cur->pNext){
+        cur=cur->pNext;
+    }
+    DLLNode<T> *tmp = new DLLNode<T> (d);
+    cur->pNext = tmp;
+    tmp->pPrev = cur;
 }
 template < class T >
 DLLNode<T>* DLinkedList<T>::front(){
@@ -104,7 +120,7 @@ void DLinkedList<T>::remove(const T &d){
     }
     else{
         DLLNode < T > *cur = Head;
-        while (cur->pNext && cur->pNext->data!=d) cur = cur->pNext;
+        while (cur->pNext && !(cur->pNext->data==d)) cur = cur->pNext;
         if (cur->pNext){
             DLLNode < T > *N = cur->pNext;
             cur->pNext = N->pNext;
@@ -125,6 +141,7 @@ void DLinkedList<T>::Delete(){
 }
 template < class T >
 DLinkedList<T>::~DLinkedList(){
+    if (isEmpty()) return;
     while (!isEmpty()) pop_front();
 }
 
