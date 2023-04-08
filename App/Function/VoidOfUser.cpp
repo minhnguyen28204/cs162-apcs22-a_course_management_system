@@ -43,6 +43,7 @@ void getUser(int &id, User &Who){
     ifstream fi("Information/Users.txt");
     while (fi >> Who.ID >> Who.FirstName >> Who.LastName >> Who.Gender >> Who.dob >> Who.Social_ID >> Who.IsStudent){
         if (Who.ID == id) {
+            //cout << Who.ID << '\n';
             fi.close();
             return;
         }

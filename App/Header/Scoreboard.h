@@ -15,15 +15,13 @@ struct Score
     double fin_mark;
     double mid_mark;
     double other_mark;
+    bool operator == (const Score &other) const{
+        return (No==other.No);
+    }
     bool operator > (const Score &other) const{
         return (No>other.No);
     }
 };
 
-struct Scoreboard
-{
-    DLinkedList <Score> score_list; // haven't has score list yet.
-    bool unlocked; // has been puplished or not (so that the student can view it or not)
-};
 
 #endif

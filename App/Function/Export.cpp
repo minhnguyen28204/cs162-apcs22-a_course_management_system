@@ -19,7 +19,7 @@ bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
     {
         fout << cur->data.IDyear << endl;
         string yf_path = folder_path + "/" + to_string(cur->data.IDyear) + "-" + to_string(cur->data.IDyear + 1);
-
+        
         struct stat db;
         if(stat(yf_path.c_str(), &db) != 0)
         if(mkdir(yf_path.c_str()) == -1) return false;
@@ -60,7 +60,7 @@ bool Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list
         struct stat db;
         if(stat(sf_path.c_str(), &db) != 0)
         if(mkdir(sf_path.c_str()) == -1) return false;
-
+        
         if(!Save_Courses(sf_path, cur->data.course_list)) return false;
         cur = cur->pNext;
     }
@@ -78,7 +78,7 @@ bool Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
     {
         fout << cur->data.class_name << endl;
         string cf_name = yf_path + "/" + cur->data.class_name;
-
+        
         struct stat db;
         if(stat(cf_name.c_str(), &db) != 0)
         if(mkdir(cf_name.c_str()) == -1) return false;
@@ -128,13 +128,13 @@ bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
         fout << cur->data.max_students << '\n';
         fout << cur->data.day_of_week << '\n';
         fout << cur->data.session << '\n';
-
+        
         string course_path = sf_path + "/" + cur->data.ID + "_" + cur->data.class_name;
         struct stat db;
-
+        
         if(stat(course_path.c_str(), &db) != 0)
         if(mkdir(course_path.c_str()) == -1) return false;
-
+        
         if(!Save_Students(course_path, cur->data.stu_list)) return false;
         if(!Save_Scoreboards(course_path, cur->data.score_list)) return false;
         cur = cur->pNext;

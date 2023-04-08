@@ -29,6 +29,7 @@
 	"VoidOfUser.h"
 	"Export.h"
 	"StudentMainMenu.h"
+	"StudentMainMenu.h"
 	<SFML/Graphics.hpp>
 	<SFML/Graphics.hpp>
 	<string>
@@ -624,6 +625,7 @@
 1680603669 e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
 	"DoublyLinkedList.hpp"
 	<iostream>
+	<iostream>
 
 1680568433 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\class.h
 	"Student.h"
@@ -634,6 +636,7 @@
 	"User.h"
 	<iostream>
 
+1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\user.h
 1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\user.h
 	<string>
 	"DoublyLinkedList.hpp"
@@ -647,6 +650,7 @@
 	<string>
 
 1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\year.h
+1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\year.h
 	"DoublyLinkedList.hpp"
 	"Class.h"
 	"Semester.h"
@@ -654,10 +658,12 @@
 	"sstream"
 
 1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\semester.h
+1679997606 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\semester.h
 	"Course.h"
 
 1680603669 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
 	"DoublyLinkedList.hpp"
+	<iostream>
 	<iostream>
 
 1679734435 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\save.cpp
@@ -741,6 +747,7 @@
 1679985497 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\wrongpass.h
 	<SFML/Graphics.hpp>
 
+1679997764 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\passwordfield.hpp
 1679997764 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\passwordfield.hpp
 	<SFML/Graphics.hpp>
 	<string>

@@ -120,7 +120,7 @@ void DLinkedList<T>::remove(const T &d){
     }
     else{
         DLLNode < T > *cur = Head;
-        while (cur->pNext && cur->pNext->data!=d) cur = cur->pNext;
+        while (cur->pNext && !(cur->pNext->data==d)) cur = cur->pNext;
         if (cur->pNext){
             DLLNode < T > *N = cur->pNext;
             cur->pNext = N->pNext;
@@ -141,6 +141,7 @@ void DLinkedList<T>::Delete(){
 }
 template < class T >
 DLinkedList<T>::~DLinkedList(){
+    if (isEmpty()) return;
     while (!isEmpty()) pop_front();
 }
 
