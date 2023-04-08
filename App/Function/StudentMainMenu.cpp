@@ -84,6 +84,7 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     TextField NewPass(_font,24,sf::Color::Black,400,450,600,50,true);
     TextBox ChangedSuccess(250,350,700,100,_font,"Password changed success",50);
     TextBox ChangedFail(250,350,700,100,_font,"Wrong current password",50);
+
     Button OK(Nun,30,550,500,100,50,"Ok",[&](){
         MainMenu = true;
         ChangePass = false;
@@ -112,6 +113,7 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     IsClickedButtons.addButton(OK);
 
 
+
     //Viewcourse Function
     sf::Text Title;
     SetText(Title,"Currently Enrolled Courses",_font,50,290,100,sf::Color::Black);
@@ -122,26 +124,17 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     TextList* Page;
     Page = new TextList[5];
     int PageSize = 0;
-
     while (Cur){
-        int cnt = 4;
+        int cnt = 2;
         bool ok = false;
         while (cnt && Cur){
-            Page[PageSize].addText("- " + Cur->data.course_name + "-" + Cur->data.ID + "_" + Cur->data.class_name);
-            Page[PageSize].addText("Teacher: " + Cur->data.teacher_name);
+            Page[PageSize].addText("- " + Cur->data.course_name + "-" + Cur->data.ID + "_" + Cur->data.class_name,_font,24,sf::Color::Black);
+            Page[PageSize].addText("Teacher: " + Cur->data.teacher_name,_font,24,sf::Color::Black);
             Cur = Cur->pNext;
             cnt--;
-            ok = true;
         }
-        if (ok){
-            Page[PageSize].setCharacterSize(25);
-            Page[PageSize].setFillColor(sf::Color::Black);
-            Page[PageSize].setFont(_font);
-            Page[PageSize].setPosition(sf::Vector2f(210,200));
-            PageSize++;
-        }
+        PageSize++;
     }
-    cout << PageSize << '\n';
     int cur_page = 0;
     TextList CurPage = Page[0];
     Button PrevPage(Nun,14,100,350,100,50,"Previous Page",[&](){
@@ -159,6 +152,10 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     ViewCButton.addButton(PrevPage);
     ViewCButton.addButton(NextPage);
 
+
+
+
+
     while (window.isOpen()){
         sf::Event event;
         while (window.pollEvent(event)){
@@ -168,6 +165,16 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
             CheckLogOut.handleEvent(event);
             if (MainMenu) MainButton.handleEvent(event);
             if (ChangePass){
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
+                    is_changed = ChangeUserPass(Who.ID,OldPass.getText(),NewPass.getText());
+                    clicked = true;
+                }
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Tab){
+                    if (OldPass.cur_state() || NewPass.cur_state()){
+                        OldPass.Tab_handle();
+                        NewPass.Tab_handle();
+                    }
+                }
                 if (!clicked){
                     ChangePassButtons.handleEvent(event);
                     OldPass.handleEvent(event);
@@ -207,8 +214,7 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
         if (ViewCourse){
             window.draw(Title);
             ViewCButton.draw(window);
-            //temp.draw(window);
-            Page[cur_page].draw(window);
+            Page[cur_page].draw(window,sf::Vector2f(200,200));
         }
         window.display();
     }

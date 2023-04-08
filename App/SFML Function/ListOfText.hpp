@@ -1,28 +1,20 @@
-#ifndef TEXT_LIST_H
-#define TEXT_LIST_H
-#include <SFML/Graphics.hpp>
+#ifndef TEXTLIST_H
+#define TEXTLIST_H
+
+#include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 
-const int MAX_TEXTS = 15;
-
-class TextList
-{
+class TextList {
 public:
     TextList();
-    void addText(std::string text);
-    void setPosition(sf::Vector2f position);
-    void setFont(sf::Font& font);
-    void setCharacterSize(unsigned int size);
-    void setFillColor(sf::Color color);
-    void draw(sf::RenderWindow& window);
-    int SizeOfList();
-    sf::Text Elements(int x);
-    void Equal(TextList other);
+    void addText(const std::string& text, const sf::Font& font, const unsigned int& charSize, const sf::Color& color);
+    void removeText(int index);
+    std::string getText(int index) const;
+    void draw(sf::RenderWindow& window, const sf::Vector2f& position);
+
 private:
-    sf::Text m_texts[MAX_TEXTS];
-    int m_numTexts;
-    sf::Font m_font;
-    sf::Color m_fillColor;
+    std::vector<sf::Text> m_textList;
 };
 
 #endif

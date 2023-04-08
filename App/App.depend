@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 95 <<<<<<< Updated upstream
 
-1680569182 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+1680942716 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
 	<string>
 	<fstream>
 	"DoublyLinkedList.hpp"
@@ -13,6 +13,7 @@
 	"VoidOfUser.h"
 	"Export.h"
 	"StudentMainMenu.h"
+	"AcademicMainMenu.h"
 	<SFML/Graphics.hpp>
 
 1680524855 shed changes
@@ -665,7 +666,7 @@
 1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\student.cpp
 	"Student.h"
 
-1680697528 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
+1680943448 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
 	"VoidOfUser.h"
 	"DoublyLinkedList.hpp"
 
@@ -744,7 +745,7 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1680700625 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+1680940315 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
 	"StudentMainMenu.h"
 	"TextBox.h"
 	"TextField.h"
@@ -790,10 +791,20 @@
 	"Course.h"
 	"Class.h"
 
-1680700051 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.hpp
-	<SFML/Graphics.hpp>
+1680771545 e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.hpp
+	<vector>
 	<string>
+	<SFML/Graphics.hpp>
 
-1680700085 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.cpp
+1680771558 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.cpp
 	"ListOfText.hpp"
+
+1680945708 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\academicmainmenu.cpp
+	"AcademicMainMenu.h"
+	"Button.h"
+
+1680942801 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\academicmainmenu.h
+	<SFML/Graphics.hpp>
+	"User.h"
+	<string>
 

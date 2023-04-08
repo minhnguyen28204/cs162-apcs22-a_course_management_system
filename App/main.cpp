@@ -9,12 +9,11 @@
 #include "VoidOfUser.h"
 #include "Export.h"
 #include "StudentMainMenu.h"
+#include "AcademicMainMenu.h"
 #include <SFML/Graphics.hpp>
 #define y1 kdbfksdjfbkdjfb
 
 int main(){
-    bool Stop = false, isLogin = false;
-    int ID;
     while(1){
         bool Stop = false, isLogin = false;
         int ID;
@@ -32,6 +31,9 @@ int main(){
         if (CurrAccount.IsStudent){
 
             StudentScreen(MainMenu,CurrAccount,LogOut);
+        }
+        else{
+            AcademicScreen(MainMenu,CurrAccount,LogOut);
         }
         if (LogOut==false) break;
     }
