@@ -1,6 +1,7 @@
 #ifndef __DOUBLY_LINKED_LIST_CPP
 #define __DOUBLY_LINKED_LIST_CPP
 #include "DoublyLinkedList.hpp"
+#include <iostream>
 using namespace std;
 
 //DLLNode
@@ -62,6 +63,21 @@ void DLinkedList<T>::push(const T &d){
     } else {
         Head = new DLLNode < T > (d);
     }
+}
+template < class T>
+void DLinkedList<T>::push_back(const T &d){
+    ListSize++;
+    if (Head==nullptr) {
+        Head = new DLLNode < T > (d);
+        return;
+    }
+    DLLNode<T> *cur = Head;
+    while (cur->pNext){
+        cur=cur->pNext;
+    }
+    DLLNode<T> *tmp = new DLLNode<T> (d);
+    cur->pNext = tmp;
+    tmp->pPrev = cur;
 }
 template < class T >
 DLLNode<T>* DLinkedList<T>::front(){

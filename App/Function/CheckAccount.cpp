@@ -1,13 +1,9 @@
 #include "CheckAccount.h"
-#include "LoginScreen.h"
 #include "Student.h"
 #include <bits/stdc++.h>
 using namespace std;
 
-void Checking(sf::RenderWindow &window, bool &isLogin, int &id, bool &Stop){
-    string User;
-    string Password;
-    MenuFunc(window,User,Password,Stop);
+void Checking(string User, string Password, bool &isLogin, int &id, bool &Stop){
     long long x = -1;
     if (User.size()) x = stoi(User);
     ifstream ifs("Data/data.dat");
