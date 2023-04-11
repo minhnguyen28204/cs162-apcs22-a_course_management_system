@@ -5,7 +5,7 @@
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
     if(ye.sem_list.GetByValue(sem)) return false;
-    ye.sem_list.push(sem);
+    ye.sem_list.push_descending(sem);
     return true;
 }
 

@@ -69,6 +69,40 @@ void DLinkedList<T>::push(const T &d){
         Head->pNext = nullptr;
     }
 }
+
+template < class T >
+void DLinkedList<T>::push_descending(const T &d){
+    ListSize++;
+    
+    if (Head){
+        DLLNode < T > *cur = Head;
+        while (cur){
+            if (!(cur->data > d)){
+                DLLNode < T > *prevCur = cur->pPrev;
+                DLLNode < T > *NN = new DLLNode<T>(d);
+                NN->pNext = cur;
+                NN->pPrev = prevCur;
+                if (prevCur) prevCur->pNext = NN;
+                else Head = NN;
+                cur->pPrev = NN;
+                return;
+            }
+            else if (cur->pNext==nullptr){
+                DLLNode < T > *NN = new DLLNode<T>(d);
+                NN->pPrev = cur;
+                NN->pNext = nullptr;
+                cur->pNext = NN;
+                return;
+            }
+            else cur = cur->pNext;
+        }
+    } else {
+        Head = new DLLNode < T > (d);
+        Head->pPrev = nullptr;
+        Head->pNext = nullptr;
+    }
+}
+
 template < class T >
 DLLNode<T>* DLinkedList<T>::front(){
     return Head;
