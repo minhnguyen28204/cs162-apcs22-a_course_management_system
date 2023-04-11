@@ -1,4 +1,3 @@
-
 #include "VoidOfStaff.h"
 #include <iostream>
 
@@ -6,7 +5,7 @@
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
     if(ye.sem_list.GetByValue(sem)) return false;
-    ye.sem_list.push(sem);
+    ye.sem_list.push_descending(sem);
     return true;
 }
 
@@ -41,22 +40,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         cur_student.Gender=stoi(Gen);
         cur_student.dob=dofb;
         cur_student.Social_ID=stoll(Soc_ID);
-        /*
-        DLLNode<Student> *Cur = cur_course.stu_list.Head;
-        bool dup = false;
-        while (Cur){
-            if (cur_student.ID==Cur->data.ID) dup = true;
-            Cur = Cur->pNext;
-        }
-        if (dup){
-            // cout << cur_student.ID << '\n';
-            continue;
-        }
-        */
-        if (cur_course.stu_list.GetByValue(cur_student)){
-            continue;
-        }
-        // else cout << "THang nay khong bi dup -> " << cur_student.ID << '\n';
+        if(cur_course.stu_list.GetByValue(cur_student)) continue;
         cur_course.stu_list.push(cur_student);
     }
     fin.close();

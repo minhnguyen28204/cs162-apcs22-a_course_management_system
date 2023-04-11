@@ -32,7 +32,6 @@ int main(){
         sf::RenderWindow MainMenu(sf::VideoMode(1200,800), "Main Menu",sf::Style::Titlebar | sf::Style::Close);
         bool LogOut = false;
         if (CurrAccount.IsStudent){
-
             StudentScreen(MainMenu,CurrAccount,LogOut);
         }
         else{

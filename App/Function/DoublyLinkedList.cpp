@@ -41,27 +41,66 @@ DLLNode<T>* DLinkedList<T>::GetByValue(const T &d){
 template < class T >
 void DLinkedList<T>::push(const T &d){
     ListSize++;
+    
     if (Head){
         DLLNode < T > *cur = Head;
-        if (cur->data>d){
-            DLLNode < T > *NN = new DLLNode < T > (d);
-            NN->pNext = Head;
-            Head->pPrev = NN;
-            Head = NN;
-            return;
+        while (cur){
+            if (cur->data > d){
+                DLLNode < T > *prevCur = cur->pPrev;
+                DLLNode < T > *NN = new DLLNode<T>(d);
+                NN->pNext = cur;
+                NN->pPrev = prevCur;
+                if (prevCur) prevCur->pNext = NN;
+                else Head = NN;
+                cur->pPrev = NN;
+                return;
+            }
+            else if (cur->pNext==nullptr){
+                DLLNode < T > *NN = new DLLNode<T>(d);
+                NN->pPrev = cur;
+                NN->pNext = nullptr;
+                cur->pNext = NN;
+                return;
+            }
+            else cur = cur->pNext;
         }
-        DLLNode < T > *Pos = Head;
-        while (cur->pNext && d>cur->pNext->data) {
-            Pos=cur;
-            cur=cur->pNext;
-        }
-        cur = new DLLNode < T > (d);
-        cur->pNext = Pos->pNext;
-        cur->pPrev = Pos;
-        if (cur->pNext) cur->pNext->pPrev = cur;
-        Pos->pNext = cur;
     } else {
         Head = new DLLNode < T > (d);
+        Head->pPrev = nullptr;
+        Head->pNext = nullptr;
+    }
+}
+
+template < class T >
+void DLinkedList<T>::push_descending(const T &d){
+    ListSize++;
+    
+    if (Head){
+        DLLNode < T > *cur = Head;
+        while (cur){
+            if (!(cur->data > d)){
+                DLLNode < T > *prevCur = cur->pPrev;
+                DLLNode < T > *NN = new DLLNode<T>(d);
+                NN->pNext = cur;
+                NN->pPrev = prevCur;
+                if (prevCur) prevCur->pNext = NN;
+                else Head = NN;
+                cur->pPrev = NN;
+                return;
+            }
+            else if (cur->pNext==nullptr){
+                DLLNode < T > *NN = new DLLNode<T>(d);
+                NN->pPrev = cur;
+                NN->pNext = nullptr;
+                cur->pNext = NN;
+                return;
+            }
+            else cur = cur->pNext;
+        }
+    } else {
+        Head = new DLLNode < T > (d);
+        Head->pPrev = nullptr;
+        Head->pNext = nullptr;
     }
 }
 template < class T>

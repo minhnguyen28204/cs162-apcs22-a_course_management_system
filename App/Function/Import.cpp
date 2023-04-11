@@ -13,7 +13,6 @@ bool importListyear(const string& folderpath, DLinkedList <Year> &year_list)
     string year_file = folderpath + "/years.dat";
     ifstream fin(year_file);
     if(!fin.is_open()) return false;
-
     string line;
     while (getline(fin, line))
     {
@@ -24,7 +23,7 @@ bool importListyear(const string& folderpath, DLinkedList <Year> &year_list)
             return false;
         if(!importListsemester(yearpath,new_year.sem_list))
             return false;
-        year_list.push(new_year);  
+        year_list.push_descending(new_year);  
     }
      
     fin.close();
@@ -46,7 +45,7 @@ bool importListsemester(const string& folderpath, DLinkedList <Semester>&semeste
         string sempath=folderpath + "/semesters/semester" + line;
         if(!importListcourse(sempath,cur_semester.course_list))
             return false;
-        semester_list.push(cur_semester);
+        semester_list.push_descending(cur_semester);
     }
     fin.close();
     return true;
