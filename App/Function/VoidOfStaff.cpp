@@ -32,10 +32,27 @@ void UpdateSession(Course& CourseList, string newSession)
 {
     CourseList.session = newSession;
 }
-void AddStudent(Course& CourseList, Student newStudent)
+void AddStudent(Course& CourseList, Student newStudent, string& folderpath)
 {
     if (CourseList.stu_list.GetByValue(newStudent)) return;
     CourseList.stu_list.push(newStudent);
+    updateStudentAccount(newStudent, folderpath);
+    return;
+}
+void updateStudentAccount(Student& stu, string& folderpath)
+{
+    ofstream fout(folderpath + "/" + to_string(stu.ID) + ".dat");
+    if (!fout.is_open()) return;
+
+    int len = stu.dob.length();
+    string pass;
+    for (int i = 0; i < len; ++i)
+    {
+        if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
+    }
+
+    fout << pass;
+    fout.close();
 }
 void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent)
 {

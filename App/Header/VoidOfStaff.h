@@ -12,6 +12,7 @@ void UpdateCourseCredits_Num(Course& CourseList, int newCredits_Num);
 void UpdateCourseMax_Students(Course& CourseList, int newMax_Students);
 void UpdateDay_Of_Week(Course& CourseList, string newDay_Of_Week);
 void UpdateSession(Course& CourseList, string newSession);
-void AddStudent(Course& CourseList, Student newStudent);
+void updateStudentAccount(Student& stu, string& folderpath);
+void AddStudent(Course& CourseList, Student newStudent, string& folderpath);
 void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent);
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse);
