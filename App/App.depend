@@ -823,3 +823,231 @@
 
 1681185643 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\vector.h
 
+1680570314 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\profilescreen.cpp
+	"ProfileScreen.h"
+	"TextBox.h"
+	"ScrollableWindow.hpp"
+
+1680570314 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\profilescreen.h
+	<SFML/Graphics.hpp>
+	"Student.h"
+
+1681206970 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\student.h
+	"User.h"
+	<iostream>
+
+1680570314 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\user.h
+	<string>
+	"DoublyLinkedList.hpp"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\doublylinkedlist.hpp
+	<functional>
+	"DoublyLinkedList.cpp"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
+	"DoublyLinkedList.hpp"
+	<iostream>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textbox.h
+	<SFML/Graphics.hpp>
+	<string>
+
+1680570314 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\scrollablewindow.hpp
+	<SFML/Graphics.hpp>
+	<vector>
+	<string>
+
+1680570314 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\student.cpp
+	"Student.h"
+
+1680570314 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\user.cpp
+
+1680570314 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\year.cpp
+	"Year.h"
+
+1680570314 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\year.h
+	"DoublyLinkedList.hpp"
+	"Class.h"
+	"Semester.h"
+	"fstream"
+	"sstream"
+
+1681206120 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\class.h
+	"Student.h"
+	"DoublyLinkedList.hpp"
+	<string>
+
+1681206326 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\semester.h
+	"Course.h"
+
+1681206120 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\course.h
+	"ScoreBoard.h"
+	"Student.h"
+
+1681206120 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\scoreboard.h
+	"DoublyLinkedList.hpp"
+	<string>
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\academicmainmenu.cpp
+	"AcademicMainMenu.h"
+	"Button.h"
+	"Vector.h"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\academicmainmenu.h
+	<SFML/Graphics.hpp>
+	"User.h"
+	<string>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\button.h
+	<SFML/Graphics.hpp>
+	<functional>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\vector.h
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\changepass.cpp
+	<string>
+	<fstream>
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\checkaccount.cpp
+	"CheckAccount.h"
+	"Student.h"
+	<bits/stdc++.h>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\checkaccount.h
+	<SFML/Graphics.hpp>
+	"Student.h"
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\doublylinkedlist.cpp
+	"DoublyLinkedList.hpp"
+	<iostream>
+
+1681206982 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\export.cpp
+	"Export.h"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\export.h
+	<string>
+	"DoublyLinkedList.hpp"
+	"Class.h"
+	"Course.h"
+	"Year.h"
+	"Scoreboard.h"
+	<direct.h>
+	<sys/stat.h>
+	<fstream>
+
+1681207002 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\import.cpp
+	"Import.h"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\import.h
+	"DoublyLinkedList.hpp"
+	<string>
+	<fstream>
+	"year.h"
+	"Semester.h"
+	"Course.h"
+	"Class.h"
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\loginscreen.cpp
+	<bits/stdc++.h>
+	"LoginScreen.h"
+	"Button.h"
+	"TextField.h"
+	"TextBox.h"
+	"PasswordField.hpp"
+	"CheckAccount.h"
+	<stdio.h>
+	<conio.h>
+	<SFML/Graphics.hpp>
+	<functional>
+	<string>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\loginscreen.h
+	<SFML/Graphics.hpp>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.h
+	<SFML/Graphics.hpp>
+	<string>
+
+1680570314 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\passwordfield.hpp
+	<SFML/Graphics.hpp>
+	<string>
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+	"StudentMainMenu.h"
+	"TextBox.h"
+	"TextField.h"
+	"ClickableText.hpp"
+	"Button.h"
+	<string>
+	"ChangePass.h"
+	"VoidOfUser.h"
+	"Import.h"
+	"DoublyLinkedList.hpp"
+	"ListOfText.hpp"
+	<vector>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\studentmainmenu.h
+	<SFML/Graphics.hpp>
+	"User.h"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\clickabletext.hpp
+	<SFML/Graphics.hpp>
+	<string>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\changepass.h
+	<string>
+	<fstream>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofuser.h
+	"User.h"
+	"Year.h"
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.hpp
+	<vector>
+	<string>
+	<SFML/Graphics.hpp>
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
+	"VoidOfUser.h"
+	"DoublyLinkedList.hpp"
+
+1681206994 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstaff.cpp
+	"VoidOfStaff.h"
+	<iostream>
+
+1681206132 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofstaff.h
+	"Semester.h"
+	"year.h"
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\main.cpp
+	<string>
+	<fstream>
+	"Import.h"
+	"Export.h"
+	"VoidOfStaff.h"
+	"DoublyLinkedList.hpp"
+	"LoginScreen.h"
+	"Class.h"
+	"Course.h"
+	"Year.h"
+	"Login/LoginScreen.h"
+	"VoidOfUser.h"
+	"Export.h"
+	"StudentMainMenu.h"
+	"AcademicMainMenu.h"
+	<SFML/Graphics.hpp>
+
+1680570314 d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\login\loginscreen.h
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\clickabletext.cpp
+	"ClickableText.hpp"
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.cpp
+	"ListOfText.hpp"
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textbox.cpp
+	"TextBox.h"
+
+1681206132 source:d:\apcs\computer science\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\textfield.cpp
+	"TextField.h"
+
