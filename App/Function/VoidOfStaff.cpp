@@ -1,6 +1,4 @@
 #include "VoidOfStaff.h"
-#include <iostream>
-
 
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
@@ -20,11 +18,12 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
 {
     ifstream fin(filename);
     if(!fin.is_open()) return false;
-    string line, id, FName, LName, Gen, dofb, Soc_ID;
+    string line, no, id, FName, LName, Gen, dofb, Soc_ID;
     getline(fin,line);
     while(getline(fin,line))
     {
         stringstream ss(line);
+        getline(ss, no, ',');
         getline(ss, id, ',');
         getline(ss, FName, ',');
         getline(ss, LName, ',');
@@ -32,6 +31,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
+        cur_student.No=stoi(no);
         cur_student.ID=stoi(id);
         cur_student.FirstName=FName;
         cur_student.LastName=LName;
@@ -44,3 +44,46 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
     fin.close();
     return true;
 }
+
+bool UpdateStudentAccount(Student& stu, const string& folderpath)
+{
+    string filename = folderpath + "/User/" + to_string(stu.ID) + ".dat";
+    ofstream fout(filename);
+    if (!fout.is_open()) return false;
+
+    int len = stu.dob.length();
+    string pass = "";
+    for (int i = 0; i < len; ++i)
+    {
+        if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
+    }
+
+    fout << pass;
+    fout.close();
+    return true;
+}
+
+bool UpdateDataStudent(Student& stu, const string& folderpath)
+{
+    string filename = folderpath + '/' + "UserData.txt";
+    ofstream fout(filename, ios::app);
+    if(!fout.is_open()) return false;
+
+    fout << stu.ID << ' '
+        << stu.FirstName << ' '
+        << stu.LastName << ' '
+        << stu.Gender << ' '
+        << stu.dob << ' '
+        << stu.Social_ID << '\n';
+    
+    fout.close();
+    return true;
+}
+
+
+
+
+
+
+
+
