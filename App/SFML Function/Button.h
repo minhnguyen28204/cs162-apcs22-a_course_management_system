@@ -6,8 +6,12 @@ class Button : public sf::Drawable, public sf::Transformable
 {
 public:
     Button(){}
-    Button(float x, float y, float width, float height, const std::string& text, const std::function<void()>& onClick)
+    Button(sf::Sprite sp, unsigned int Size, float x, float y, float width, float height, const std::string& text, const std::function<void()>& onClick)
     {
+        // Load the hover image
+        image = sp;
+        image.setPosition(x-50,y);
+
         // Load the font
         font_.loadFromFile("resources/font.ttf");
 
@@ -21,7 +25,7 @@ public:
         // Create the text
         text_.setFont(font_);
         text_.setString(text);
-        text_.setCharacterSize(24);
+        text_.setCharacterSize(Size);
         text_.setFillColor(sf::Color::Black);
         sf::FloatRect textBounds = text_.getLocalBounds();
         text_.setOrigin(textBounds.left + textBounds.width / 2, textBounds.top + textBounds.height / 2);
@@ -40,10 +44,12 @@ public:
     {
         if (contains(x, y))
         {
+            isdraw = true;
             shape_.setFillColor(sf::Color(200, 200, 200));
         }
         else
         {
+            isdraw = false;
             shape_.setFillColor(sf::Color::White);
         }
     }
@@ -59,8 +65,10 @@ private:
         states.transform *= getTransform();
         target.draw(shape_, states);
         target.draw(text_, states);
+        if (isdraw) target.draw(image, states);
     }
-
+    sf::Sprite image;
+    bool isdraw;
     sf::RectangleShape shape_;
     sf::Text text_;
     sf::Font font_;

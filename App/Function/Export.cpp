@@ -164,4 +164,3 @@ bool Save_Scoreboards(const string& course_path, DLinkedList <Score>& sco_list)
     fout.close();
     return true;
 }
-

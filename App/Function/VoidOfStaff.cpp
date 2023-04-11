@@ -46,9 +46,3 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
     fin.close();
     return true;
 }
-
-
-
-
-
-
