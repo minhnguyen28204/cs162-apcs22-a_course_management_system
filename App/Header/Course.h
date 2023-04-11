@@ -27,7 +27,7 @@ struct Course
     inline int operator == (const Course& other) {
 		return (ID == other.ID && class_name == other.class_name);
 	}
-    bool operator>(const Course& other) const
+    bool operator > (const Course& other) const
     {
         return ID > other.ID;
     }

@@ -30,7 +30,6 @@ bool QuickInputClass(const string& folderpath,Class &CurClass){
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
-        cur_student.No=stoi(no);
         cur_student.ID=stoi(id);
         cur_student.FirstName=FName;
         cur_student.LastName=LName;

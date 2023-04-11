@@ -72,6 +72,7 @@
 		<Unit filename="Function/Student.cpp" />
 		<Unit filename="Function/StudentMainMenu.cpp" />
 		<Unit filename="Function/User.cpp" />
+		<Unit filename="Function/VoidOfStudent.cpp" />
 		<Unit filename="Function/VoidOfUser.cpp" />
 		<Unit filename="Function/VoidOfYear.cpp" />
 		<Unit filename="Function/year.cpp" />
@@ -90,6 +91,7 @@
 		<Unit filename="Header/Student.h" />
 		<Unit filename="Header/StudentMainMenu.h" />
 		<Unit filename="Header/User.h" />
+		<Unit filename="Header/VoidOfStudent.h" />
 		<Unit filename="Header/VoidOfUser.h" />
 		<Unit filename="Header/VoidOfYear.h" />
 		<Unit filename="Header/year.h" />
