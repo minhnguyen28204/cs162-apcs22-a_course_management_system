@@ -1,5 +1,8 @@
 #include <string>
 #include <fstream>
+#include "Import.h"
+#include "Export.h"
+#include "VoidOfStaff.h"
 #include "DoublyLinkedList.hpp"
 #include "LoginScreen.h"
 #include "Class.h"

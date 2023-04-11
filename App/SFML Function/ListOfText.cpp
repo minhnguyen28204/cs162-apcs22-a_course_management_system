@@ -22,9 +22,8 @@ std::string TextList::getText(int index) const {
 }
 
 void TextList::draw(sf::RenderWindow& window, const sf::Vector2f& position) {
-    for (unsigned int i = 0; i < m_textList.size(); i++) {
-        sf::Text text = m_textList[i];
-        text.setPosition(position.x, position.y + i * text.getCharacterSize());
-        window.draw(text);
+    for (int i = 0; i < m_textList.size(); i++) {
+        m_textList[i].setPosition(position.x, position.y + i * m_textList[i].getCharacterSize());
+        window.draw(m_textList[i]);
     }
 }

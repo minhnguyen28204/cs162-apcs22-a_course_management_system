@@ -62,6 +62,7 @@
 		<Linker>
 			<Add directory="C:/Users/suyun/Downloads/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="Function/AcademicMainMenu.cpp" />
 		<Unit filename="Function/ChangePass.cpp" />
 		<Unit filename="Function/CheckAccount.cpp" />
 		<Unit filename="Function/DoublyLinkedList.cpp" />
@@ -71,10 +72,11 @@
 		<Unit filename="Function/ProfileScreen.cpp" />
 		<Unit filename="Function/Student.cpp" />
 		<Unit filename="Function/StudentMainMenu.cpp" />
-		<Unit filename="Function/StudentMainMenu.cpp" />
 		<Unit filename="Function/User.cpp" />
+		<Unit filename="Function/VoidOfStaff.cpp" />
 		<Unit filename="Function/VoidOfUser.cpp" />
 		<Unit filename="Function/year.cpp" />
+		<Unit filename="Header/AcademicMainMenu.h" />
 		<Unit filename="Header/ChangePass.h" />
 		<Unit filename="Header/CheckAccount.h" />
 		<Unit filename="Header/Class.h" />
@@ -89,8 +91,9 @@
 		<Unit filename="Header/Staff.h" />
 		<Unit filename="Header/Student.h" />
 		<Unit filename="Header/StudentMainMenu.h" />
-		<Unit filename="Header/StudentMainMenu.h" />
 		<Unit filename="Header/User.h" />
+		<Unit filename="Header/Vector.h" />
+		<Unit filename="Header/VoidOfStaff.h" />
 		<Unit filename="Header/VoidOfUser.h" />
 		<Unit filename="Header/VoidOfYear.h" />
 		<Unit filename="Header/year.h" />
@@ -107,7 +110,6 @@
 		<Unit filename="Information/semesters.csv" />
 		<Unit filename="Information/years.csv" />
 		<Unit filename="SFML Function/Button.h" />
-		<Unit filename="SFML Function/PasswordField.hpp" />
 		<Unit filename="SFML Function/ClickableText.cpp" />
 		<Unit filename="SFML Function/ClickableText.hpp" />
 		<Unit filename="SFML Function/ListOfText.cpp" />
