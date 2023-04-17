@@ -43,14 +43,17 @@ void updateStudentAccount(Student& stu, string& folderpath)
 {
     ofstream fout(folderpath + "/" + to_string(stu.ID) + ".dat");
     if (!fout.is_open()) return;
-
     int len = stu.dob.length();
-    string pass;
+    string pass(len, ' '); // Initialize the pass string with the same length as dob
+    int count = 0;
     for (int i = 0; i < len; ++i)
     {
-        if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
+        if (stu.dob[i] != '/')
+        {
+            pass[count] = stu.dob[i];
+            count++;
+        }
     }
-
     fout << pass;
     fout.close();
 }
