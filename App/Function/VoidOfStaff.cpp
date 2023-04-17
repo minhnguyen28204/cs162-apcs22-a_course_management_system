@@ -66,9 +66,9 @@ bool ExportToCSV(Course& cou, const string& filename)
     return true;
 }
 
-bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist) {
-
-    ifstream fin(folderpath);
+bool ImpScoreCSV(const string filepath, DLinkedList<Score>& sco_list) {
+ 
+    ifstream fin(filepath);
     if (!fin.is_open()) return false;
 
     string line;
@@ -81,18 +81,20 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
         getline(ss, cur_score.stu_id, ',');
         getline(ss, cur_score.first_name, ',');
         getline(ss, cur_score.last_name, ',');
-        fin >> cur_score.tot_mark;
-        fin >> cur_score.fin_mark;
-        fin >> cur_score.mid_mark;
-        fin >> cur_score.other_mark;
-        fin.ignore(1000,'\n');
+        getline(ss, line, ',');
+        cur_score.tot_mark = stof(line);
 
-        new_scorelist.push(cur_score);
+        getline(ss, line, ',');
+        cur_score.fin_mark = stof(line);
+
+        getline(ss, line, ',');
+        cur_score.mid_mark = stof(line);
+
+        getline(ss, line);
+        cur_score.other_mark = stof(line);
+        
+        sco_list.push(cur_score);
     }
     fin.close();
-
-    Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
-    CurCou.score_list.Delete();
-    CurCou.score_list.Head = new_scorelist.Head;
     return true;
 }
