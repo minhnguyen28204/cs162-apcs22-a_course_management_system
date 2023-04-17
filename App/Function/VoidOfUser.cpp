@@ -4,8 +4,8 @@
 #include "DoublyLinkedList.hpp"
 
 DLLNode<Course> *View_Course_Default(User &CurUser, DLinkedList<Year> &ListYear){
-    int LatestYear=ListYear.Head->data.IDyear; //= top of listyear
-    int LatestSemester=(ListYear.Head->data).sem_list.Head->data.IDsemester;
+    int LatestYear=ListYear.back()->data.IDyear; //= top of listyear
+    int LatestSemester=(ListYear.back()->data).sem_list.back()->data.IDsemester;
     return View_Course(CurUser,LatestYear,LatestSemester,ListYear);
     //edit LastYear and LastSemester
 }
@@ -39,5 +39,14 @@ DLLNode<Course> *View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Y
     }
     return Data.Head;
 };
+void getUser(string &id, User &Who){
+    ifstream fi("Information/Users.txt");
+    while (fi >> Who.ID >> Who.FirstName >> Who.LastName >> Who.Gender >> Who.dob >> Who.Social_ID >> Who.IsStudent){
+        if (Who.ID == id) {
+            fi.close();
+            return;
+        }
+    }
+}
 
 #endif // VOID_OF_USER_CPP

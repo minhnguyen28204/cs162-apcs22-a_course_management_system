@@ -31,7 +31,6 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
-        cur_student.No=stoi(no);
         cur_student.ID=stoi(id);
         cur_student.FirstName=FName;
         cur_student.LastName=LName;
@@ -45,7 +44,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
     return true;
 }
 
-bvoid updateStudentAccount(Student& stu, string& folderpath)
+void updateStudentAccount(Student& stu, string& folderpath)
 {
     ofstream fout(folderpath + "/" + stu.ID + ".dat");
     if (!fout.is_open()) return;
@@ -76,14 +75,14 @@ bool UpdateDataStudent(Student& stu, const string& folderpath)
         << stu.Gender << ' '
         << stu.dob << ' '
         << stu.Social_ID << '\n';
-    
+
     fout.close();
     return true;
 }
 
 
 bool ScoreCSV(const string folderpath, DLinkedList<Score>& sco_list) {
- 
+
     ifstream fin(folderpath);
     if (!fin.is_open()) return false;
 
@@ -102,7 +101,7 @@ bool ScoreCSV(const string folderpath, DLinkedList<Score>& sco_list) {
         fin >> cur_score.mid_mark;
         fin >> cur_score.other_mark;
         fin.ignore(1000,'\n');
-        
+
         sco_list.push(cur_score);
     }
     fin.close();

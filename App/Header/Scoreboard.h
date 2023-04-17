@@ -8,7 +8,7 @@ using namespace std;
 struct Score
 {
     int No;
-    int stu_id;
+    string stu_id;
     string first_name;
     string last_name;
     double tot_mark;
