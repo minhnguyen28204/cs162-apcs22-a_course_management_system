@@ -40,7 +40,6 @@ bool QInputStuInCourse(const string& filename,Course& cur_course, const string& 
         cur_student.Social_ID= Soc_ID ;
         if(cur_course.stu_list.GetByValue(cur_student)) continue;
         cur_course.stu_list.push(cur_student);
-        if(!UpdateStudentAccount(cur_student, folderpath)) return false;
     }
     fin.close();
     return true;
@@ -66,7 +65,7 @@ bool ExportToCSV(Course& cou, const string& filename)
     fout.close();
     return true;
 }
-  
+
 bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist) {
 
     ifstream fin(folderpath);
@@ -91,7 +90,7 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
         new_scorelist.push(cur_score);
     }
     fin.close();
-    
+
     Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
     CurCou.score_list.Delete();
     CurCou.score_list.Head = new_scorelist.Head;

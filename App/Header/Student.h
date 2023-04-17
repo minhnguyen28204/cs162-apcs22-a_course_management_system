@@ -7,8 +7,8 @@ using namespace std;
 
 struct Student : User
 {
-	void View_Stu_Courses();
-	void View_Stu_Grade();
+	int Number_Of_Credits;
+	double TotalScore;
 	bool operator > (const Student &other) const{
         return (ID>other.ID);
     }

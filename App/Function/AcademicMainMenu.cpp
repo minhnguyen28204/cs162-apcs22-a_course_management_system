@@ -297,11 +297,11 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
 
 //Main function
 void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
-    importData("SystemData",ListYear);
+    importData("Information/SystemData",ListYear);
 
 
     if (ListYear.Head) setText(default_year,"Current year: " + to_string(ListYear.Head->data.IDyear),_Font,20,50,50,sf::Color::Black);
-    if (ListYear.Head) setText(default_semester,"Current semester: " + to_string(ListYear.Head->data.sem_list.Head->data.IDsemester),_Font,20,300,50,sf::Color::Black);
+    if (ListYear.Head && ListYear.Head->data.sem_list.Head) setText(default_semester,"Current semester: " + to_string(ListYear.Head->data.sem_list.Head->data.IDsemester),_Font,20,300,50,sf::Color::Black);
     //set text for add course page
     setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Black);
     setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Black);
@@ -509,5 +509,5 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         }
         DrawWindow(window);
     }
-    Save_Data("SystemData",ListYear);
+    Save_Data("Information/SystemData",ListYear);
 }

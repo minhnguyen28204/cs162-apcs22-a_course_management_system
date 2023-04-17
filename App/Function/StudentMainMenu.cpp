@@ -119,7 +119,7 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     SetText(Title,"Currently Enrolled Courses",_font,50,290,100,sf::Color::Black);
 
     DLinkedList<Year> ListOfYear;
-    importData("SystemData",ListOfYear);
+    importData("Information/SystemData",ListOfYear);
     DLLNode<Course>* Cur = View_Course_Default(Who,ListOfYear);
     TextList* Page;
     Page = new TextList[5];
