@@ -1,6 +1,4 @@
 #include "VoidOfStaff.h"
-#include <iostream>
-
 
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
@@ -46,3 +44,46 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
     fin.close();
     return true;
 }
+
+bool UpdateStudentAccount(Student& stu, const string& folderpath)
+{
+    string filename = folderpath + "/User/" + to_string(stu.ID) + ".dat";
+    ofstream fout(filename);
+    if (!fout.is_open()) return false;
+
+    int len = stu.dob.length();
+    string pass = "";
+    for (int i = 0; i < len; ++i)
+    {
+        if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
+    }
+
+    fout << pass;
+    fout.close();
+    return true;
+}
+
+bool UpdateDataStudent(Student& stu, const string& folderpath)
+{
+    string filename = folderpath + '/' + "UserData.txt";
+    ofstream fout(filename, ios::app);
+    if(!fout.is_open()) return false;
+
+    fout << stu.ID << ' '
+        << stu.FirstName << ' '
+        << stu.LastName << ' '
+        << stu.Gender << ' '
+        << stu.dob << ' '
+        << stu.Social_ID << '\n';
+    
+    fout.close();
+    return true;
+}
+
+
+
+
+
+
+
+

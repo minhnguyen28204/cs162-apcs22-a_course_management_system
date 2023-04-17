@@ -110,7 +110,6 @@ bool importListstudent(const string& folderpath,DLinkedList <Student>& student_l
     while(getline(fin, line))
     {
         Student cur_student;
-        cur_student.No = stoi(line);
         fin >> cur_student.ID;
         fin.ignore(1000,'\n');
         getline(fin, cur_student.FirstName);

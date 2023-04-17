@@ -18,6 +18,4 @@ struct Semester
     // add a course to list of course above
 };
 
-void Delete_A_Course();
-
 #endif
