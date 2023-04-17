@@ -19,7 +19,7 @@ using namespace std;
 #define RIGHT 77
 #define DOWN 80
 
-void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop){
+void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop, User &Who, bool &is_student){
     bool Menu = true;
     bool Login = false;
     bool GetPass = false;
@@ -65,7 +65,7 @@ void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop){
         clicked = true;
         UserID = UserInput.getText();
         PasswordID = PasswordInput.getText();
-        Checking(UserID,PasswordID,isLogin,ID,Stop);
+        Checking(UserID,PasswordID,isLogin,ID,Stop,Who,is_student);
         is_login = isLogin;
     });
     LoginScreenButton.addButton(EnterButton);
@@ -101,7 +101,7 @@ void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop){
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
                     UserID = UserInput.getText();
                     PasswordID = PasswordInput.getText();
-                    Checking(UserID,PasswordID,isLogin,ID,Stop);
+                    Checking(UserID,PasswordID,isLogin,ID,Stop,Who,is_student);
                     is_login = isLogin;
                     clicked = true;
                 }

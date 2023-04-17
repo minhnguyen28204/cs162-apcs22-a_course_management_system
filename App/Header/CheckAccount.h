@@ -1,5 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Student.h"
+#include "User.h"
 
-void Checking(string User, string Password, bool &isLogin, int &id, bool &Stop);
+void Checking(string user, string Password, bool &isLogin, int &id, bool &Stop, User &Who, bool &is_student);

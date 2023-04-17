@@ -75,6 +75,7 @@
 		<Unit filename="Function/User.cpp" />
 		<Unit filename="Function/VoidOfStaff.cpp" />
 		<Unit filename="Function/VoidOfUser.cpp" />
+		<Unit filename="Function/VoidOfYear.cpp" />
 		<Unit filename="Function/year.cpp" />
 		<Unit filename="Header/AcademicMainMenu.h" />
 		<Unit filename="Header/ChangePass.h" />
@@ -112,6 +113,7 @@
 		<Unit filename="SFML Function/Button.h" />
 		<Unit filename="SFML Function/ClickableText.cpp" />
 		<Unit filename="SFML Function/ClickableText.hpp" />
+		<Unit filename="SFML Function/DropdownBox.h" />
 		<Unit filename="SFML Function/ListOfText.cpp" />
 		<Unit filename="SFML Function/ListOfText.hpp" />
 		<Unit filename="SFML Function/PasswordField.hpp" />

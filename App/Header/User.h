@@ -7,12 +7,12 @@ using namespace std;
 
 struct User
 {
-    int ID;
+    string ID;
 	string FirstName;
 	string LastName;
 	int Gender;
 	string dob;
-	long long Social_ID;
+	string Social_ID;
     bool IsStudent;
 	inline int operator == (const User& other) {
 		return (ID == other.ID);

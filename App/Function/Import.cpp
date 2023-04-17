@@ -23,9 +23,9 @@ bool importListyear(const string& folderpath, DLinkedList <Year> &year_list)
             return false;
         if(!importListsemester(yearpath,new_year.sem_list))
             return false;
-        year_list.push_descending(new_year);  
+        year_list.push_descending(new_year);
     }
-     
+
     fin.close();
     return true;
 }
@@ -79,7 +79,7 @@ bool importListcourse(const string& folderpath,DLinkedList <Course> &course_list
 
     string line;
     while(getline(fin,line))
-    {    
+    {
         Course cur_course;
         cur_course.ID = line;
         getline(fin, cur_course.course_name);

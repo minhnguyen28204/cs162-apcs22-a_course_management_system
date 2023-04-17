@@ -26,9 +26,9 @@ struct Course
     void Import_Scoreboard(); // Import from CSV file
     void view_scoreboard(); // if staff puplished, student can see it
     inline int operator == (const Course &other){
-        return (course_name==other.course_name);
+        return (ID == other.ID && class_name == other.class_name);
     }
-    bool operator>(const Course& other) const
+    bool operator > (const Course& other) const
     {
         return course_name > other.course_name;
     }

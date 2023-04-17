@@ -2,4 +2,4 @@
 #include <fstream>
 using namespace std;
 
-bool ChangeUserPass(int ID, string curpass, string newpass);
+bool ChangeUserPass(string ID, string curpass, string newpass);

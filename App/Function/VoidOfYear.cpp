@@ -1,7 +1,7 @@
 #include "VoidOfYear.h"
 bool CreateNewYear(DLinkedList<Year> &ListYear, Year &NewYear){
     if (ListYear.GetByValue(NewYear)!=nullptr) return false;
-    ListYear.push(NewYear);
+    ListYear.push_descending(NewYear);
     return true;
 }
 bool AddClass(Year &CurYear, Class &CurClass){
