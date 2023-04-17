@@ -1,4 +1,5 @@
 #include "VoidOfStaff.h"
+#include "VoidOfStudent.h"
 
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
@@ -14,7 +15,7 @@ bool Add_A_Course(Semester& sem, Course& cou)
     return true;
 }
 
-bool QInputStuInCourse(const string& filename,Course& cur_course)
+bool QInputStuInCourse(const string& filename,Course& cur_course, const string& folderpath)
 {
     ifstream fin(filename);
     if(!fin.is_open()) return false;
@@ -31,57 +32,42 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
-        cur_student.ID=stoi(id);
+        cur_student.ID= id ;
         cur_student.FirstName=FName;
         cur_student.LastName=LName;
         cur_student.Gender=stoi(Gen);
         cur_student.dob=dofb;
-        cur_student.Social_ID=stoll(Soc_ID);
+        cur_student.Social_ID= Soc_ID ;
         if(cur_course.stu_list.GetByValue(cur_student)) continue;
         cur_course.stu_list.push(cur_student);
+        if(!UpdateStudentAccount(cur_student, folderpath)) return false;
     }
     fin.close();
     return true;
 }
 
-void updateStudentAccount(Student& stu, string& folderpath)
+bool ExportToCSV(Course& cou, const string& filename)
 {
-    ofstream fout(folderpath + "/" + stu.ID + ".dat");
-    if (!fout.is_open()) return;
-    int len = stu.dob.length();
-    string pass(len, ' '); // Initialize the pass string with the same length as dob
-    int count = 0;
-    for (int i = 0; i < len; ++i)
-    {
-        if (stu.dob[i] != '/')
-        {
-            pass[count] = stu.dob[i];
-            count++;
-        }
-    }
-    fout << pass;
-    fout.close();
-}
-
-bool UpdateDataStudent(Student& stu, const string& folderpath)
-{
-    string filename = folderpath + '/' + "UserData.txt";
-    ofstream fout(filename, ios::app);
+    ofstream fout(filename);
     if(!fout.is_open()) return false;
-
-    fout << stu.ID << ' '
-        << stu.FirstName << ' '
-        << stu.LastName << ' '
-        << stu.Gender << ' '
-        << stu.dob << ' '
-        << stu.Social_ID << '\n';
-
+    string line = "No,ID,FirstName,LastName,TotalMark,FinalMark,MidtermMark,OtherMark\n";
+    fout << line;
+    DLLNode<Student> *cur = cou.stu_list.Head;
+    int no = 1;
+    while(cur)
+    {
+        fout << no << ','
+            << cur->data.ID << ','
+            << cur->data.FirstName << ','
+            << cur->data.LastName << ',' << endl;
+        no++;
+        cur = cur->pNext;
+    }
     fout.close();
     return true;
 }
-
-
-bool ScoreCSV(const string folderpath, DLinkedList<Score>& sco_list) {
+  
+bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist) {
 
     ifstream fin(folderpath);
     if (!fin.is_open()) return false;
@@ -102,13 +88,12 @@ bool ScoreCSV(const string folderpath, DLinkedList<Score>& sco_list) {
         fin >> cur_score.other_mark;
         fin.ignore(1000,'\n');
 
-        sco_list.push(cur_score);
+        new_scorelist.push(cur_score);
     }
     fin.close();
+    
+    Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
+    CurCou.score_list.Delete();
+    CurCou.score_list.Head = new_scorelist.Head;
     return true;
 }
-
-
-
-
-

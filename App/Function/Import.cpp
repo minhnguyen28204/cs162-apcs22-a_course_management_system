@@ -23,9 +23,9 @@ bool importListyear(const string& folderpath, DLinkedList <Year> &year_list)
             return false;
         if(!importListsemester(yearpath,new_year.sem_list))
             return false;
-        year_list.push_descending(new_year);
+        year_list.push_descending(new_year);  
     }
-
+     
     fin.close();
     return true;
 }
@@ -79,7 +79,7 @@ bool importListcourse(const string& folderpath,DLinkedList <Course> &course_list
 
     string line;
     while(getline(fin,line))
-    {
+    {    
         Course cur_course;
         cur_course.ID = line;
         getline(fin, cur_course.course_name);
@@ -110,15 +110,13 @@ bool importListstudent(const string& folderpath,DLinkedList <Student>& student_l
     while(getline(fin, line))
     {
         Student cur_student;
-        fin >> cur_student.ID;
-        fin.ignore(1000,'\n');
+        cur_student.ID = line;
         getline(fin, cur_student.FirstName);
         getline(fin, cur_student.LastName);
         fin >> cur_student.Gender;
         fin.ignore(1000, '\n');
         getline(fin, cur_student.dob);
-        fin >> cur_student.Social_ID;
-        fin.ignore(1000, '\n');
+        getline(fin, cur_student.Social_ID);
         student_list.push(cur_student);
     }
     fin.close();
@@ -135,9 +133,7 @@ bool importScoreboard(const string folderpath, DLinkedList <Score>& sco_list)
     while (getline(fin, line))
     {
         Score cur_score;
-        cur_score.No = stoi(line);
-        fin >> cur_score.stu_id;
-        fin.ignore(1000, '\n');
+        cur_score.stu_id = line;
         getline(fin, cur_score.first_name);
         getline(fin, cur_score.last_name);
         fin >> cur_score.tot_mark;

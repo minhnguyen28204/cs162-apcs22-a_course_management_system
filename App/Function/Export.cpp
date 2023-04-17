@@ -17,9 +17,10 @@ bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
     DLLNode <Year> *cur = year_list.Head;
     while(cur)
     {
-        fout << cur->data.IDyear << endl;
+        fout << cur->data.IDyear;
+        if(cur->pNext) fout << '\n';
         string yf_path = folder_path + "/" + to_string(cur->data.IDyear) + "-" + to_string(cur->data.IDyear + 1);
-
+        
         struct stat db;
         if(stat(yf_path.c_str(), &db) != 0)
         if(mkdir(yf_path.c_str()) == -1) return false;
@@ -54,13 +55,15 @@ bool Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list
     {
         fout << cur->data.IDsemester << '\n';
         fout << cur->data.start_day << '\n';
-        fout << cur->data.end_day << '\n';
+        fout << cur->data.end_day;
+        if(cur->pNext) fout << '\n';
+
         string sf_path = yf_path + "/semester" + to_string(cur->data.IDsemester);
 
         struct stat db;
         if(stat(sf_path.c_str(), &db) != 0)
         if(mkdir(sf_path.c_str()) == -1) return false;
-
+        
         if(!Save_Courses(sf_path, cur->data.course_list)) return false;
         cur = cur->pNext;
     }
@@ -76,9 +79,11 @@ bool Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
 
     while(cur)
     {
-        fout << cur->data.class_name << endl;
-        string cf_name = yf_path + "/" + cur->data.class_name;
+        fout << cur->data.class_name;
+        if(cur->pNext) fout << '\n';
 
+        string cf_name = yf_path + "/" + cur->data.class_name;
+        
         struct stat db;
         if(stat(cf_name.c_str(), &db) != 0)
         if(mkdir(cf_name.c_str()) == -1) return false;
@@ -104,7 +109,8 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
         fout << cur->data.LastName << '\n';
         fout << cur->data.Gender << '\n';
         fout << cur->data.dob << '\n';
-        fout << cur->data.Social_ID << '\n';
+        fout << cur->data.Social_ID;
+        if(cur->pNext) fout << '\n';
         cur = cur->pNext;
     }
     fout.close();
@@ -126,14 +132,15 @@ bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
         fout << cur->data.credits_num << '\n';
         fout << cur->data.max_students << '\n';
         fout << cur->data.day_of_week << '\n';
-        fout << cur->data.session << '\n';
-
+        fout << cur->data.session;
+        if(cur->pNext) fout << '\n';
+        
         string course_path = sf_path + "/" + cur->data.ID + "_" + cur->data.class_name;
         struct stat db;
-
+        
         if(stat(course_path.c_str(), &db) != 0)
         if(mkdir(course_path.c_str()) == -1) return false;
-
+        
         if(!Save_Students(course_path, cur->data.stu_list)) return false;
         if(!Save_Scoreboards(course_path, cur->data.score_list)) return false;
         cur = cur->pNext;
@@ -150,16 +157,17 @@ bool Save_Scoreboards(const string& course_path, DLinkedList <Score>& sco_list)
     DLLNode <Score> *cur = sco_list.Head;
     while(cur)
     {
-        fout << cur->data.No << '\n';
         fout << cur->data.stu_id << '\n';
         fout << cur->data.first_name << '\n';
         fout << cur->data.last_name << '\n';
         fout << cur->data.tot_mark << '\n';
         fout << cur->data.fin_mark << '\n';
         fout << cur->data.mid_mark << '\n';
-        fout << cur->data.other_mark << '\n';
+        fout << cur->data.other_mark;
+        if(cur->pNext) fout << '\n';
         cur = cur->pNext;
     }
     fout.close();
     return true;
 }
+

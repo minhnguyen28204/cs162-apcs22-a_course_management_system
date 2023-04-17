@@ -13,7 +13,6 @@ struct User
 	int Gender;
 	string dob;
 	string Social_ID;
-    bool IsStudent;
 	inline int operator == (const User& other) {
 		return (ID == other.ID);
 	}

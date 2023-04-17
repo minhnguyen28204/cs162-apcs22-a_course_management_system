@@ -6,5 +6,6 @@
 bool CreateNewYear(DLinkedList<Year> &ListYear, Year &NewYear);
 bool AddClass(Year &CurYear, Class &CurClass);
 bool AddStudent(Class &CurClass, Student &CurStudent);
-bool QuickInputClass(const std::string& folderpath,Class &CurClass);
+bool UpdateStudentAccount(Student& stu, const string& folderpath);
+bool QuickInputClass(const string& filename,Class &CurClass, const string& folderpath);
 
