@@ -1,5 +1,7 @@
+#ifndef VOID_OF_STUDENT_CPP
+#define VOID_OF_STUDENT_CPP
 #include "VoidOfStudent.h"
-void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore ){
+void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
    Number_Of_Credits = 0;
    TotalScore = 0;
    ListCourse =  View_Course(CurStudent,IDYear,IDSem,ListYear);
@@ -62,3 +64,4 @@ void Update(int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score>
         Cur=Cur->pNext;
     }
 }
+#endif // VOID_OF_STUDENT_CPP
