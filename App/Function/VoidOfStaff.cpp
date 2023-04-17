@@ -45,22 +45,23 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
     return true;
 }
 
-bool UpdateStudentAccount(Student& stu, const string& folderpath)
+bvoid updateStudentAccount(Student& stu, string& folderpath)
 {
-    string filename = folderpath + "/User/" + to_string(stu.ID) + ".dat";
-    ofstream fout(filename);
-    if (!fout.is_open()) return false;
-
+    ofstream fout(folderpath + "/" + stu.ID + ".dat");
+    if (!fout.is_open()) return;
     int len = stu.dob.length();
-    string pass = "";
+    string pass(len, ' '); // Initialize the pass string with the same length as dob
+    int count = 0;
     for (int i = 0; i < len; ++i)
     {
-        if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
+        if (stu.dob[i] != '/')
+        {
+            pass[count] = stu.dob[i];
+            count++;
+        }
     }
-
     fout << pass;
     fout.close();
-    return true;
 }
 
 bool UpdateDataStudent(Student& stu, const string& folderpath)
@@ -81,7 +82,32 @@ bool UpdateDataStudent(Student& stu, const string& folderpath)
 }
 
 
+bool ScoreCSV(const string folderpath, DLinkedList<Score>& sco_list) {
+ 
+    ifstream fin(folderpath);
+    if (!fin.is_open()) return false;
 
+    string line;
+    getline(fin, line); // skip header line
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string field;
+        Score cur_score;
+        getline(ss, field, ',');
+        getline(ss, cur_score.stu_id, ',');
+        getline(ss, cur_score.first_name, ',');
+        getline(ss, cur_score.last_name, ',');
+        fin >> cur_score.tot_mark;
+        fin >> cur_score.fin_mark;
+        fin >> cur_score.mid_mark;
+        fin >> cur_score.other_mark;
+        fin.ignore(1000,'\n');
+        
+        sco_list.push(cur_score);
+    }
+    fin.close();
+    return true;
+}
 
 
 
