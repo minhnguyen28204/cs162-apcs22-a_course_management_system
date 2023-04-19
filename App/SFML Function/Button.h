@@ -6,7 +6,7 @@ class Button : public sf::Drawable, public sf::Transformable
 {
 public:
     Button(){}
-    Button(sf::Sprite sp, unsigned int Size, float x, float y, float width, float height, const std::string& text, const std::function<void()>& onClick)
+    Button(sf::Sprite sp, unsigned int Size, float x, float y, float width, float height, const std::string text, const std::function<void()>& onClick)
     {
         // Load the hover image
         image = sp;
@@ -54,6 +54,37 @@ public:
         }
     }
 
+    void SetFunction(const std::function<void()>& onClick){
+        onClick_ = std::function<void()>(onClick);
+    }
+
+    void SetDetail(sf::Sprite sp, unsigned int Size, float x, float y, float width, float height){
+        // Load the hover image
+        image = sp;
+        image.setPosition(x-50,y);
+
+        // Load the font
+        font_.loadFromFile("resources/font.ttf");
+
+        // Create the rectangle shape
+        shape_.setPosition(x, y);
+        shape_.setSize(sf::Vector2f(width, height));
+        shape_.setFillColor(sf::Color::White);
+        shape_.setOutlineThickness(2);
+        shape_.setOutlineColor(sf::Color::Black);
+
+        text_.setFont(font_);
+        text_.setCharacterSize(Size);
+        text_.setFillColor(sf::Color::Black);
+        sf::FloatRect textBounds = text_.getLocalBounds();
+        text_.setOrigin(textBounds.left + textBounds.width / 2, textBounds.top + textBounds.height / 2);
+        text_.setPosition(x + width / 2, y + height / 2);
+    }
+
+    void ChangeText(std::string &text){
+        text_.setString(text);
+    }
+
     void onClick()
     {
         onClick_();
@@ -79,6 +110,10 @@ class ButtonLibrary
 {
 public:
     ButtonLibrary() : buttonCount_(0) {}
+
+    void ResetSize(){
+        buttonCount_ = 0;
+    }
 
     void addButton(const Button& button)
     {

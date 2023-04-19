@@ -110,15 +110,12 @@ bool importListstudent(const string& folderpath,DLinkedList <Student>& student_l
     while(getline(fin, line))
     {
         Student cur_student;
-        fin >> cur_student.ID;
-        fin.ignore(1000,'\n');
-        getline(fin, cur_student.FirstName);
-        getline(fin, cur_student.LastName);
+        cur_student.ID = line;
+        fin >> cur_student.FirstName;
+        fin >> cur_student.LastName;
         fin >> cur_student.Gender;
-        fin.ignore(1000, '\n');
-        getline(fin, cur_student.dob);
+        fin >> cur_student.dob;
         fin >> cur_student.Social_ID;
-        fin.ignore(1000, '\n');
         student_list.push(cur_student);
     }
     fin.close();

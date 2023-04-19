@@ -31,8 +31,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
-        cur_student.No=stoi(no);
-        cur_student.ID=stoi(id);
+        cur_student.ID = id;
         cur_student.FirstName=FName;
         cur_student.LastName=LName;
         cur_student.Gender=stoi(Gen);
@@ -47,7 +46,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
 
 bool UpdateStudentAccount(Student& stu, const string& folderpath)
 {
-    string filename = folderpath + "/User/" + to_string(stu.ID) + ".dat";
+    string filename = folderpath + "/User/" + stu.ID + ".dat";
     ofstream fout(filename);
     if (!fout.is_open()) return false;
 
@@ -75,7 +74,7 @@ bool UpdateDataStudent(Student& stu, const string& folderpath)
         << stu.Gender << ' '
         << stu.dob << ' '
         << stu.Social_ID << '\n';
-    
+
     fout.close();
     return true;
 }

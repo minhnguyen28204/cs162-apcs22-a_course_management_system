@@ -100,10 +100,15 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
     while(cur)
     {
         fout << cur->data.ID << '\n';
+
         fout << cur->data.FirstName << '\n';
+
         fout << cur->data.LastName << '\n';
+
         fout << cur->data.Gender << '\n';
+
         fout << cur->data.dob << '\n';
+
         fout << cur->data.Social_ID << '\n';
         cur = cur->pNext;
     }
