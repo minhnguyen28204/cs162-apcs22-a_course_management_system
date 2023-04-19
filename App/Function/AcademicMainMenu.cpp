@@ -48,6 +48,7 @@ Vector<int> all_year_id;
 int ID_chosen_year;
 int chose_year_curpage;
 Vector<ButtonLibrary> chose_year_page;
+ButtonLibrary viewclass_vecbutton;
 
 //ViewClass2
 ButtonLibrary viewclass2_vecbutton;
@@ -229,7 +230,10 @@ void DrawWindow(sf::RenderWindow &window){
 
     if (is_MainMenu) Page[curpage].draw(window);
 
-    if (is_ViewClass) chose_year_page[chose_year_curpage].draw(window);
+    if (is_ViewClass){
+        if (chose_year_page.getSize()) chose_year_page[chose_year_curpage].draw(window);
+        viewclass_vecbutton.draw(window);
+    }
     else if (is_ViewClass2) {
         if (chose_class_page.getSize()) chose_class_page[chose_class_curpage].draw(window);
         viewclass2_vecbutton.draw(window);
@@ -323,8 +327,10 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
 
     if (is_MainMenu) Page[curpage].handleEvent(event);
 
-    if (is_ViewClass) chose_year_page[chose_year_curpage].handleEvent(event);
-
+    if (is_ViewClass){
+        if (chose_year_page.getSize()) chose_year_page[chose_year_curpage].handleEvent(event);
+        viewclass_vecbutton.handleEvent(event);
+    }
     else if (is_ViewClass2){
         if (chose_class_page.getSize()) chose_class_page[chose_class_curpage].handleEvent(event);
         viewclass2_vecbutton.handleEvent(event);
@@ -650,9 +656,6 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
                 UpperBound += 100;
                 i++;
             }
-            CurPage.addButton(BackPage);
-            CurPage.addButton(NextPage);
-            CurPage.addButton(addschoolyear_back);
             chose_year_page.push_back(CurPage);
         }
         chose_year_curpage = 0;
@@ -870,6 +873,11 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
 
     MainMenu2.addButton(BackPage);
     MainMenu2.addButton(NextPage);
+
+    //view class
+    viewclass_vecbutton.addButton(addschoolyear_back);
+    viewclass_vecbutton.addButton(BackPage);
+    viewclass_vecbutton.addButton(NextPage);
 
     //view class 2
     viewclass2_vecbutton.addButton(BackPage);
