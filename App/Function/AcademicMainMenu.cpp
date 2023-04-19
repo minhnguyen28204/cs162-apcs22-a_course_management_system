@@ -27,12 +27,14 @@ ButtonLibrary MainMenu2;
 bool is_MainMenu;
 bool is_ViewClass;
 bool is_ViewClass2;
+bool is_ViewClass3;
 bool is_ViewCourse;
 bool is_AddSchoolYear;
 bool is_AddClass;
 bool is_AddCourse;
 bool is_AddSemester;
 bool is_AddStudent;
+bool is_AddStudentToCourse;
 bool is_AddIndividual;
 bool is_AddFromCSV;
 bool is_ChoseClass;
@@ -49,6 +51,14 @@ Vector<ButtonLibrary> chose_year_page;
 
 //ViewClass2
 ButtonLibrary viewclass2_vecbutton;
+
+//ViewClass3
+Vector<ButtonLibrary> chose_student_page;
+Button CurStu;
+Vector<string> all_student_name;
+int ID_chosen_student;
+int chose_student_curpage;
+ButtonLibrary viewclass3_vecbutton;
 
 //Add school year
 sf::Text addschoolyear_text;
@@ -103,6 +113,14 @@ int ID_chosen_class;
 int chose_class_curpage;
 Vector<ButtonLibrary> chose_class_page;
 Button CurClass;
+
+//Chose course
+Vector<string> all_course_id;
+int ID_chosen_course;
+int chose_course_curpage;
+Vector<ButtonLibrary> chose_course_page;
+Button CurCourse;
+ButtonLibrary chosecourse_vecbutton;
 
 //Add individual
 sf::Text addstudent_ID;
@@ -212,9 +230,13 @@ void DrawWindow(sf::RenderWindow &window){
     if (is_MainMenu) Page[curpage].draw(window);
 
     if (is_ViewClass) chose_year_page[chose_year_curpage].draw(window);
-    if (is_ViewClass2) {
+    else if (is_ViewClass2) {
         if (chose_class_page.getSize()) chose_class_page[chose_class_curpage].draw(window);
         viewclass2_vecbutton.draw(window);
+    }
+    else if (is_ViewClass3){
+        if (chose_student_page.getSize()) chose_student_page[chose_student_curpage].draw(window);
+        viewclass3_vecbutton.draw(window);
     }
 
     if (is_AddSchoolYear){
@@ -286,6 +308,10 @@ void DrawWindow(sf::RenderWindow &window){
         addstudent_folderpath_input.draw(window);
     }
 
+    if (is_AddStudentToCourse && !is_AddStudent && !is_AddIndividual && !is_AddFromCSV){
+        if (chose_course_page.getSize()) chose_course_page[chose_course_curpage].draw(window);
+        chosecourse_vecbutton.draw(window);
+    }
     window.display();
 }
 
@@ -299,9 +325,14 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
 
     if (is_ViewClass) chose_year_page[chose_year_curpage].handleEvent(event);
 
-    if (is_ViewClass2){
+    else if (is_ViewClass2){
         if (chose_class_page.getSize()) chose_class_page[chose_class_curpage].handleEvent(event);
         viewclass2_vecbutton.handleEvent(event);
+    }
+
+    else if (is_ViewClass3){
+        if (chose_student_page.getSize()) chose_student_page[chose_student_curpage].handleEvent(event);
+        viewclass3_vecbutton.handleEvent(event);
     }
 
     if (is_AddSchoolYear){
@@ -376,6 +407,54 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
     else if (is_AddStudent && !is_ChoseClass){
         addstudent_vecbutton.handleEvent(event);
     }
+    if (is_AddStudentToCourse && !is_AddStudent && !is_AddIndividual && !is_AddFromCSV){
+        if (chose_course_page.getSize()) chose_course_page[chose_course_curpage].handleEvent(event);
+        chosecourse_vecbutton.handleEvent(event);
+    }
+}
+
+void ProcessListOfStudent(){
+    DLLNode <Year> *cur = ListYear.Head;
+    while (cur){
+        if (cur->data.IDyear==all_year_id[ID_chosen_year]) break;
+        cur = cur->pNext;
+    }
+    DLLNode <Class> *Cur = cur->data.classes_list.Head;
+    while (Cur){
+        if (Cur->data.class_name==all_class_name[ID_chosen_class]) break;
+        Cur = Cur->pNext;
+    }
+    DLLNode <Student> *head = Cur->data.stu_list.Head;
+    while (all_student_name.getSize()) all_student_name.pop_back();
+    while (chose_student_page.getSize()) chose_student_page.pop_back();
+    int cur_num = 0;
+    while (head){
+        all_student_name.push_back(head->data.ID + " - " + head->data.FirstName + " " + head->data.LastName);
+        cur_num++;
+        head = head->pNext;
+    }
+    int i = 0;
+    while (i < cur_num){
+        ButtonLibrary CurPage;
+        int cnt = 4;
+        int UpperBound = 205;
+        while (cnt && i < cur_num){
+            CurStu.SetFunction([=](){
+                ID_chosen_student = i;
+                is_ViewClass3 = false;
+                //is_ViewStudent = true;
+                //Continue here
+            });
+            CurStu.ChangeText(all_student_name[i]);
+            CurStu.SetDetail(Non,24,400,UpperBound,400,40);
+            CurPage.addButton(CurStu);
+            cnt--;
+            UpperBound+=100;
+            i++;
+        }
+        chose_student_page.push_back(CurPage);
+    }
+    chose_student_curpage = 0;
 }
 
 void ProcessListOfClass(){
@@ -404,8 +483,9 @@ void ProcessListOfClass(){
             CurClass.SetFunction([=](){
                 if (!is_MainMenu){
                     ID_chosen_class = i;
-                    //is_ViewClass2 = false;
-                    //is_ViewClass3 = true;
+                    is_ViewClass2 = false;
+                    is_ViewClass3 = true;
+                    ProcessListOfStudent();
                 }
             });
             CurClass.ChangeText(all_class_name[i]);
@@ -453,10 +533,30 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     setText(addclass_classname,"Class name",_Font,20,100,360,sf::Color::Black);
 
     //preprocess
+    //Set all scene to default
     is_MainMenu = true;
+    is_ViewClass = false;
+    is_ViewClass2 = false;
+    is_ViewClass3 = false;
+    is_ViewCourse = false;
+    is_AddSchoolYear = false;
+    is_AddClass = false;
+    is_AddCourse = false;
+    is_AddSemester = false;
+    is_AddStudent = false;
+    is_AddIndividual = false;
+    is_AddFromCSV = false;
+    is_ChoseClass = false;
+    is_AddStudentToCourse = false;
+
+    //Set Back ground and welcome text
     SetBackGround();
     SetwelcomeText(Who);
+
+    //Set text for add school year
     setText(addschoolyear_text,"Enter id school year", _Font, 24, 200, 300, sf::Color::Black);
+
+    //Set text for add semester
     setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
     setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
     setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
@@ -487,11 +587,15 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         if (curpage > 0) curpage--;
         if (chose_class_curpage > 0) chose_class_curpage--;
         if (chose_year_curpage > 0) chose_year_curpage--;
+        if (chose_student_curpage > 0) chose_student_curpage--;
+        if (chose_course_curpage > 0) chose_course_curpage--;
     });
     Button NextPage(cursor,20,950,600,150,50,"Next Page",[&](){
         if (curpage < 1) curpage++;
         if (chose_class_curpage < chose_class_page.getSize()-1) chose_class_curpage++;
         if (chose_year_curpage < chose_year_page.getSize()-1) chose_class_curpage++;
+        if (chose_student_curpage < chose_student_page.getSize()-1) chose_student_curpage++;
+        if (chose_course_curpage < chose_course_page.getSize()-1) chose_course_curpage++;
     });
     Button addsemester_okbutton(Non,24,550,700,100,50,"OK",[&](){
         string cur_sem_id = IDSem.getText();
@@ -680,12 +784,14 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         NS.Gender = stoi(addstudent_Gender_input.getText());
         NS.dob = addstudent_Dob_input.getText();
         NS.Social_ID = addstudent_Social_input.getText();
-        DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
-        while (Cur){
-            if (Cur->data.class_name == all_class_name[ID_chosen_class]) break;
-            Cur = Cur->pNext;
+        if (!is_AddStudentToCourse){
+            DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
+            while (Cur){
+                if (Cur->data.class_name == all_class_name[ID_chosen_class]) break;
+                Cur = Cur->pNext;
+            }
+            AddStudent(Cur->data,NS);
         }
-        AddStudent(Cur->data,NS);
         is_MainMenu = true;
         is_AddIndividual  = false;
     });
@@ -705,6 +811,47 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_ViewClass2 = false;
         is_ViewClass = true;
     });
+    Button Back_To_Chose_Class(Non,20,105,100,70,50,"Back",[&](){
+        is_ViewClass3 = false;
+        is_ViewClass2 = true;
+    });
+    Button AddNewStudentToCourse(cursor,24,435,350,330,50,"Add student to course",[&](){
+        is_MainMenu = false;
+        is_AddStudentToCourse = true;
+        DLLNode <Course> *Cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
+        while (all_course_id.getSize()) all_course_id.pop_back();
+        while (chose_course_page.getSize()) chose_course_page.pop_back();
+        int i = 0;
+        int cur_num = 0;
+        while (Cur){
+            all_course_id.push_back(Cur->data.ID + " - " + Cur->data.course_name);
+            Cur = Cur->pNext;
+            cur_num++;
+        }
+        while (i < cur_num){
+            ButtonLibrary CurPage;
+            int cnt = 4;
+            int UpperBound = 205;
+            while (cnt && i < cur_num){
+                CurCourse.SetFunction([=](){
+                    ID_chosen_course = i;
+                    is_AddStudent = true;
+                });
+                CurCourse.ChangeText(all_course_id[i]);
+                CurCourse.SetDetail(Non,24,300,UpperBound,600,40);
+                CurPage.addButton(CurCourse);
+                cnt--;
+                UpperBound+=100;
+                i++;
+            }
+            chose_course_page.push_back(CurPage);
+        }
+        chose_course_curpage = 0;
+    });
+    Button Back_From_Chose_Course_To_Main_Menu(Non,20,105,100,70,50,"Back",[&](){
+        is_AddStudentToCourse = false;
+        is_MainMenu = true;
+    });
 
     MainMenu.addButton(ViewClass);
     MainMenu.addButton(ViewCourse);
@@ -714,6 +861,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
 
     MainMenu2.addButton(AddCourses);
     MainMenu2.addButton(AddNewStudent);
+    MainMenu2.addButton(AddNewStudentToCourse);
 
     CheckLogOut.addButton(Logout);
 
@@ -727,6 +875,11 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     viewclass2_vecbutton.addButton(BackPage);
     viewclass2_vecbutton.addButton(NextPage);
     viewclass2_vecbutton.addButton(Back_To_Chose_Year);
+
+    //view class 3
+    viewclass3_vecbutton.addButton(BackPage);
+    viewclass3_vecbutton.addButton(NextPage);
+    viewclass3_vecbutton.addButton(Back_To_Chose_Class);
 
     //add school year
     addschoolyear_vecbutton.addButton(addschoolyear_okbutton);
@@ -756,7 +909,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     });
     Button Back_to_Chose(Non,20,105,100,70,50,"Back",[&](){
         is_AddStudent = false;
-        is_ChoseClass = true;
+        if (!is_AddStudentToCourse) is_ChoseClass = true;
     });
     addstudent_vecbutton.addButton(Back_to_Chose);
     addstudent_vecbutton.addButton(AddIndividualStudent);
@@ -766,6 +919,11 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     addstudent_indi.addButton(Back_from_add);
     //add individual
     addindi_vecbutton.addButton(addstudent_okbutton);
+
+    //add student to course
+    chosecourse_vecbutton.addButton(Back_From_Chose_Course_To_Main_Menu);
+    chosecourse_vecbutton.addButton(NextPage);
+    chosecourse_vecbutton.addButton(BackPage);
 
 
     while (window.isOpen()){

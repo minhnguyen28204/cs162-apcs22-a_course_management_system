@@ -23,6 +23,7 @@ bool importListyear(const string& folderpath, DLinkedList <Year> &year_list)
             return false;
         if(!importListsemester(yearpath,new_year.sem_list))
             return false;
+        if (year_list.GetByValue(new_year)!=nullptr) continue;
         year_list.push_descending(new_year);
     }
 
@@ -107,7 +108,7 @@ bool importListstudent(const string& folderpath,DLinkedList <Student>& student_l
     ifstream fin(student_file);
     if(!fin.is_open()) return false;
     string line;
-    while(getline(fin, line))
+    while(fin >> line)
     {
         Student cur_student;
         cur_student.ID = line;

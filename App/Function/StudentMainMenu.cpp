@@ -9,7 +9,7 @@
 #include "Import.h"
 #include "DoublyLinkedList.hpp"
 #include "ListOfText.hpp"
-#include <vector>
+#include "Vector.h"
 
 using namespace std;
 
@@ -21,7 +21,16 @@ void SetText(sf::Text &m_text, string str, sf::Font& _font, unsigned int Size, f
     m_text.setColor(color);
 }
 
+Vector<string> all_course_name;
+Vector<ButtonLibrary> student_chose_course_page;
+int student_chose_course_curpage;
+Button Student_CurCourse;
+ButtonLibrary viewcourse_vecbutton;
+
 void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
+
+    DLinkedList<Year> ListYear;
+    importData("Information/SystemData",ListYear);
     sf::Texture object;
     object.loadFromFile("Image/MainMenu2.png");
     sf::Texture catPointer;
@@ -55,6 +64,33 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     Button ViewC(Pointer,24,490,255,220,50,"View Courses",[&](){
         MainMenu = false;
         ViewCourse = true;
+        DLLNode <Course> *Cur = View_Course_Default(Who,ListYear);
+        int cur_num = 0;
+        while (Cur){
+            all_course_name.push_back(Cur->data.ID + " - " + Cur->data.course_name);
+            cur_num++;
+            Cur = Cur->pNext;
+        }
+        int i = 0;
+        while (i < cur_num){
+            int UpperBound = 205;
+            int cnt = 4;
+            ButtonLibrary CurPage;
+            while (cnt && i < cur_num){
+                Student_CurCourse.SetFunction([=](){});
+                Student_CurCourse.ChangeText(all_course_name[i]);
+                Student_CurCourse.SetDetail(Nun,24,300,UpperBound,600,40);
+                CurPage.addButton(Student_CurCourse);
+            }
+            student_chose_course_page.push_back(CurPage);
+        }
+        student_chose_course_curpage = 0;
+    });
+    Button BackPage(Pointer,20,100,600,150,50,"Previous Page",[&](){
+        if (student_chose_course_curpage > 0) student_chose_course_curpage--;
+    });
+    Button NextPage(Pointer,20,950,600,150,50,"Next Page",[&](){
+        if (student_chose_course_curpage < student_chose_course_page.getSize()-1) student_chose_course_curpage++;
     });
     Button ViewProfile(Pointer,24,490,360,220,50,"Profile",[&](){
         window.close();
@@ -69,6 +105,8 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     MainButton.addButton(ViewProfile);
     MainButton.addButton(Grade);
     MainButton.addButton(Exit);
+    viewcourse_vecbutton.addButton(BackPage);
+    viewcourse_vecbutton.addButton(NextPage);
 
 
 
@@ -95,6 +133,7 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
         ViewCourse = false;
         ViewGrade = false;
     });
+    viewcourse_vecbutton.addButton(Back);
     Button ChangePassword(Pointer,24,490,150,220,50,"Change password",[&](){
         OldPass.clear_str();
         NewPass.clear_str();
@@ -111,46 +150,6 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     ChangePassButtons.addButton(Back);
     ChangePassButtons.addButton(Enter);
     IsClickedButtons.addButton(OK);
-
-
-
-    //Viewcourse Function
-    sf::Text Title;
-    SetText(Title,"Currently Enrolled Courses",_font,50,290,100,sf::Color::Black);
-
-    DLinkedList<Year> ListOfYear;
-    importData("SystemData",ListOfYear);
-    DLLNode<Course>* Cur = View_Course_Default(Who,ListOfYear);
-    TextList* Page;
-    Page = new TextList[5];
-    int PageSize = 0;
-    while (Cur){
-        int cnt = 4;
-        bool ok = false;
-        while (cnt && Cur){
-            Page[PageSize].addText("- " + Cur->data.course_name + "-" + Cur->data.ID + "_" + Cur->data.class_name,_font,24,sf::Color::Black);
-            Page[PageSize].addText("Teacher: " + Cur->data.teacher_name,_font,24,sf::Color::Black);
-            Page[PageSize].addText("",_font,24,sf::Color::Black);
-            Cur = Cur->pNext;
-            cnt--;
-        }
-        PageSize++;
-    }
-    int cur_page = 0;
-    Button PrevPage(Nun,14,100,350,100,50,"Previous Page",[&](){
-        if (cur_page>=1){
-            cur_page--;
-        }
-    });
-    Button NextPage(Nun,14,1000,350,100,50,"Next Page",[&](){
-        if (cur_page < PageSize-1){
-            cur_page++;
-        }
-    });
-    ButtonLibrary ViewCButton;
-    ViewCButton.addButton(Back);
-    ViewCButton.addButton(PrevPage);
-    ViewCButton.addButton(NextPage);
 
 
 
@@ -183,7 +182,8 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
                 }
             }
             if (ViewCourse){
-                ViewCButton.handleEvent(event);
+                if (student_chose_course_page.getSize()) student_chose_course_page[student_chose_course_curpage].handleEvent(event);
+                viewcourse_vecbutton.handleEvent(event);
             }
         }
         window.clear();
@@ -209,12 +209,10 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
                 IsClickedButtons.draw(window);
             }
         }
-        else if (ViewCourse){
-            window.draw(Title);
-            ViewCButton.draw(window);
-            Page[cur_page].draw(window,sf::Vector2f(250,210));
+        if (ViewCourse){
+            if (student_chose_course_page.getSize()) student_chose_course_page[student_chose_course_curpage].draw(window);
+            viewcourse_vecbutton.draw(window);
         }
         window.display();
     }
-    delete[] Page;
 }

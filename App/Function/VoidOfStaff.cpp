@@ -57,7 +57,13 @@ bool UpdateStudentAccount(Student& stu, const string& folderpath)
         if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
     }
 
-    fout << pass;
+    fout << pass << '\n';
+    fout << 1 << '\n';
+    fout << stu.FirstName << '\n';
+    fout << stu.LastName << '\n';
+    fout << stu.Gender << '\n';
+    fout << stu.dob << '\n';
+    fout << stu.Social_ID;
     fout.close();
     return true;
 }

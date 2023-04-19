@@ -12,7 +12,7 @@ bool Save_Data(const string& folder_path, DLinkedList <Year>& year_list)
 
 bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
 {
-    ofstream fout(folder_path + "/years.dat");
+    ofstream fout(folder_path + "/years.dat", ios::trunc);
     if(!fout.is_open()) return false;
     DLLNode <Year> *cur = year_list.Head;
     while(cur)

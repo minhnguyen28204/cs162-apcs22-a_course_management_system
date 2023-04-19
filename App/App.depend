@@ -610,7 +610,7 @@
 1679733916 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\scrollablewindow.cpp
 	"ScrollableWindow.hpp"
 
-1681741117 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\import.cpp
+1681904130 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\import.cpp
 	"Import.h"
 
 1679985408 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\user.cpp
@@ -689,7 +689,7 @@
 
 1679985408 e:\cs162\project\cs162-apcs22-a_course_management_system\app\login\loginscreen.h
 
-1681742552 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\export.cpp
+1681902222 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\export.cpp
 	"Export.h"
 
 1680948515 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\export.h
@@ -750,7 +750,7 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1681184223 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+1681908126 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
 	"StudentMainMenu.h"
 	"TextBox.h"
 	"TextField.h"
@@ -762,7 +762,7 @@
 	"Import.h"
 	"DoublyLinkedList.hpp"
 	"ListOfText.hpp"
-	<vector>
+	"Vector.h"
 
 1680948515 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\studentmainmenu.h
 	<SFML/Graphics.hpp>
@@ -804,7 +804,7 @@
 1680949964 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.cpp
 	"ListOfText.hpp"
 
-1681746100 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\academicmainmenu.cpp
+1681906156 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\academicmainmenu.cpp
 	"AcademicMainMenu.h"
 	"TextField.h"
 	"TextBox.h"
@@ -823,7 +823,7 @@
 	"User.h"
 	<string>
 
-1681723341 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstaff.cpp
+1681906756 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstaff.cpp
 	"VoidOfStaff.h"
 
 1681722984 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofstaff.h
@@ -1093,8 +1093,9 @@
 	<SFML/Graphics.hpp>
 	<vector>
 
-1681742378 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofyear.cpp
+1681906384 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofyear.cpp
 	"VoidOfYear.h"
+	"VoidOfStaff.h"
 
 1681206443 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstudent.cpp
 	"VoidOfStudent.h"
