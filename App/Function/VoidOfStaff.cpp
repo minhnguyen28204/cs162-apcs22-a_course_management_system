@@ -3,6 +3,7 @@
 
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
+    if(!ValidSemester(sem.IDsemester)) return false;
     if(ye.sem_list.GetByValue(sem)) return false;
     ye.sem_list.push_descending(sem);
     return true;
@@ -10,12 +11,13 @@ bool Add_A_Semester(Year& ye, Semester& sem)
 
 bool Add_A_Course(Semester& sem, Course& cou)
 {
+    
     if(sem.course_list.GetByValue(cou)) return false;
     sem.course_list.push(cou);
     return true;
 }
 
-bool QInputStuInCourse(const string& filename,Course& cur_course, const string& folderpath)
+bool QInputStuInCourse(const string& filename,Course& cur_course)
 {
     ifstream fin(filename);
     if(!fin.is_open()) return false;
@@ -33,11 +35,17 @@ bool QInputStuInCourse(const string& filename,Course& cur_course, const string& 
         getline(ss, Soc_ID, ',');
         Student cur_student;
         cur_student.ID= id ;
+        if(!CheckID(cur_student.ID)) continue;
         cur_student.FirstName=FName;
+        if(!CheckName(cur_student.FirstName)) continue;
         cur_student.LastName=LName;
+        if(!CheckName(cur_student.LastName)) continue;
         cur_student.Gender=stoi(Gen);
+        if(!isnum(Gen[0])) continue;
         cur_student.dob=dofb;
+        if(!CheckDOB(cur_student.dob)) continue;
         cur_student.Social_ID= Soc_ID ;
+        if(!CheckID(cur_student.Social_ID)) continue;
         if(cur_course.stu_list.GetByValue(cur_student)) continue;
         cur_course.stu_list.push(cur_student);
     }

@@ -59,14 +59,20 @@ bool QuickInputClass(const string& filename,Class &CurClass, const string& folde
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
-        cur_student.ID= id;
+        cur_student.ID= id ;
+        if(!CheckID(cur_student.ID)) continue;
         cur_student.FirstName=FName;
+        if(!CheckName(cur_student.FirstName)) continue;
         cur_student.LastName=LName;
+        if(!CheckName(cur_student.LastName)) continue;
         cur_student.Gender=stoi(Gen);
+        if(!isnum(Gen[0])) continue;
         cur_student.dob=dofb;
-        cur_student.Social_ID = Soc_ID;
+        if(!CheckDOB(cur_student.dob)) continue;
+        cur_student.Social_ID= Soc_ID ;
+        if(!CheckID(cur_student.Social_ID)) continue;
         AddStudent(CurClass,cur_student);
-        if(!UpdateStudentAccount(cur_student, folderpath)) return false;
+        if(!UpdateStudentAccount(cur_student, folderpath)) return continue;
     }
     fin.close();
     return true;
