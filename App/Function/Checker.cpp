@@ -128,8 +128,6 @@ void delspace(string& fullname)
     if(fullname[0] == ' ') fullname.erase(0, 1);
 }
 
-
-
 bool CheckFullName(string& fullname)
 {
     int len = fullname.length();
@@ -164,4 +162,17 @@ bool CheckSession(string& sess)
 {
     if(sess.compare("S1") != 0 && sess.compare("S2") != 0 && sess.compare("S3") != 0 && sess.compare("S4") != 0) return false;
     return true;
+}
+
+bool CheckGrade(string& grade)
+{
+    int len = grade.length();
+    for(int i = 0; i < len; ++i)
+    {
+        if(!isnum(grade[i]) && grade[i] != '.') return false;
+    }
+
+    double dgrade = stof(grade);
+    if(dgrade >= 0 && dgrade <= 10) return true;
+    return false;
 }

@@ -17,6 +17,4 @@ void delspace(string& fullname);
 bool CheckFullName(string& fullname);
 bool CheckDOW(string& dow);
 bool CheckSession(string& sess);
-
-
-
+bool CheckGrade(string& grade);

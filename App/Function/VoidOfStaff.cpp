@@ -37,9 +37,9 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         cur_student.ID= id ;
         if(!CheckID(cur_student.ID)) continue;
         cur_student.FirstName=FName;
-        if(!CheckName(cur_student.FirstName)) continue;
+        if(!CheckFullName(cur_student.FirstName)) continue;
         cur_student.LastName=LName;
-        if(!CheckName(cur_student.LastName)) continue;
+        if(!CheckFullName(cur_student.LastName)) continue;
         cur_student.Gender=stoi(Gen);
         if(!isnum(Gen[0])) continue;
         cur_student.dob=dofb;
@@ -87,20 +87,23 @@ bool ImpScoreCSV(const string filepath, DLinkedList<Score>& sco_list) {
         Score cur_score;
         getline(ss, field, ',');
         getline(ss, cur_score.stu_id, ',');
+        if(!CheckID(cur_score.stu_id)) continue;
         getline(ss, cur_score.first_name, ',');
+        if(!CheckFullName(cur_score.first_name)) continue;
         getline(ss, cur_score.last_name, ',');
+        if(!CheckFullName(cur_score.last_name)) continue;
         getline(ss, line, ',');
-        cur_score.tot_mark = stof(line);
-
+        if(!CheckGrade(line)) cur_score.tot_mark = 0;
+        else cur_score.tot_mark = stof(line);
         getline(ss, line, ',');
-        cur_score.fin_mark = stof(line);
-
+        if(!CheckGrade(line)) cur_score.fin_mark = 0;
+        else cur_score.fin_mark = stof(line);
         getline(ss, line, ',');
-        cur_score.mid_mark = stof(line);
-
+        if(!CheckGrade(line)) cur_score.mid_mark = 0; 
+        else cur_score.mid_mark = stof(line);
         getline(ss, line);
-        cur_score.other_mark = stof(line);
-        
+        if(!CheckGrade(line)) cur_score.other_mark = 0;
+        else cur_score.other_mark = stof(line);   
         sco_list.push(cur_score);
     }
     fin.close();
