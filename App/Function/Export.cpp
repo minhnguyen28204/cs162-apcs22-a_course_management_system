@@ -171,3 +171,14 @@ bool Save_Scoreboards(const string& course_path, DLinkedList <Score>& sco_list)
     return true;
 }
 
+bool RemoveFolderCourse(const string& saved_folder, int year, int sem, string course_id, string class_name)
+{
+    string folderpath = saved_folder + "/" + to_string(year) + "-" + to_string(year + 1) + "/semesters/semester" + to_string(sem) + "/" +course_id + "_" + class_name;
+    string file1 = folderpath + "/students.dat";
+    string file2 = folderpath + "/scoreboard.dat";
+    if(remove(file1.c_str()) != 0) return false;
+    if(remove(file2.c_str()) != 0) return false;
+    if(rmdir(folderpath.c_str()) != 0) return false;
+    return true;
+}
+
