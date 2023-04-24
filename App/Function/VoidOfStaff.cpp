@@ -109,3 +109,27 @@ bool ImpScoreCSV(const string filepath, DLinkedList<Score>& sco_list) {
     fin.close();
     return true;
 }
+
+bool UpdateScoreFinal(DLLNode <Score>& newSco, string x)
+{
+    CheckGrade(x);
+    newSco->data.fin_mark = stof(x);
+}
+
+bool UpdateScoreMidterm(DLLNode <Score>& newSco, string x)
+{
+    CheckGrade(x);
+    newSco->data.mid_mark = stof(x);
+}
+
+bool UpdateScoreTotal(DLLNode <Score>& newSco, string x)
+{
+    CheckGrade(x);
+    newSco->data.tot_mark = stof(x);
+}
+
+bool UpdateScoreOther(DLLNode <Score>& newSco, string x)
+{
+    CheckGrade(x);
+    newSco->data.other_mark = stof(x);
+}
