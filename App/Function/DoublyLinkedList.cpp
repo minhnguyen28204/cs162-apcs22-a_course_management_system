@@ -170,16 +170,24 @@ void DLinkedList<T>::remove(const T &d){
     }
 }
 template < class T >
+void DLinkedList<T>::Reset(){
+    Head=nullptr;
+    ListSize=0;
+}
+template < class T >
 int DLinkedList<T>::size(){
     return ListSize;
 }
 template < class T >
 void DLinkedList<T>::Delete(){
+    if (Head==nullptr) return;
+    if (isEmpty()) return;
     while (!isEmpty()) pop_front();
 
 }
 template < class T >
 DLinkedList<T>::~DLinkedList(){
+    if (Head==nullptr) return;
     if (isEmpty()) return;
     while (!isEmpty()) pop_front();
 }

@@ -109,7 +109,9 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
         fout << cur->data.LastName << '\n';
         fout << cur->data.Gender << '\n';
         fout << cur->data.dob << '\n';
-        fout << cur->data.Social_ID;
+        fout << cur->data.Social_ID << '\n';
+        fout << cur->data.Number_Of_Credits << '\n';
+        fout << cur->data.TotalScore;
         if(cur->pNext) fout << '\n';
         cur = cur->pNext;
     }

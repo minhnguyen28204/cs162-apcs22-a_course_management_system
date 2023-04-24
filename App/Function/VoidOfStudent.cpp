@@ -29,18 +29,19 @@ void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &L
 bool FindStudent(Student *&CurStudent, int IDYear, string StuID, DLinkedList<Year> &ListYear){
     Student tmp;
     tmp.ID = StuID;
-    Year NewYear;
-    NewYear.IDyear = IDYear;
-    DLLNode<Year>* cur = ListYear.GetByValue(NewYear);
-    if (cur == nullptr) return false;
-    DLLNode<Class> *CurClass  = cur->data.classes_list.Head;
-    DLLNode<Student> *CurPointer;
-    while (CurClass){
-        CurPointer = CurClass->data.stu_list.GetByValue(tmp);
-        if (CurPointer!=nullptr){
-            CurStudent = &CurPointer->data;
-            return true;
+    DLLNode<Year>* cur = ListYear.Head;
+    while (cur){
+        DLLNode<Class> *CurClass  = cur->data.classes_list.Head;
+        DLLNode<Student> *CurPointer;
+        while (CurClass){
+            CurPointer = CurClass->data.stu_list.GetByValue(tmp);
+            if (CurPointer!=nullptr){
+                CurStudent = &CurPointer->data;
+                return true;
+            }
+            CurClass = CurClass->pNext;
         }
+        cur=cur->pNext;
     }
     return false;
 }
@@ -52,14 +53,22 @@ void Update(int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score>
     DLLNode<Score> *Cur = OldScore;
     while (Cur){
         Student *CurStudent;
-        FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear);
+        if (!FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear)){
+            cout << "No student in old ";
+            cout << Cur->data.stu_id;
+            return;
+        };
         UpdateStudentResult(CurStudent,CurCou,Cur->data,-1);
         Cur=Cur->pNext;
     }
     Cur = NewScore;
     while (Cur){
         Student *CurStudent;
-        FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear);
+        if (!FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear)){
+            cout << "No student in new ";
+            cout << Cur->data.stu_id;
+            return;
+        }
         UpdateStudentResult(CurStudent,CurCou,Cur->data,1);
         Cur=Cur->pNext;
     }

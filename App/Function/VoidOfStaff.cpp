@@ -125,6 +125,7 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
     Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
     CurCou.score_list.Delete();
     CurCou.score_list.Head = new_scorelist.Head;
+    new_scorelist.Reset();
 
     return true;
 }
