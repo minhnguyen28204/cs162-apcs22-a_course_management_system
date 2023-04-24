@@ -131,6 +131,7 @@ void delspace(string& fullname)
 
 bool CheckGrade(string& grade)
 {
+    if (grade.size()==0) return false;
     int len = grade.length();
     for(int i = 0; i < len; ++i)
     {

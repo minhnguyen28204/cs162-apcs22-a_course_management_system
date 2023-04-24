@@ -29,6 +29,7 @@ bool is_MainMenu;
 bool is_ViewClass;
 bool is_ViewClass2;
 bool is_ViewClass3;
+bool is_ViewScoreOfClass;
 
 bool is_ViewCourse;
 bool is_ViewCourse2;
@@ -104,6 +105,9 @@ Vector<string> all_student_name;
 int ID_chosen_student;
 int chose_student_curpage;
 ButtonLibrary viewclass3_vecbutton;
+
+//View Scoreboard in Class
+ButtonLibrary viewscoreboard_vecbutton;
 
 //Add school year
 sf::Text addschoolyear_text;
@@ -564,6 +568,10 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
     }
 }
 
+void ViewScoreOfClass(){
+    bool is_stop = false;
+}
+
 void ProcessListOfStudent(){
     DLLNode <Year> *cur = ListYear.Head;
     while (cur){
@@ -579,29 +587,24 @@ void ProcessListOfStudent(){
     while (all_student_name.getSize()) all_student_name.pop_back();
     while (chose_student_page.getSize()) chose_student_page.pop_back();
     int cur_num = 0;
-    while (head){
-        all_student_name.push_back(head->data.ID + " - " + head->data.FirstName + " " + head->data.LastName);
-        cur_num++;
-        head = head->pNext;
-    }
     int i = 0;
-    while (i < cur_num){
+    while (head){
         ButtonLibrary CurPage;
         int cnt = 4;
         int UpperBound = 205;
-        while (cnt && i < cur_num){
+        while (cnt && head){
+            all_student_name.push_back(head->data.ID + " - " + head->data.FirstName + " " + head->data.LastName);
             CurStu.SetFunction([=](){
-                ID_chosen_student = i;
-                is_ViewClass3 = false;
-                //is_ViewStudent = true;
-                //Continue here
+                CurChoseStudent = head;
+                ViewScoreOfClass();
             });
-            CurStu.ChangeText(all_student_name[i]);
+            CurStu.ChangeText(all_student_name[cur_num]);
             CurStu.SetDetail(Non,24,400,UpperBound,400,40);
             CurPage.addButton(CurStu);
             cnt--;
+            cur_num++;
             UpperBound+=100;
-            i++;
+            head = head->pNext;
         }
         chose_student_page.push_back(CurPage);
     }
@@ -1679,8 +1682,10 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     });
     Button ImportScore(Non,24,650,600,200,50,"Import scoreboard",[&](){
         string filename = GetDir(window);
-        if (filename.size()) ImpScoreCSV(filename,CurChosenCourse->data.score_list);
+        DLinkedList<Score> NewScore;
+        if (filename.size()) ImpScoreCSV(filename,ListYear,ListYear.Head->data.IDyear,CurChosenCourse->data,CurChosenCourse->data.score_list.Head,NewScore);
     });
+
 
     MainMenu.addButton(ViewClass);
     MainMenu.addButton(ViewCourse);
@@ -1736,6 +1741,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     viewclass3_vecbutton.addButton(BackPage);
     viewclass3_vecbutton.addButton(NextPage);
     viewclass3_vecbutton.addButton(Back_To_Chose_Class);
+
 
     //add school year
     addschoolyear_vecbutton.addButton(addschoolyear_okbutton);

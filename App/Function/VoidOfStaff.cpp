@@ -88,11 +88,10 @@ bool ExportToCSV(Course& cou, const string& filename)
     return true;
 }
 
-bool ImpScoreCSV(const string filepath, DLinkedList<Score>& sco_list) {
+bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist) {
 
-    ifstream fin(filepath);
+    ifstream fin(folderpath);
     if (!fin.is_open()) return false;
-
     string line;
     getline(fin, line); // skip header line
     while (getline(fin, line)) {
@@ -118,14 +117,18 @@ bool ImpScoreCSV(const string filepath, DLinkedList<Score>& sco_list) {
         getline(ss, line);
         if(!CheckGrade(line)) cur_score.other_mark = 0;
         else cur_score.other_mark = stof(line);
-        if (sco_list.GetByValue(cur_score)){
-            sco_list.remove(cur_score);
-        }
-        sco_list.push(cur_score);
+        new_scorelist.push(cur_score);
     }
     fin.close();
+
+
+    Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
+    CurCou.score_list.Delete();
+    CurCou.score_list.Head = new_scorelist.Head;
+
     return true;
 }
+
 
 void UpdateCourseID(Course& CourseList, string newID)
 {

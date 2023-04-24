@@ -4,6 +4,7 @@
 #include "Semester.h"
 #include "year.h"
 #include "Checker.h"
+#include "VoidOfStudent.h"
 
 bool Add_A_Semester(Year& ye, Semester& sem);
 bool Add_A_Course(Semester& sem, Course& cou);
@@ -22,6 +23,6 @@ bool AddStudentToCourse(Course& CourseList, Student newStudent);
 void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent);
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse);
 bool ExportToCSV(Course& cou, const string& filename);
-bool ImpScoreCSV(const string filepath, DLinkedList<Score>& sco_list);
+bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist);
 
 #endif
