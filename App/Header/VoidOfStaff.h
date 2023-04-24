@@ -24,5 +24,6 @@ void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent);
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse);
 bool ExportToCSV(Course& cou, const string& filename);
 bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist);
+void PublicScoreboard(Course &CurCou, DLinkedList<Year> &ListYear);
 
 #endif

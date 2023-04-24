@@ -26,7 +26,7 @@ void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &L
    }
    ListScore = Data.Head;
 }
-bool FindStudent(Student *&CurStudent, int IDYear, string StuID, DLinkedList<Year> &ListYear){
+bool FindStudent(Student *&CurStudent, string StuID, DLinkedList<Year> &ListYear){
     Student tmp;
     tmp.ID = StuID;
     DLLNode<Year>* cur = ListYear.Head;
@@ -45,31 +45,37 @@ bool FindStudent(Student *&CurStudent, int IDYear, string StuID, DLinkedList<Yea
     }
     return false;
 }
-void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, int del){
-    (*CurStudent).Number_Of_Credits += CurCou.credits_num*del;
-    (*CurStudent).TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
+void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, int del, bool isPublic){
+    if (!isPublic){
+        (*CurStudent).Number_Of_Credits += CurCou.credits_num*del;
+        (*CurStudent).TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
+    }
+    if (CurCou.unlocked){
+        (*CurStudent).Official_Number_Of_Credits += CurCou.credits_num*del;
+        (*CurStudent).Official_TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
+    }
 }
-void Update(int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear){
+void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear, bool isPublic){
     DLLNode<Score> *Cur = OldScore;
     while (Cur){
         Student *CurStudent;
-        if (!FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear)){
+        if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
             cout << "No student in old ";
             cout << Cur->data.stu_id;
             return;
         };
-        UpdateStudentResult(CurStudent,CurCou,Cur->data,-1);
+        UpdateStudentResult(CurStudent,CurCou,Cur->data,-1,isPublic);
         Cur=Cur->pNext;
     }
     Cur = NewScore;
     while (Cur){
         Student *CurStudent;
-        if (!FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear)){
+        if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
             cout << "No student in new ";
             cout << Cur->data.stu_id;
             return;
         }
-        UpdateStudentResult(CurStudent,CurCou,Cur->data,1);
+        UpdateStudentResult(CurStudent,CurCou,Cur->data,1,isPublic);
         Cur=Cur->pNext;
     }
 }

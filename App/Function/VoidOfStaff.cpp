@@ -122,7 +122,7 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
     fin.close();
 
 
-    Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
+    Update(CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear,false);
     CurCou.score_list.Delete();
     CurCou.score_list.Head = new_scorelist.Head;
     new_scorelist.Reset();
@@ -176,4 +176,8 @@ void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent)
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse)
 {
     CourseList.remove(DeleteCourse);
+}
+void PublicScoreboard(Course &CurCou, DLinkedList<Year> &ListYear){
+    CurCou.unlocked = true;
+    Update(CurCou,nullptr,CurCou.score_list.Head, ListYear, true);
 }
