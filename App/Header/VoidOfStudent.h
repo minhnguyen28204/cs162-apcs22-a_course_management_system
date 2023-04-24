@@ -5,4 +5,4 @@
 #include "year.h"
 #include "VoidOfUser.h"
 #include "User.h"
-void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore);
+void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLinkedList<Course> &ListCourse, DLinkedList<Course> &ListScore);

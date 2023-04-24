@@ -7,7 +7,6 @@ using namespace std;
 
 struct Score
 {
-    int No;
     string stu_id;
     string first_name;
     string last_name;
@@ -16,10 +15,10 @@ struct Score
     double mid_mark;
     double other_mark;
     bool operator == (const Score &other) const{
-        return (No==other.No);
+        return (stu_id==other.stu_id);
     }
     bool operator > (const Score &other) const{
-        return (No>other.No);
+        return (stu_id>other.stu_id);
     }
 };
 

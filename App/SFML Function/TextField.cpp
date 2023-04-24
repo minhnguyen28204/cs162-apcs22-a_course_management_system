@@ -1,4 +1,5 @@
 #include "TextField.h"
+#include <iostream>
 
 TextField::TextField(sf::Font& font, unsigned int size, sf::Color _color, float x, float y, float width, float height, bool showText = true)
     : m_selected(false), m_cursorVisible(false)
@@ -12,7 +13,7 @@ TextField::TextField(sf::Font& font, unsigned int size, sf::Color _color, float 
     m_text.setFont(font);
     m_text.setCharacterSize(size);
     m_text.setFillColor(color);
-    m_text.setPosition(x + 10, y + 10);
+    m_text.setPosition(x+10,y+7);
 
     m_cursor.setSize(sf::Vector2f(1, size));
     m_cursor.setFillColor(color);
@@ -40,6 +41,11 @@ void TextField::Tab_handle(){
 
 bool TextField::cur_state(){
     return m_selected;
+}
+
+void TextField::SetIniStr(std::string str){
+    m_text.setString(str);
+    handleEvent(sf::Event());
 }
 
 void TextField::draw(sf::RenderWindow& window)

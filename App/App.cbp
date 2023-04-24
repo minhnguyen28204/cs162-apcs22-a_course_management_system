@@ -13,11 +13,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="Header" />
-					<Add directory="Infomation" />
-					<Add directory="SFML Function" />
-					<Add directory="Function" />
-					<Add directory="Data" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-s-d" />
@@ -56,8 +51,8 @@
 			<Add option="-DSFML_STATIC" />
 			<Add directory="C:/Users/suyun/Downloads/SFML-2.5.1/include" />
 			<Add directory="SFML Function" />
-			<Add directory="Main Function" />
-			<Add directory="Variables" />
+			<Add directory="Header" />
+			<Add directory="Function" />
 		</Compiler>
 		<Linker>
 			<Add directory="C:/Users/suyun/Downloads/SFML-2.5.1/lib" />
@@ -65,6 +60,7 @@
 		<Unit filename="Function/AcademicMainMenu.cpp" />
 		<Unit filename="Function/ChangePass.cpp" />
 		<Unit filename="Function/CheckAccount.cpp" />
+		<Unit filename="Function/Checker.cpp" />
 		<Unit filename="Function/DoublyLinkedList.cpp" />
 		<Unit filename="Function/Export.cpp" />
 		<Unit filename="Function/Import.cpp" />
@@ -81,6 +77,7 @@
 		<Unit filename="Header/AcademicMainMenu.h" />
 		<Unit filename="Header/ChangePass.h" />
 		<Unit filename="Header/CheckAccount.h" />
+		<Unit filename="Header/Checker.h" />
 		<Unit filename="Header/Class.h" />
 		<Unit filename="Header/Course.h" />
 		<Unit filename="Header/DoublyLinkedList.hpp" />

@@ -16,17 +16,37 @@ bool AddStudent(Class &CurClass, Student &CurStudent){
     CurClass.stu_list.push(CurStudent);
     return true;
 }
-bool QuickInputClass(const string& folderpath,Class &CurClass){
-    ifstream fin(folderpath);
-    if(!fin.is_open()){
-        return false;
+bool UpdateStudentAccount(Student& stu, const string& folderpath)
+{
+    string filename = folderpath + "/User/" + stu.ID + ".dat";
+    ofstream fout(filename);
+    if (!fout.is_open()) return false;
+
+    int len = stu.dob.length();
+    string pass = "";
+    for (int i = 0; i < len; ++i)
+    {
+        if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
     }
+
+    fout << pass << '\n';
+    fout << 1 << '\n';
+    fout << stu.FirstName << '\n';
+    fout << stu.LastName << '\n';
+    fout << stu.Gender << '\n';
+    fout << stu.dob << '\n';
+    fout << stu.Social_ID;
+    fout.close();
+    return true;
+}
+bool QuickInputClass(const string& filename,Class &CurClass){
+    ifstream fin(filename);
+    if(!fin.is_open()) return false;
     string line, no, id, FName, LName, Gen, dofb, Soc_ID;
-    fin >> line;
-    while(fin >> line)
+    getline(fin,line);
+    while(getline(fin,line))
     {
         stringstream ss(line);
-        cout << line << '\n';
         getline(ss, no, ',');
         getline(ss, id, ',');
         getline(ss, FName, ',');
@@ -35,14 +55,20 @@ bool QuickInputClass(const string& folderpath,Class &CurClass){
         getline(ss, dofb, ',');
         getline(ss, Soc_ID, ',');
         Student cur_student;
-        cur_student.ID = id;
+        cur_student.ID= id ;
+        if(!CheckID(cur_student.ID)) continue;
         cur_student.FirstName=FName;
+        if(!CheckFullName(cur_student.FirstName)) continue;
         cur_student.LastName=LName;
+        if(!CheckFullName(cur_student.LastName)) continue;
         cur_student.Gender=stoi(Gen);
+        if(!isnum(Gen[0])) continue;
         cur_student.dob=dofb;
-        cur_student.Social_ID = Soc_ID;
-        if (CurClass.stu_list.GetByValue(cur_student)!=nullptr) return false;
-        CurClass.stu_list.push(cur_student);
+        if(!CheckDOB(cur_student.dob)) continue;
+        cur_student.Social_ID= Soc_ID ;
+        if(!CheckID(cur_student.Social_ID)) continue;
+        AddStudent(CurClass,cur_student);
+        if(!UpdateStudentAccount(cur_student, "Information")) continue;
     }
     fin.close();
     return true;

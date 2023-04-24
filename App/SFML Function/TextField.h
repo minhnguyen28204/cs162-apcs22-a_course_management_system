@@ -14,6 +14,7 @@ public:
     void clear_str();
     void Tab_handle();
     bool cur_state();
+    void SetIniStr(std::string str);
     std::string getText() const;
 
 private:

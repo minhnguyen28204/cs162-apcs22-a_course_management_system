@@ -41,7 +41,7 @@ DLLNode<T>* DLinkedList<T>::GetByValue(const T &d){
 template < class T >
 void DLinkedList<T>::push(const T &d){
     ListSize++;
-    
+
     if (Head){
         DLLNode < T > *cur = Head;
         while (cur){
@@ -74,7 +74,7 @@ void DLinkedList<T>::push(const T &d){
 template < class T >
 void DLinkedList<T>::push_descending(const T &d){
     ListSize++;
-    
+
     if (Head){
         DLLNode < T > *cur = Head;
         while (cur){
@@ -163,7 +163,7 @@ void DLinkedList<T>::remove(const T &d){
         if (cur->pNext){
             DLLNode < T > *N = cur->pNext;
             cur->pNext = N->pNext;
-            cur->pNext->pPrev = cur;
+            if (cur->pNext) cur->pNext->pPrev = cur;
             delete N;
             ListSize--;
         }

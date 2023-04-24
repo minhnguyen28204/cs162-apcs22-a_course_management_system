@@ -1,7 +1,7 @@
 #include "VoidOfStudent.h"
-void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore){
-   ListCourse =  View_Course(CurStudent,IDYear,IDSem,ListYear);
-   DLLNode<Course> *cur = ListCourse;
+void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLinkedList<Course> &ListCourse, DLinkedList<Score> &ListScore){
+   ListCourse =  View_Course_Default(CurStudent,ListYear);
+   DLLNode<Course> *cur = ListCourse.Head;
    DLinkedList<Score> Data;
    while (cur){
         DLLNode<Score> *cur2 = cur->data.score_list.Head;
@@ -18,5 +18,5 @@ void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &L
             Data.push_back(a);
         }
    }
-   ListScore = Data.Head;
+   ListScore = Data;
 }

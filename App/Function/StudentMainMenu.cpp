@@ -64,14 +64,18 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
     Button ViewC(Pointer,24,490,255,220,50,"View Courses",[&](){
         MainMenu = false;
         ViewCourse = true;
-        DLLNode <Course> *Cur = View_Course_Default(Who,ListYear);
+        DLinkedList <Course> CL = View_Course_Default(Who,ListYear);
         int cur_num = 0;
+        DLLNode<Course> *Cur = CL.Head;
+        while (all_course_name.getSize()) all_course_name.pop_back();
         while (Cur){
             all_course_name.push_back(Cur->data.ID + " - " + Cur->data.course_name);
+            cout << Cur->data.ID + " - " + Cur->data.course_name << '\n';
             cur_num++;
             Cur = Cur->pNext;
         }
         int i = 0;
+        while (student_chose_course_page.getSize()) student_chose_course_page.pop_back();
         while (i < cur_num){
             int UpperBound = 205;
             int cnt = 4;
@@ -81,6 +85,9 @@ void StudentScreen(sf::RenderWindow &window, User Who, bool& logout){
                 Student_CurCourse.ChangeText(all_course_name[i]);
                 Student_CurCourse.SetDetail(Nun,24,300,UpperBound,600,40);
                 CurPage.addButton(Student_CurCourse);
+                cnt--;
+                i++;
+                UpperBound += 100;
             }
             student_chose_course_page.push_back(CurPage);
         }

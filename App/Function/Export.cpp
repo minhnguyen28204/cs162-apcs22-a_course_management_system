@@ -12,12 +12,13 @@ bool Save_Data(const string& folder_path, DLinkedList <Year>& year_list)
 
 bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
 {
-    ofstream fout(folder_path + "/years.dat", ios::trunc);
+    ofstream fout(folder_path + "/years.dat");
     if(!fout.is_open()) return false;
     DLLNode <Year> *cur = year_list.Head;
     while(cur)
     {
-        fout << cur->data.IDyear << endl;
+        fout << cur->data.IDyear;
+        if(cur->pNext) fout << '\n';
         string yf_path = folder_path + "/" + to_string(cur->data.IDyear) + "-" + to_string(cur->data.IDyear + 1);
 
         struct stat db;
@@ -54,7 +55,9 @@ bool Save_Semesters(const string& yf_path, DLinkedList <Semester>& semester_list
     {
         fout << cur->data.IDsemester << '\n';
         fout << cur->data.start_day << '\n';
-        fout << cur->data.end_day << '\n';
+        fout << cur->data.end_day;
+        if(cur->pNext) fout << '\n';
+
         string sf_path = yf_path + "/semester" + to_string(cur->data.IDsemester);
 
         struct stat db;
@@ -76,7 +79,9 @@ bool Save_Classes(const string& yf_path, DLinkedList <Class>& class_list)
 
     while(cur)
     {
-        fout << cur->data.class_name << endl;
+        fout << cur->data.class_name;
+        if(cur->pNext) fout << '\n';
+
         string cf_name = yf_path + "/" + cur->data.class_name;
 
         struct stat db;
@@ -100,16 +105,12 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
     while(cur)
     {
         fout << cur->data.ID << '\n';
-
         fout << cur->data.FirstName << '\n';
-
         fout << cur->data.LastName << '\n';
-
         fout << cur->data.Gender << '\n';
-
         fout << cur->data.dob << '\n';
-
-        fout << cur->data.Social_ID << '\n';
+        fout << cur->data.Social_ID;
+        if(cur->pNext) fout << '\n';
         cur = cur->pNext;
     }
     fout.close();
@@ -131,7 +132,8 @@ bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
         fout << cur->data.credits_num << '\n';
         fout << cur->data.max_students << '\n';
         fout << cur->data.day_of_week << '\n';
-        fout << cur->data.session << '\n';
+        fout << cur->data.session;
+        if(cur->pNext) fout << '\n';
 
         string course_path = sf_path + "/" + cur->data.ID + "_" + cur->data.class_name;
         struct stat db;
@@ -155,16 +157,27 @@ bool Save_Scoreboards(const string& course_path, DLinkedList <Score>& sco_list)
     DLLNode <Score> *cur = sco_list.Head;
     while(cur)
     {
-        fout << cur->data.No << '\n';
         fout << cur->data.stu_id << '\n';
         fout << cur->data.first_name << '\n';
         fout << cur->data.last_name << '\n';
         fout << cur->data.tot_mark << '\n';
         fout << cur->data.fin_mark << '\n';
         fout << cur->data.mid_mark << '\n';
-        fout << cur->data.other_mark << '\n';
+        fout << cur->data.other_mark;
+        if(cur->pNext) fout << '\n';
         cur = cur->pNext;
     }
     fout.close();
+    return true;
+}
+
+bool RemoveFolderCourse(const string& saved_folder, int year, int sem, string course_id, string class_name)
+{
+    string folderpath = saved_folder + "/" + to_string(year) + "-" + to_string(year + 1) + "/semesters/semester" + to_string(sem) + "/" +course_id + "_" + class_name;
+    string file1 = folderpath + "/students.dat";
+    string file2 = folderpath + "/scoreboard.dat";
+    if(remove(file1.c_str()) != 0) return false;
+    if(remove(file2.c_str()) != 0) return false;
+    if(rmdir(folderpath.c_str()) != 0) return false;
     return true;
 }

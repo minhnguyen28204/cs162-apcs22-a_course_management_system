@@ -133,9 +133,7 @@ bool importScoreboard(const string folderpath, DLinkedList <Score>& sco_list)
     while (getline(fin, line))
     {
         Score cur_score;
-        cur_score.No = stoi(line);
-        fin >> cur_score.stu_id;
-        fin.ignore(1000, '\n');
+        cur_score.stu_id = line;
         getline(fin, cur_score.first_name);
         getline(fin, cur_score.last_name);
         fin >> cur_score.tot_mark;
