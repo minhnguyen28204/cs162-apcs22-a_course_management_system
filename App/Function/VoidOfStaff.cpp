@@ -133,3 +133,33 @@ bool UpdateScoreOther(DLLNode <Score>& newSco, string x)
     CheckGrade(x);
     newSco->data.other_mark = stof(x);
 }
+
+void AutoAddClasses(DLinkedList<Year>& listyear, int latestyear)
+{
+    DLLNode<Year> *prev_year = listyear.Head->pNext;
+    if(listyear.ListSize <= 4) 
+    {
+        DLLNode<Class> *cur_class = prev_year->data.classes_list.Head;
+        while(cur_class)
+        {
+            listyear.Head->data.classes_list.push(cur_class->data);
+            cur_class = cur_class ->pNext;
+        }
+    } else 
+    {
+        DLLNode<Year>* cur_year = listyear.Head;
+        int count = 4;
+        while(count--)
+        {
+            cur_year = cur_year->pNext;
+        }
+        DLLNode<Class> *prev_class = prev_year->data.classes_list.Head;
+
+        while(prev_class)
+        {
+            if(!cur_year->data.classes_list.GetByValue(prev_class->data))
+            listyear.Head->data.classes_list.push(prev_class->data);
+            prev_class = prev_class->pNext;
+        }
+    }
+}

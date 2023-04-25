@@ -13,5 +13,6 @@ bool UpdateScoreFinal(DLLNode <Score>& newSco, string x);
 bool UpdateScoreMidterm(DLLNode <Score>& newSco, string x);
 bool UpdateScoreTotal(DLLNode <Score>& newSco, string x);
 bool UpdateScoreOther(DLLNode <Score>& newSco, string x);
+void AutoAddClasses(DLinkedList<Year>& listyear, int latestyear);
 
 #endif
