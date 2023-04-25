@@ -50,6 +50,7 @@ DLLNode<Course> *View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Y
         }
         cur3 = cur3->pNext;
     }
+    cout << "spa" << Data.Head << ' ' << Data.Head->data.score_list.Head->data.stu_id << endl;
     return Data.Head;
 };
 

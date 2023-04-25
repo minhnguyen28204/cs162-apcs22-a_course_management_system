@@ -18,13 +18,6 @@ struct Course
     DLinkedList <Student> stu_list;
     DLinkedList <Score> score_list; // haven't has score list yet.
     bool unlocked; // has been puplished or not (so that the student can view it or not)
-    void Update_Info(); // update a course info
-    void Remove_A_Student();
-    // in the end of semester
-    // only by staff
-    void Export_Students(); // Export a list of students in a course to a CSV file
-    void Import_Scoreboard(); // Import from CSV file
-    void view_scoreboard(); // if staff puplished, student can see it
     inline int operator == (const Course &other){
         return (ID == other.ID && class_name == other.class_name);
     }

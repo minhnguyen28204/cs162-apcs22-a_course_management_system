@@ -4,16 +4,27 @@
 void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
    Number_Of_Credits = 0;
    TotalScore = 0;
+   cout << IDYear << ' '  << IDSem << ' ' << CurStudent.ID << endl;
    ListCourse =  View_Course(CurStudent,IDYear,IDSem,ListYear);
+   cout << "spe" << ListCourse << ' ' << ListCourse->data.score_list.Head->data.stu_id << endl;
    DLLNode<Course> *cur = ListCourse;
+
+   while (cur){
+        cout << cur->data.course_name << ' ' << cur->data.score_list.Head->data.stu_id << endl;
+        cur=cur->pNext;
+   } return;
+    cur = ListCourse;
    DLinkedList<Score> Data;
    //cur = CurCourse
    //cur2 = cur score;
    while (cur){
+
         DLLNode<Score> *cur2 = cur->data.score_list.Head;
         bool check = false;
         while (cur2){
+            cout << cur2->data.stu_id << endl;
             if (cur2->data.stu_id==CurStudent.ID) {
+                cout << "Co diem ne\n";
                 Number_Of_Credits+=cur->data.credits_num;
                 TotalScore += cur2->data.tot_mark * cur->data.credits_num;
                 Data.push_back(cur2->data);

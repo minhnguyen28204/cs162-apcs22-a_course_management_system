@@ -11,4 +11,5 @@ void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedLis
 bool FindStudent(Student *&CurStudent, string StuID, DLinkedList<Year> &ListYear);
 void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, int del, bool isPublic);
 void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear, bool isPublic);
+void SetCredit(Course &CurCou, string ID, DLinkedList<Year> &ListYear);
 #endif // VOID_OF_STUDENT_H
