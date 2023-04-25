@@ -117,6 +117,10 @@ bool importListstudent(const string& folderpath,DLinkedList <Student>& student_l
         fin >> cur_student.Gender;
         fin >> cur_student.dob;
         fin >> cur_student.Social_ID;
+        fin >> cur_student.Number_Of_Credits;
+        fin >> cur_student.TotalScore;
+        fin >> cur_student.Official_Number_Of_Credits;
+        fin >> cur_student.Official_TotalScore;
         student_list.push(cur_student);
     }
     fin.close();

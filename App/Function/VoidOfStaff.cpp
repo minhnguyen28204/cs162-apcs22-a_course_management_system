@@ -127,9 +127,10 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
     fin.close();
 
 
-    Update(IDYear, CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
+    Update(CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear,false);
     CurCou.score_list.Delete();
     CurCou.score_list.Head = new_scorelist.Head;
+    new_scorelist.Reset();
 
     return true;
 }
@@ -230,4 +231,8 @@ bool UpdateScoreOther(DLLNode <Score> *newSco, string x)
     if(!CheckGrade(x)) return false;
     newSco->data.other_mark = stof(x);
     return true;
+}
+void PublicScoreboard(Course &CurCou, DLinkedList<Year> &ListYear){
+    CurCou.unlocked = true;
+    Update(CurCou,nullptr,CurCou.score_list.Head, ListYear, true);
 }

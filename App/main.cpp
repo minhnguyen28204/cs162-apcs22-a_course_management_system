@@ -15,6 +15,7 @@
 #include "AcademicMainMenu.h"
 #include <SFML/Graphics.hpp>
 #define y1 kdbfksdjfbkdjfb
+#include <bits/stdc++.h>
 
 int main(){
     while(1){
@@ -38,5 +39,6 @@ int main(){
         }
         if (LogOut==false) break;
     }
+
     return 0;
 }
