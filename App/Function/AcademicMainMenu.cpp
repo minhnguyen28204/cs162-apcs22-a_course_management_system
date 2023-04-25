@@ -914,6 +914,97 @@ void ViewScore(sf::RenderWindow &window){
     }
 }
 
+void UpdateScoreWindow(sf::RenderWindow &window){
+    sf::Text ID;
+    setText(ID,"ID: " + CurChoseStudent->data.ID,_Font,24,200,150,sf::Color::Black);
+    sf::Text Name;
+    setText(Name,"Full name: " + CurChoseStudent->data.FirstName + " " + CurChoseStudent->data.LastName,_Font,24,200,200,sf::Color::Black);
+    bool stop = false;
+    Button Back(Non,20,105,100,70,50,"Back",[&](){
+        stop = true;
+    });
+    DLLNode<Score> *Cur = CurChosenCourse->data.score_list.Head;
+    while (Cur){
+        if (Cur->data.stu_id == CurChoseStudent->data.ID) break;
+        Cur = Cur->pNext;
+    }
+    TextField OtherMark(_Font,24,sf::Color::Black,400,300,200,50,true);
+    sf::Text othermark; setText(othermark,"Other mark",_Font,24,200,310,sf::Color::Black);
+    TextField MidMark(_Font,24,sf::Color::Black,400,400,200,50,true);
+    sf::Text midmark; setText(midmark,"Midterm mark",_Font,24,200,410,sf::Color::Black);
+    TextField FinMark(_Font,24,sf::Color::Black,400,500,200,50,true);
+    sf::Text finmark; setText(finmark,"Final mark",_Font,24,200,510,sf::Color::Black);
+    TextField TotMark(_Font,24,sf::Color::Black,400,600,200,50,true);
+    sf::Text totmark; setText(totmark,"Total mark",_Font,24,200,610,sf::Color::Black);
+    if (Cur) {
+        OtherMark.SetIniStr(Point(Cur->data.other_mark));
+        MidMark.SetIniStr(Point(Cur->data.mid_mark));
+        FinMark.SetIniStr(Point(Cur->data.fin_mark));
+        TotMark.SetIniStr(Point(Cur->data.tot_mark));
+    }
+    Button OK(Non,24,700,460,200,50,"OK",[&](){
+        UpdateScoreOther(Cur,OtherMark.getText());
+        UpdateScoreMidterm(Cur,MidMark.getText());
+        UpdateScoreFinal(Cur,FinMark.getText());
+        UpdateScoreTotal(Cur,TotMark.getText());
+        stop = true;
+        TextBox Info(300,350,600,100,_Font,"Update successfully",30);
+        Info.draw(window);
+        window.display();
+        sf::sleep(sf::seconds(2));
+        window.clear();
+        window.display();
+    });
+
+    ButtonLibrary AllButtons;
+    AllButtons.addButton(Back);
+    AllButtons.addButton(OK);
+    while (window.isOpen()){
+        sf::Event event;
+        while (window.pollEvent(event)){
+            AllButtons.handleEvent(event);
+            CheckLogOut.handleEvent(event);
+            OtherMark.handleEvent(event);
+            MidMark.handleEvent(event);
+            FinMark.handleEvent(event);
+            TotMark.handleEvent(event);
+            if (event.type==sf::Event::Closed){
+                window.close();
+            }
+            if (event.type==sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
+                UpdateScoreOther(Cur,OtherMark.getText());
+                UpdateScoreMidterm(Cur,MidMark.getText());
+                UpdateScoreFinal(Cur,FinMark.getText());
+                UpdateScoreTotal(Cur,TotMark.getText());
+                stop = true;
+                TextBox Info(300,350,600,100,_Font,"Update successfully",30);
+                Info.draw(window);
+                window.display();
+                sf::sleep(sf::seconds(2));
+                window.clear();
+                window.display();
+            }
+            if (stop) return;
+        }
+        window.clear();
+        window.draw(background);
+        window.draw(welcome);
+        window.draw(author);
+        window.draw(ID);
+        window.draw(Name);
+        CheckLogOut.draw(window);
+        window.draw(default_year);
+        window.draw(default_semester);
+        if (stop) return;
+        OtherMark.draw(window); window.draw(othermark);
+        MidMark.draw(window); window.draw(midmark);
+        FinMark.draw(window); window.draw(finmark);
+        TotMark.draw(window); window.draw(totmark);
+        AllButtons.draw(window);
+        window.display();
+    }
+}
+
 //Main function
 void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     importData("Information/SystemData",ListYear);
@@ -1439,6 +1530,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         else is_valid_social = false;
 
         bool is_add_success = false;
+        bool is_valid_student = false;
         if (!is_AddStudentToCourse && is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob){
             DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
             while (Cur){
@@ -1453,8 +1545,9 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
                 if (all_course_id[ID_chosen_course] == Cur->data.ID + " - " + Cur->data.course_name) break;
                 Cur = Cur->pNext;
             }
-            is_add_success = AddStudentToCourse(Cur->data,NS);
+            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student);
         }
+        cout << is_valid_student << '\n';
         if (is_add_success){
             TextBox Info(400,325,400,150,_Font,"Added successfully",30);
             Info.draw(window);
@@ -1465,6 +1558,20 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             is_MainMenu = true;
             if (is_AddStudentToCourse) is_AddStudentToCourse = false;
             is_AddIndividual  = false;
+        }
+        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && !is_valid_student){
+            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
+            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
+            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
+            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
+            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
+            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
+            TextBox info(250,325,700,100,_Font,"Student is not in any class",30);
+            info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
         }
         else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob){
             setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
@@ -1659,6 +1766,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         ViewScore(window);
     });
     Button UpdateScoreBoard(cursor,24,450,200,300,50,"Update Scoreboard",[&](){
+        UpdateScoreWindow(window);
     });
     Button DeleteStudent(cursor,24,450,400,300,50,"Delete Student",[&](){
         DLLNode<Score> *Cur = CurChosenCourse->data.score_list.Head;

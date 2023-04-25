@@ -45,6 +45,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         if(!CheckID(cur_student.Social_ID)) continue;
         if(cur_course.stu_list.GetByValue(cur_student)) continue;
         cur_course.stu_list.push(cur_student);
+        CreateDefaultScore(cur_course,cur_student);
     }
     fin.close();
     return true;
@@ -73,14 +74,18 @@ bool ExportToCSV(Course& cou, const string& filename)
     if(!fout.is_open()) return false;
     string line = "No,ID,FirstName,LastName,TotalMark,FinalMark,MidtermMark,OtherMark\n";
     fout << line;
-    DLLNode<Student> *cur = cou.stu_list.Head;
+    DLLNode<Score> *cur = cou.score_list.Head;
     int no = 1;
     while(cur)
     {
         fout << no << ','
-            << cur->data.ID << ','
-            << cur->data.FirstName << ','
-            << cur->data.LastName << ',' << endl;
+            << cur->data.stu_id << ','
+            << cur->data.first_name << ','
+            << cur->data.last_name << ','
+            << cur->data.tot_mark << ','
+            << cur->data.fin_mark << ','
+            << cur->data.mid_mark << ','
+            << cur->data.other_mark << endl;
         no++;
         cur = cur->pNext;
     }
@@ -129,6 +134,18 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
     return true;
 }
 
+void CreateDefaultScore(Course& cur_cou, Student& cur_stu)
+{
+    Score sc;
+    sc.stu_id = cur_stu.ID;
+    sc.first_name = cur_stu.FirstName;
+    sc.last_name = cur_stu.LastName;
+    sc.fin_mark = 0;
+    sc.mid_mark = 0;
+    sc.tot_mark = 0;
+    sc.other_mark = 0;
+    cur_cou.score_list.push(sc);
+}
 
 void UpdateCourseID(Course& CourseList, string newID)
 {
@@ -162,12 +179,23 @@ void UpdateSession(Course& CourseList, string newSession)
 {
     CourseList.session = newSession;
 }
-bool AddStudentToCourse(Course& CourseList, Student newStudent)
+bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass)
 {
+    string filename = "Information/User/" + newStudent.ID + ".dat";
+    ifstream fin(filename.c_str());
+    if(!fin.is_open())
+    {
+        isinclass = false;
+        return false;
+    }
+    fin.close();
+    isinclass = true;
     if (CourseList.stu_list.GetByValue(newStudent)) return false;
     CourseList.stu_list.push(newStudent);
+    CreateDefaultScore(CourseList,newStudent);
     return true;
 }
+
 void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent)
 {
     StudentList.remove(DeleteStudent);
@@ -175,4 +203,31 @@ void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent)
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse)
 {
     CourseList.remove(DeleteCourse);
+}
+bool UpdateScoreFinal(DLLNode <Score> *newSco, string x)
+{
+    if(!CheckGrade(x)) return false;
+    newSco->data.fin_mark = stof(x);
+    return true;
+}
+
+bool UpdateScoreMidterm(DLLNode <Score> *newSco, string x)
+{
+    if(!CheckGrade(x)) return false;
+    newSco->data.mid_mark = stof(x);
+    return true;
+}
+
+bool UpdateScoreTotal(DLLNode <Score> *newSco, string x)
+{
+    if(!CheckGrade(x)) return false;
+    newSco->data.tot_mark = stof(x);
+    return true;
+}
+
+bool UpdateScoreOther(DLLNode <Score> *newSco, string x)
+{
+    if(!CheckGrade(x)) return false;
+    newSco->data.other_mark = stof(x);
+    return true;
 }

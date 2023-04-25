@@ -19,10 +19,15 @@ void UpdateCourseCredits_Num(Course& CourseList, int newCredits_Num);
 void UpdateCourseMax_Students(Course& CourseList, int newMax_Students);
 void UpdateDay_Of_Week(Course& CourseList, string newDay_Of_Week);
 void UpdateSession(Course& CourseList, string newSession);
-bool AddStudentToCourse(Course& CourseList, Student newStudent);
+bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass);
 void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent);
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse);
 bool ExportToCSV(Course& cou, const string& filename);
 bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLinkedList<Score>& new_scorelist);
+bool UpdateScoreFinal(DLLNode <Score> *newSco, string x);
+bool UpdateScoreMidterm(DLLNode <Score> *newSco, string x);
+bool UpdateScoreTotal(DLLNode <Score> *newSco, string x);
+bool UpdateScoreOther(DLLNode <Score> *newSco, string x);
+void CreateDefaultScore(Course& cur_cou, Student& cur_stu);
 
 #endif
