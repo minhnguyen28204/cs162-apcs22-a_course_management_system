@@ -617,12 +617,12 @@ void ProcessScoreBoardOfStudent(){
         while (cnt && cur){
             TextBox ID(200,UpperBound,100,50,_Font,cur->data.ID,24);
             TextBox Name(300,UpperBound,600,50,_Font,cur->data.course_name,24);
-            //TextBox Total(900,UpperBound,100,50,_Font,Point(ListScore->data.tot_mark),24);
+            TextBox Total(900,UpperBound,100,50,_Font,Point(ListScore->data.tot_mark),24);
             current_page.push_back(ID);
             current_page.push_back(Name);
-            //current_page.push_back(Total);
+            current_page.push_back(Total);
             cur = cur->pNext;
-            //ListScore = ListScore->pNext;
+            ListScore = ListScore->pNext;
             UpperBound+=50;
             cnt--;
         }
