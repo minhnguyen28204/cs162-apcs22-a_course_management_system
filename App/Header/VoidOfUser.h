@@ -3,7 +3,7 @@
 #include "User.h"
 #include "Year.h"
 DLinkedList<Course> View_Course_Default(User &CurUser, DLinkedList<Year> &ListYear);
-DLLNode<Course> *View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Year>& ListYear);
+void View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Year>& ListYear, DLinkedList<Course> &ListCourse);
 //need list of users
 
 #endif // VOID_OF_USER_H

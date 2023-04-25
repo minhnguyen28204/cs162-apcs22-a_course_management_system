@@ -22,14 +22,13 @@ DLinkedList<Course> View_Course_Default(User &CurUser, DLinkedList<Year> &ListYe
     return CourseList;
 }
 
-DLLNode<Course> *View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Year>& ListYear) {
-    DLinkedList<Course> Data;
+void View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Year>& ListYear, DLinkedList<Course> &ListCourse) {
     //create a NewYear with type Year to compare and getbyvalue
     Year NewYear;
     NewYear.IDyear = IDYear;
     DLLNode<Year>* cur = ListYear.GetByValue(NewYear);
     if (cur == nullptr) {
-        return nullptr;
+        return;
     }
     DLinkedList<Semester> SemestersOfYear = (cur)->data.sem_list;
     //create a NewSem with type Semester to compare and getbyvalue
@@ -37,7 +36,7 @@ DLLNode<Course> *View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Y
     NewSem.IDsemester = IDSem;
     DLLNode<Semester>* cur2 = SemestersOfYear.GetByValue(NewSem);
     if (cur2 == nullptr) {
-        return nullptr;
+        return ;
     }
     DLinkedList<Course> CourseOfSemester = (cur2)->data.course_list;
     //Find Courses
@@ -46,12 +45,10 @@ DLLNode<Course> *View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Y
     NewStu.ID = CurUser.ID;
     while (cur3) {
         if ((cur3->data).stu_list.GetByValue(NewStu)) {
-            Data.push(cur3->data);
+            ListCourse.push(cur3->data);
         }
         cur3 = cur3->pNext;
     }
-    cout << "spa" << Data.Head << ' ' << Data.Head->data.score_list.Head->data.stu_id << endl;
-    return Data.Head;
 };
 
 #endif // VOID_OF_USER_CPP
