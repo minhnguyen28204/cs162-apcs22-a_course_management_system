@@ -3,6 +3,7 @@
 bool CreateNewYear(DLinkedList<Year> &ListYear, Year &NewYear){
     if (ListYear.GetByValue(NewYear)!=nullptr) return false;
     ListYear.push_descending(NewYear);
+    AutoAddClasses(ListYear,NewYear.IDyear);
     return true;
 }
 bool AddClass(Year &CurYear, Class &CurClass){

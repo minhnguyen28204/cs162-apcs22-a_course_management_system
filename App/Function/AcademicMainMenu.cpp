@@ -11,6 +11,15 @@
 #include "DropdownBox.h"
 #include <vector>
 
+string Point(double &a){
+      string s;
+      s= to_string((int)(a));
+      if (((int)(a*10))%10 == 0) return s;
+      s += '.';
+      s += to_string((int)(a*10)%10);
+     return s;
+}
+
 sf::Texture ob;
 sf::Texture cat;
 sf::Sprite background;
@@ -108,6 +117,11 @@ ButtonLibrary viewclass3_vecbutton;
 
 //View Scoreboard in Class
 ButtonLibrary viewscoreboard_vecbutton;
+vector<vector<TextBox>> ScorePage;
+int cur_score_page;
+TextBox Course_ID;
+TextBox Course_Name;
+TextBox Total_Point;
 
 //Add school year
 sf::Text addschoolyear_text;
@@ -359,6 +373,17 @@ void DrawWindow(sf::RenderWindow &window){
         if (chose_student_page.getSize()) chose_student_page[chose_student_curpage].draw(window);
         viewclass3_vecbutton.draw(window);
     }
+    else if (is_ViewScoreOfClass){
+        viewscoreboard_vecbutton.draw(window);
+        Course_ID.draw(window);
+        Course_Name.draw(window);
+        Total_Point.draw(window);
+        for(int i=0; i<ScorePage.size(); i++){
+            for(int j=0; j<ScorePage[i].size(); j++){
+                ScorePage[i][j].draw(window);
+            }
+        }
+    }
 
     if (is_AddSchoolYear){
         window.draw(addschoolyear_text);
@@ -488,6 +513,9 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
         if (chose_student_page.getSize()) chose_student_page[chose_student_curpage].handleEvent(event);
         viewclass3_vecbutton.handleEvent(event);
     }
+    else if (is_ViewScoreOfClass){
+        viewscoreboard_vecbutton.handleEvent(event);
+    }
 
     if (is_AddSchoolYear){
         addschoolyear_vecbutton.handleEvent(event);
@@ -568,8 +596,37 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
     }
 }
 
-void ViewScoreOfClass(){
-    bool is_stop = false;
+void ProcessScoreBoardOfStudent(){
+    DLLNode<Year> *CurYear = ListYear.Head;
+    DLLNode<Semester> *CurSem = CurYear->data.sem_list.Head;
+    DLLNode<Course> *ListCourse = nullptr;
+    DLLNode<Score> *ListScore = nullptr;
+    int Numcredit;
+    double Total_point;
+    ViewResultInSemester(CurChoseStudent->data,CurYear->data.IDyear,CurSem->data.IDsemester,ListYear,ListCourse,ListScore,Numcredit,Total_point);
+    Course_ID.SetDetail(200,200,100,50,_Font,"ID",24);
+    Course_Name.SetDetail(300,200,600,50,_Font,"Course name",24);
+    Total_Point.SetDetail(900,200,100,50,_Font,"Total",24);
+    ScorePage.clear();
+    if (ListScore==nullptr) cout << "Wrong qua wrong roi\n";
+    while (ListCourse){
+        int cnt = 6;
+        int UpperBound = 250;
+        vector<TextBox> current_page;
+        while (cnt && ListCourse){
+            TextBox ID(200,UpperBound,100,50,_Font,ListCourse->data.ID,24);
+            TextBox Name(300,UpperBound,600,50,_Font,ListCourse->data.course_name,24);
+            //TextBox Total(900,UpperBound,100,50,_Font,Point(ListScore->data.tot_mark),24);
+            current_page.push_back(ID);
+            current_page.push_back(Name);
+            //current_page.push_back(Total);
+            ListCourse = ListCourse->pNext;
+            //ListScore = ListScore->pNext;
+            UpperBound+=50;
+            cnt--;
+        }
+        ScorePage.push_back(current_page);
+    }
 }
 
 void ProcessListOfStudent(){
@@ -596,7 +653,9 @@ void ProcessListOfStudent(){
             all_student_name.push_back(head->data.ID + " - " + head->data.FirstName + " " + head->data.LastName);
             CurStu.SetFunction([=](){
                 CurChoseStudent = head;
-                ViewScoreOfClass();
+                is_ViewClass3 = false;
+                is_ViewScoreOfClass  = true;
+                ProcessScoreBoardOfStudent();
             });
             CurStu.ChangeText(all_student_name[cur_num]);
             CurStu.SetDetail(Non,24,400,UpperBound,400,40);
@@ -804,15 +863,6 @@ string GetDir(sf::RenderWindow &window){
     }
     if (is_return) return Dir_Input.getText();
     else return "";
-}
-
-string Point(double &a){
-      string s;
-      s= to_string((int)(a));
-      if (((int)(a*10))%10 == 0) return s;
-      s += '.';
-      s += to_string((int)(a*10)%10);
-     return s;
 }
 
 void ViewScore(sf::RenderWindow &window){
@@ -1047,6 +1097,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     is_ViewClass = false;
     is_ViewClass2 = false;
     is_ViewClass3 = false;
+    is_ViewScoreOfClass = false;
     is_ViewCourse = false;
     is_ViewDetailCourse = false;
     is_ViewStudentCourse = false;
@@ -1793,7 +1844,10 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         DLinkedList<Score> NewScore;
         if (filename.size()) ImpScoreCSV(filename,ListYear,ListYear.Head->data.IDyear,CurChosenCourse->data,CurChosenCourse->data.score_list.Head,NewScore);
     });
-
+    Button Back_To_View_Class3(Non,20,105,100,70,50,"Back",[&](){
+        is_ViewScoreOfClass = false;
+        is_ViewClass3 = true;
+    });
 
     MainMenu.addButton(ViewClass);
     MainMenu.addButton(ViewCourse);
@@ -1850,6 +1904,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     viewclass3_vecbutton.addButton(NextPage);
     viewclass3_vecbutton.addButton(Back_To_Chose_Class);
 
+    //view score of class
+    viewscoreboard_vecbutton.addButton(Back_To_View_Class3);
 
     //add school year
     addschoolyear_vecbutton.addButton(addschoolyear_okbutton);
