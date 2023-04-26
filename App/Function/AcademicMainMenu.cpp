@@ -524,7 +524,7 @@ void HandleAddIndi(sf::RenderWindow &window){
                 if (all_course_id[ID_chosen_course] == Cur->data.ID + " - " + Cur->data.course_name) break;
                 Cur = Cur->pNext;
             }
-            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student);
+            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student,ListYear);
         }
         if (is_add_success){
             TextBox Info(400,325,400,150,_Font,"Added successfully",30);
@@ -620,7 +620,7 @@ string folderpath = addstudent_folderpath_input.getText();
         cout << cur->data.course_name << '\n';
         bool is_add_success;
         if (!is_AddStudentToCourse) is_add_success = QuickInputClass(folderpath,Cur->data);
-        else is_add_success = QInputStuInCourse(folderpath,cur->data);
+        else is_add_success = QInputStuInCourse(folderpath,cur->data,ListYear);
         if (is_add_success){
             TextBox Info(400,325,400,150,_Font,"Added successfully",30);
             Info.draw(window);
@@ -1037,7 +1037,7 @@ void ProcessScoreBoardOfStudent(){
     ViewResultInSemester(CurChoseStudent->data,CurYear->data.IDyear,CurSem->data.IDsemester,ListYear,ListCourse,ListScore,Numcredit,Total_point);
 
     double gpa = Total_point/Numcredit;
-    double OveGpa = CurChoseStudent->data.Official_TotalScore/CurChoseStudent->data.Official_Number_Of_Credits;
+    double OveGpa = CurChoseStudent->data.TotalScore/CurChoseStudent->data.Number_Of_Credits;
     SemGPA.SetDetail(200,100,150,50,_Font,"GPA: " + Point(gpa),24);
     OveGPA.SetDetail(400,100,600,50,_Font,"Overall GPA: " + Point(OveGpa),24);
     Course_ID.SetDetail(200,200,100,50,_Font,"ID",24);
