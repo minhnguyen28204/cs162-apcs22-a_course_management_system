@@ -603,7 +603,7 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
 void ProcessScoreBoardOfStudent(){
     DLLNode<Year> *CurYear = ListYear.Head;
     DLLNode<Semester> *CurSem = CurYear->data.sem_list.Head;
-    DLLNode<Course> *ListCourse = nullptr;
+    DLinkedList<Course> ListCourse;
     DLLNode<Score> *ListScore = nullptr;
     int Numcredit;
     double Total_point;
@@ -612,19 +612,21 @@ void ProcessScoreBoardOfStudent(){
     Course_Name.SetDetail(300,200,600,50,_Font,"Course name",24);
     Total_Point.SetDetail(900,200,100,50,_Font,"Total",24);
     ScorePage.clear();
-    while (ListCourse){
+    if (ListScore==nullptr) cout << "Wrong qua wrong roi\n";
+    DLLNode<Course> *cur = ListCourse.Head;
+    while (cur){
         int cnt = 6;
         int UpperBound = 250;
         current_page.clear();
-        while (cnt && ListCourse){
-            ID_Score.SetDetail(200,UpperBound,100,50,_Font,ListCourse->data.ID,24);
-            Name_Score.SetDetail(300,UpperBound,600,50,_Font,ListCourse->data.course_name,24);
-            //TextBox Total(900,UpperBound,100,50,_Font,Point(ListScore->data.tot_mark),24);
+        while (cnt && cur){
+            ID_Score.SetDetail(200,UpperBound,100,50,_Font,cur->data.ID,24);
+            Name_Score.SetDetail(300,UpperBound,600,50,_Font,cur->data.course_name,24);
+            TextBox Total(900,UpperBound,100,50,_Font,Point(ListScore->data.tot_mark),24);
             current_page.push_back(ID_Score);
             current_page.push_back(Name_Score);
-            //current_page.push_back(Total);
-            ListCourse = ListCourse->pNext;
-            //ListScore = ListScore->pNext;
+            current_page.push_back(Total);
+            cur = cur->pNext;
+            ListScore = ListScore->pNext;
             UpperBound+=50;
             cnt--;
         }

@@ -1,11 +1,11 @@
 #ifndef VOID_OF_STUDENT_CPP
 #define VOID_OF_STUDENT_CPP
 #include "VoidOfStudent.h"
-void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
+void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLinkedList<Course> &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
    Number_Of_Credits = 0;
    TotalScore = 0;
-   ListCourse =  View_Course(CurStudent,IDYear,IDSem,ListYear);
-   DLLNode<Course> *cur = ListCourse;
+   View_Course(CurStudent,IDYear,IDSem,ListYear,ListCourse);
+   DLLNode<Course> *cur = ListCourse.Head;
    DLinkedList<Score> Data;
    //cur = CurCourse
    //cur2 = cur score;
@@ -23,7 +23,7 @@ void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedLis
             cur2 = cur2 -> pNext;
         }
         if (!check){
-            cout << "Something go wrong roi may anh zai";
+            cout << "Khong co diem trong course " << cur->data.course_name;
             return;
         }
         cur = cur -> pNext;
