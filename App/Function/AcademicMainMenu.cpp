@@ -118,10 +118,14 @@ ButtonLibrary viewclass3_vecbutton;
 //View Scoreboard in Class
 ButtonLibrary viewscoreboard_vecbutton;
 vector<vector<TextBox>> ScorePage;
+vector<TextBox> current_page;
 int cur_score_page;
 TextBox Course_ID;
 TextBox Course_Name;
 TextBox Total_Point;
+TextBox ID_Score;
+TextBox Name_Score;
+TextBox Total_Score;
 
 //Add school year
 sf::Text addschoolyear_text;
@@ -608,17 +612,16 @@ void ProcessScoreBoardOfStudent(){
     Course_Name.SetDetail(300,200,600,50,_Font,"Course name",24);
     Total_Point.SetDetail(900,200,100,50,_Font,"Total",24);
     ScorePage.clear();
-    if (ListScore==nullptr) cout << "Wrong qua wrong roi\n";
     while (ListCourse){
         int cnt = 6;
         int UpperBound = 250;
-        vector<TextBox> current_page;
+        current_page.clear();
         while (cnt && ListCourse){
-            TextBox ID(200,UpperBound,100,50,_Font,ListCourse->data.ID,24);
-            TextBox Name(300,UpperBound,600,50,_Font,ListCourse->data.course_name,24);
+            ID_Score.SetDetail(200,UpperBound,100,50,_Font,ListCourse->data.ID,24);
+            Name_Score.SetDetail(300,UpperBound,600,50,_Font,ListCourse->data.course_name,24);
             //TextBox Total(900,UpperBound,100,50,_Font,Point(ListScore->data.tot_mark),24);
-            current_page.push_back(ID);
-            current_page.push_back(Name);
+            current_page.push_back(ID_Score);
+            current_page.push_back(Name_Score);
             //current_page.push_back(Total);
             ListCourse = ListCourse->pNext;
             //ListScore = ListScore->pNext;
@@ -1156,6 +1159,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             addschoolyear_textfield.clear_str();
             setText(default_year,"Current year: " + to_string(ListYear.Head->data.IDyear),_Font,20,50,50,sf::Color::Black);
             setText(default_semester,"",_Font,20,300,50,sf::Color::Black);
+            is_MainMenu = true;
+            is_AddSchoolYear = false;
         }
         else{
             TextBox Info(400,325,400,150,_Font,"Invalid year",30);
@@ -1165,8 +1170,6 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             window.clear();
             window.display();
         }
-        is_MainMenu = true;
-        is_AddSchoolYear = false;
     });
     Button Back_From_Chose_Semester(Non,20,105,100,70,50,"Back",[=](){
         is_ViewCourse2 = false;
@@ -1188,18 +1191,28 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     });
     Button addsemester_okbutton(Non,24,550,700,100,50,"OK",[&](){
         string temp;
+        Semester NS;
         temp = IDSem.getText();
-        string cur_sem_id = temp;
+        bool is_valid_temp = false;
+        if (temp.size()){
+            is_valid_temp = ValidSemester(temp);
+            if (is_valid_temp) NS.IDsemester = stoi(temp);
+        }
 
         string start_day = StDay.getText();
+        bool is_valid_start = false;
+        if (start_day.size()){
+            is_valid_start = CheckDOB(start_day);
+            if (is_valid_start) NS.start_day = start_day;
+        }
         string end_day = EnDay.getText();
-        Semester NS;
-        int ID = 0; for(int i=0; i<cur_sem_id.size(); i++) ID = ID*10+cur_sem_id[i]-'0';
-        NS.IDsemester = ID;
-        NS.start_day = start_day;
-        NS.end_day = end_day;
+        bool is_valid_end = false;
+        if (end_day.size()){
+            is_valid_end = CheckDOB(end_day);
+            if (is_valid_end) NS.end_day = end_day;
+        }
         bool is_add_success = false;
-        if (ID) is_add_success = Add_A_Semester(ListYear.Head->data,NS);
+        if (is_valid_temp && is_valid_start && is_valid_end) is_add_success = Add_A_Semester(ListYear.Head->data,NS);
         if (is_add_success){
             TextBox Info(400,325,400,150,_Font,"Added successfully",30);
             Info.draw(window);
@@ -1208,20 +1221,29 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             window.clear();
             window.display();
             setText(default_semester,"Current semester: " + to_string(ListYear.Head->data.sem_list.Head->data.IDsemester),_Font,20,300,50,sf::Color::Black);
+            IDSem.clear_str();
+            StDay.clear_str();
+            EnDay.clear_str();
+            is_AddSemester = false;
+            is_MainMenu = true;
+            setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
+            setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
+            setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
         }
         else{
-            TextBox Info(400,325,400,150,_Font,"Invalid year",30);
+            if (is_valid_temp) setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
+            else setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Red);
+            if (is_valid_start) setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
+            else setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Red);
+            if (is_valid_end) setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
+            else setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Red);
+            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
             Info.draw(window);
             window.display();
             sf::sleep(sf::seconds(2));
             window.clear();
             window.display();
         }
-        IDSem.clear_str();
-        StDay.clear_str();
-        EnDay.clear_str();
-        is_AddSemester = false;
-        is_MainMenu = true;
     });
     Button Logout(Non,20,1100,720,80,50,"Logout",[&](){
         logout = true;

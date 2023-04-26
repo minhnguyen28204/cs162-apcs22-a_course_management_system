@@ -17,7 +17,7 @@ TextField::TextField(sf::Font& font, unsigned int size, sf::Color _color, float 
 
     m_cursor.setSize(sf::Vector2f(1, size));
     m_cursor.setFillColor(color);
-    m_cursor.setPosition(x + 10, y + 10);
+    m_cursor.setPosition(x + 10, y + 7);
 
     pos_x = x;
     pos_y = y;
