@@ -236,11 +236,11 @@ void SetwelcomeText(User Who){
 
 //handle add school year
 void HandleAddSchoolYear(sf::RenderWindow &window){
-            string cur_year_id = addschoolyear_textfield.getText();
+        string cur_year_id = addschoolyear_textfield.getText();
         int ID = 0;
         for(int i=0; i<cur_year_id.size(); i++) ID = ID * 10 + cur_year_id[i]-'0';
         Year NY;
-        NY.IDyear = ID;
+        NY.IDyear = stoi(cur_year_id);
         bool is_add_success = CreateNewYear(ListYear,NY);
         if (is_add_success){
             TextBox Info(400,325,400,150,_Font,"Added successfully",30);
@@ -1685,33 +1685,63 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         addschoolyear_textfield.clear_str();
     });
     Button AddClasses(cursor,24,490,450,220,50,"Add class",[&](){
-        is_AddClass = true;
-        is_MainMenu = false;
+        if (ListYear.Head){
+            is_AddClass = true;
+            is_MainMenu = false;
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Please add year",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button AddCourses(cursor,24,490,150,220,50,"Add course",[&](){
-        is_AddCourse = true;
-        is_MainMenu = false;
-        ID_input.clear_str();
-        Name_input.clear_str();
-        Class_input.clear_str();
-        Teacher_input.clear_str();
-        Session_input.clear_str();
-        DayWeek_input.clear_str();
-        Credits_input.clear_str();
-        MaxStudent_input.clear_str();
-        setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Black);
-        setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Black);
-        setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Black);
-        setText(addcourse_teacher,"Teacher Name",_Font,20,100,510,sf::Color::Black);
-        setText(addcourse_credits,"Credits",_Font,20,100,210,sf::Color::Black);
-        setText(addcourse_maxstu,"Max students",_Font,20,100,310,sf::Color::Black);
-        setText(addcourse_dayweek,"Day of week",_Font,20,100,410,sf::Color::Black);
-        setText(addcourse_sess,"Session",_Font,20,100,510,sf::Color::Black);
-        cur_addcourse_page = 0;
+        if (ListYear.Head && ListYear.Head->data.sem_list.Head){
+            is_AddCourse = true;
+            is_MainMenu = false;
+            ID_input.clear_str();
+            Name_input.clear_str();
+            Class_input.clear_str();
+            Teacher_input.clear_str();
+            Session_input.clear_str();
+            DayWeek_input.clear_str();
+            Credits_input.clear_str();
+            MaxStudent_input.clear_str();
+            setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Black);
+            setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Black);
+            setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Black);
+            setText(addcourse_teacher,"Teacher Name",_Font,20,100,510,sf::Color::Black);
+            setText(addcourse_credits,"Credits",_Font,20,100,210,sf::Color::Black);
+            setText(addcourse_maxstu,"Max students",_Font,20,100,310,sf::Color::Black);
+            setText(addcourse_dayweek,"Day of week",_Font,20,100,410,sf::Color::Black);
+            setText(addcourse_sess,"Session",_Font,20,100,510,sf::Color::Black);
+            cur_addcourse_page = 0;
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Please add year or semester first",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button AddSemester(cursor,24,490,550,220,50,"Add semester",[&](){
-        is_AddSemester = true;
-        is_MainMenu = false;
+        if (ListYear.Head){
+            is_AddSemester = true;
+            is_MainMenu = false;
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Please add year",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button OK1(Non,24,550,600,100,50,"OK",[&](){
         HandleOK1(window);
@@ -1727,45 +1757,55 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_MainMenu = true;
     });
     Button AddNewStudent(cursor,24,435,250,330,50,"Add student to class",[&](){
-        DLLNode <Class> *Cur = ListYear.Head->data.classes_list.Head;
-        while (all_class_name.getSize()) all_class_name.pop_back();
-        while (chose_class_page.getSize()) chose_class_page.pop_back();
-        int cur_num = 0;
-        string Temp;
-        while (Cur){
-            Temp = Cur->data.class_name;
-            all_class_name.push_back(Temp);
-            Cur = Cur->pNext;
-            cur_num++;
-        }
-        int i = 0;
-        while (i < cur_num){
-            ButtonLibrary CurPage;
-            int cnt = 4;
-            int UpperBound = 205;
-            while (cnt && i < cur_num){
-                CurClass.SetFunction([=](){
-                    if (!is_MainMenu){
-                        ID_chosen_class = i;
-                        is_ChoseClass = false;
-                        is_AddStudent = true;
-                    }
-                });
-                CurClass.ChangeText(all_class_name[i]);
-                CurClass.SetDetail(Non,24,400,UpperBound,400,40);
-                CurPage.addButton(CurClass);
-                cnt--;
-                UpperBound += 100;
-                i++;
+        if (ListYear.Head && ListYear.Head->data.sem_list.Head){
+            DLLNode <Class> *Cur = ListYear.Head->data.classes_list.Head;
+            while (all_class_name.getSize()) all_class_name.pop_back();
+            while (chose_class_page.getSize()) chose_class_page.pop_back();
+            int cur_num = 0;
+            string Temp;
+            while (Cur){
+                Temp = Cur->data.class_name;
+                all_class_name.push_back(Temp);
+                Cur = Cur->pNext;
+                cur_num++;
             }
-            CurPage.addButton(BackPage);
-            CurPage.addButton(NextPage);
-            chose_class_page.push_back(CurPage);
+            int i = 0;
+            while (i < cur_num){
+                ButtonLibrary CurPage;
+                int cnt = 4;
+                int UpperBound = 205;
+                while (cnt && i < cur_num){
+                    CurClass.SetFunction([=](){
+                        if (!is_MainMenu){
+                            ID_chosen_class = i;
+                            is_ChoseClass = false;
+                            is_AddStudent = true;
+                        }
+                    });
+                    CurClass.ChangeText(all_class_name[i]);
+                    CurClass.SetDetail(Non,24,400,UpperBound,400,40);
+                    CurPage.addButton(CurClass);
+                    cnt--;
+                    UpperBound += 100;
+                    i++;
+                }
+                CurPage.addButton(BackPage);
+                CurPage.addButton(NextPage);
+                chose_class_page.push_back(CurPage);
+            }
+            is_MainMenu = false;
+            is_ChoseClass = true;
+            is_AddIndividual = false;
+            chose_class_curpage = 0;
         }
-        is_MainMenu = false;
-        is_ChoseClass = true;
-        is_AddIndividual = false;
-        chose_class_curpage = 0;
+        else{
+            TextBox Info(300,325,600,150,_Font,"Please add year or semester first",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button AddIndividualStudent(cursor,24,490,300,220,50,"Add a student",[&](){
         is_AddIndividual = true;
@@ -1803,37 +1843,47 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_ViewClass2 = true;
     });
     Button AddNewStudentToCourse(cursor,24,435,350,330,50,"Add student to course",[&](){
-        is_MainMenu = false;
-        is_AddStudentToCourse = true;
-        DLLNode <Course> *Cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
-        while (all_course_id.getSize()) all_course_id.pop_back();
-        while (chose_course_page.getSize()) chose_course_page.pop_back();
-        int i = 0;
-        int cur_num = 0;
-        while (Cur){
-            all_course_id.push_back(Cur->data.ID + " - " + Cur->data.course_name);
-            Cur = Cur->pNext;
-            cur_num++;
-        }
-        while (i < cur_num){
-            ButtonLibrary CurPage;
-            int cnt = 4;
-            int UpperBound = 205;
-            while (cnt && i < cur_num){
-                CurCourse.SetFunction([=](){
-                    ID_chosen_course = i;
-                    is_AddStudent = true;
-                });
-                CurCourse.ChangeText(all_course_id[i]);
-                CurCourse.SetDetail(Non,24,300,UpperBound,600,40);
-                CurPage.addButton(CurCourse);
-                cnt--;
-                UpperBound+=100;
-                i++;
+        if (ListYear.Head && ListYear.Head->data.sem_list.Head){
+            is_MainMenu = false;
+            is_AddStudentToCourse = true;
+            DLLNode <Course> *Cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
+            while (all_course_id.getSize()) all_course_id.pop_back();
+            while (chose_course_page.getSize()) chose_course_page.pop_back();
+            int i = 0;
+            int cur_num = 0;
+            while (Cur){
+                all_course_id.push_back(Cur->data.ID + " - " + Cur->data.course_name);
+                Cur = Cur->pNext;
+                cur_num++;
             }
-            chose_course_page.push_back(CurPage);
+            while (i < cur_num){
+                ButtonLibrary CurPage;
+                int cnt = 4;
+                int UpperBound = 205;
+                while (cnt && i < cur_num){
+                    CurCourse.SetFunction([=](){
+                        ID_chosen_course = i;
+                        is_AddStudent = true;
+                    });
+                    CurCourse.ChangeText(all_course_id[i]);
+                    CurCourse.SetDetail(Non,24,300,UpperBound,600,40);
+                    CurPage.addButton(CurCourse);
+                    cnt--;
+                    UpperBound+=100;
+                    i++;
+                }
+                chose_course_page.push_back(CurPage);
+            }
+            chose_course_curpage = 0;
         }
-        chose_course_curpage = 0;
+        else{
+            TextBox Info(300,325,600,150,_Font,"Please add year or semester first",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button Back_From_Chose_Course_To_Main_Menu(Non,20,105,100,70,50,"Back",[&](){
         is_AddStudentToCourse = false;

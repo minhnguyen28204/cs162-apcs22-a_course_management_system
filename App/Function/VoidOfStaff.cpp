@@ -2,7 +2,7 @@
 
 void AutoAddClasses(DLinkedList<Year>& listyear, int latestyear)
 {
-    if(!listyear.Head) return;
+    if(!listyear.Head->pNext) return;
     DLLNode<Year> *prev_year = listyear.Head->pNext;
     if(listyear.ListSize <= 4)
     {
@@ -12,7 +12,8 @@ void AutoAddClasses(DLinkedList<Year>& listyear, int latestyear)
             listyear.Head->data.classes_list.push(cur_class->data);
             cur_class = cur_class ->pNext;
         }
-    } else
+    }
+    else
     {
         DLLNode<Year>* cur_year = listyear.Head;
         int count = 4;
