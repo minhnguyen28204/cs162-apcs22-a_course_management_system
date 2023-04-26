@@ -65,9 +65,9 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         cur_student.ID= id ;
         if(!CheckID(cur_student.ID)) continue;
         cur_student.FirstName=FName;
-        if(!CheckName(cur_student.FirstName)) continue;
+        if(!CheckFullName(cur_student.FirstName)) continue;
         cur_student.LastName=LName;
-        if(!CheckName(cur_student.LastName)) continue;
+        if(!CheckFullName(cur_student.LastName)) continue;
         cur_student.Gender=stoi(Gen);
         if(!isnum(Gen[0])) continue;
         cur_student.dob=dofb;
