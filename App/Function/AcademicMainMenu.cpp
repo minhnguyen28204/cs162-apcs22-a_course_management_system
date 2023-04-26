@@ -999,12 +999,12 @@ void UpdateScoreWindow(sf::RenderWindow &window){
     }
     Button OK(Non,24,700,460,200,50,"OK",[&](){
         Student *StudentPointer = &CurChoseStudent->data;
-        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,-1,false);
+        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,-1);
         UpdateScoreOther(Cur,OtherMark.getText());
         UpdateScoreMidterm(Cur,MidMark.getText());
         UpdateScoreFinal(Cur,FinMark.getText());
         UpdateScoreTotal(Cur,TotMark.getText());
-        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,1,false);
+        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,1);
         stop = true;
         TextBox Info(300,350,600,100,_Font,"Update successfully",30);
         Info.draw(window);
@@ -1623,7 +1623,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
                 if (all_course_id[ID_chosen_course] == Cur->data.ID + " - " + Cur->data.course_name) break;
                 Cur = Cur->pNext;
             }
-            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student);
+            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student,ListYear);
         }
         cout << is_valid_student << '\n';
         if (is_add_success){
@@ -1704,7 +1704,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         }
         bool is_add_success;
         if (!is_AddStudentToCourse) is_add_success = QuickInputClass(folderpath,Cur->data);
-        else is_add_success = QInputStuInCourse(folderpath,cur->data);
+        else is_add_success = QInputStuInCourse(folderpath,cur->data,ListYear);
         if (is_add_success){
             TextBox Info(400,325,400,150,_Font,"Added successfully",30);
             Info.draw(window);

@@ -49,17 +49,11 @@ bool FindStudent(Student *&CurStudent, string StuID, DLinkedList<Year> &ListYear
     }
     return false;
 }
-void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, int del, bool isPublic){
-    if (!isPublic){
-        (*CurStudent).Number_Of_Credits += CurCou.credits_num*del;
-        (*CurStudent).TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
-    }
-    if (CurCou.unlocked){
-        (*CurStudent).Official_Number_Of_Credits += CurCou.credits_num*del;
-        (*CurStudent).Official_TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
-    }
+void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, int del){
+    (*CurStudent).Number_Of_Credits += CurCou.credits_num*del;
+    (*CurStudent).TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
 }
-void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear, bool isPublic){
+void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear){
     DLLNode<Score> *Cur = OldScore;
     while (Cur){
         Student *CurStudent;
@@ -68,7 +62,7 @@ void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, 
             cout << Cur->data.stu_id;
             return;
         };
-        UpdateStudentResult(CurStudent,CurCou,Cur->data,-1,isPublic);
+        UpdateStudentResult(CurStudent,CurCou,Cur->data,-1);
         Cur=Cur->pNext;
     }
     Cur = NewScore;
@@ -79,7 +73,7 @@ void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, 
             cout << Cur->data.stu_id;
             return;
         }
-        UpdateStudentResult(CurStudent,CurCou,Cur->data,1,isPublic);
+        UpdateStudentResult(CurStudent,CurCou,Cur->data,1);
         Cur=Cur->pNext;
     }
 }

@@ -30,6 +30,5 @@ bool UpdateScoreMidterm(DLLNode <Score> *newSco, string x);
 bool UpdateScoreTotal(DLLNode <Score> *newSco, string x);
 bool UpdateScoreOther(DLLNode <Score> *newSco, string x);
 void CreateDefaultScore(Course& cur_cou, Student& cur_stu, Score& sc);
-void PublicScoreboard(Course &CurCou, DLinkedList<Year> &ListYear);
 
 #endif
