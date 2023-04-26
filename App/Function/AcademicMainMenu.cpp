@@ -1431,13 +1431,14 @@ void UpdateScoreWindow(sf::RenderWindow &window){
         TotMark.SetIniStr(Point(Cur->data.tot_mark));
     }
     Button OK(Non,24,700,460,200,50,"OK",[&](){
-        Student *StudentPointer = &CurChoseStudent->data;
-        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,-1);
+        Student *tmp;
+        FindStudent(tmp,CurChoseStudent->data.ID,ListYear);
+        UpdateStudentResult(tmp,CurChosenCourse->data,Cur->data,-1);
         UpdateScoreOther(Cur,OtherMark.getText());
         UpdateScoreMidterm(Cur,MidMark.getText());
         UpdateScoreFinal(Cur,FinMark.getText());
         UpdateScoreTotal(Cur,TotMark.getText());
-        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,1);
+        UpdateStudentResult(tmp,CurChosenCourse->data,Cur->data,1);
         stop = true;
         TextBox Info(300,350,600,100,_Font,"Update successfully",30);
         Info.draw(window);
