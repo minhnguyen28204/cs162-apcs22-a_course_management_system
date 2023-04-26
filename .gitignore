@@ -7,3 +7,8 @@ App/obj/Release/main.o
 .vscode
 main.exe
 *.depend
+App/Information/SystemData/2027-2028/semesters/semesters.dat
+App/Information/SystemData/2027-2028/classes/26CTT1/students.dat
+App/Information/SystemData/2027-2028/semesters/semester1/courses.dat
+App/Information/SystemData/2027-2028/classes/26CTT1/students.dat
+App/Information/SystemData/2027-2028/semesters/semester1/courses.dat

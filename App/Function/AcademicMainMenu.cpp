@@ -126,6 +126,8 @@ TextBox Total_Point;
 TextBox ID_Score;
 TextBox Name_Score;
 TextBox Total_Score;
+TextBox SemGPA;
+TextBox OveGPA;
 
 //Add school year
 sf::Text addschoolyear_text;
@@ -232,58 +234,413 @@ void SetwelcomeText(User Who){
     setText(author,"A project made by Group 3, APCS22, enjoy using it :3",_Font,15,170,760,sf::Color::Black);
 }
 
+//handle add school year
+void HandleAddSchoolYear(sf::RenderWindow &window){
+            string cur_year_id = addschoolyear_textfield.getText();
+        int ID = 0;
+        for(int i=0; i<cur_year_id.size(); i++) ID = ID * 10 + cur_year_id[i]-'0';
+        Year NY;
+        NY.IDyear = ID;
+        bool is_add_success = CreateNewYear(ListYear,NY);
+        if (is_add_success){
+            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+            addschoolyear_textfield.clear_str();
+            setText(default_year,"Current year: " + to_string(ListYear.Head->data.IDyear),_Font,20,50,50,sf::Color::Black);
+            setText(default_semester,"",_Font,20,300,50,sf::Color::Black);
+            is_MainMenu = true;
+            is_AddSchoolYear = false;
+        }
+        else{
+            TextBox Info(400,325,400,150,_Font,"Invalid year",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+}
+
 //OK handle add class
-void HandleAddClass(){
-    string TEMP = addclass_classname_input.getText();
-    Class NC; NC.class_name = TEMP;
-    AddClass(ListYear.Head->data,NC);
-    addclass_classname_input.clear_str();
-    is_MainMenu = true;
-    is_AddClass = false;
+void HandleAddClass(sf::RenderWindow &window){
+        string TEMP = addclass_classname_input.getText();
+        Class NC; NC.class_name = TEMP;
+        bool is_add_success = AddClass(ListYear.Head->data,NC);
+        if (is_add_success){
+            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else{
+            TextBox Info(400,325,400,150,_Font,"Invalid year",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        addclass_classname_input.clear_str();
+        is_MainMenu = true;
+        is_AddClass = false;
 }
 
 //OK1
-void HandleOK1(){
-    cur_addcourse_page = 1;
+void HandleOK1(sf::RenderWindow &window){
+    bool is_valid_id = ID_input.getText().size();
     temp.ID = ID_input.getText();
+    bool is_valid_class = Class_input.getText().size();
     temp.class_name = Class_input.getText();
+    bool is_valid_course = Name_input.getText().size();
     temp.course_name = Name_input.getText();
-    temp.teacher_name = Teacher_input.getText();
+    string TEMP;
+    TEMP = Teacher_input.getText();
+    bool is_valid_teacher = false;
+    if (TEMP.size()){
+        is_valid_teacher = CheckFullName(TEMP);
+        temp.teacher_name = TEMP;
+    }
+    if (is_valid_teacher && is_valid_id && is_valid_class && is_valid_course){
+        cur_addcourse_page = 1;
+    }
+    else{
+        if (is_valid_teacher) setText(addcourse_teacher,"Teacher Name",_Font,20,100,510,sf::Color::Black);
+        else setText(addcourse_teacher,"Teacher Name",_Font,20,100,510,sf::Color::Red);
+        if (is_valid_id) setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Black);
+        else setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Red);
+        if (is_valid_course) setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Black);
+        else setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Red);
+        if (is_valid_class) setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Black);
+        else setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Red);
+        TextBox Info(400,325,400,150,_Font,"Invalid information",30);
+        Info.draw(window);
+        window.display();
+        sf::sleep(sf::seconds(2));
+        window.clear();
+        window.display();
+    }
 }
 //OK2
-void HandleOK2(){
+void HandleOK2(sf::RenderWindow &window){
     string TEMP = Credits_input.getText();
-    int crdts = 0; for(int i=0; i<TEMP.size(); i++) crdts = crdts*10 + (TEMP[i]-'0');
-    temp.credits_num = crdts;
-    temp.day_of_week = DayWeek_input.getText();
-    temp.session = Session_input.getText();
-    int maxst = 0;
-    TEMP = MaxStudent_input.getText();
-    for(int i=0; i<TEMP.size(); i++) maxst = maxst*10 + TEMP[i]-'0';
-    temp.max_students = maxst;
-    is_AddCourse = false;
-    is_MainMenu = true;
-    Add_A_Course(ListYear.Head->data.sem_list.Head->data,temp);
+
+        bool is_valid_credit = false;
+        if (TEMP.size()){
+            is_valid_credit = CheckID(TEMP);
+            if (is_valid_credit) temp.credits_num = stoi(TEMP);
+        }
+
+        bool is_valid_dayofweek = false;
+        TEMP = DayWeek_input.getText();
+        if (TEMP.size()){
+            is_valid_dayofweek = CheckDOW(TEMP);
+            temp.day_of_week = TEMP;
+        }
+
+        bool is_valid_session = false;
+        TEMP = Session_input.getText();
+        if (TEMP.size()){
+            is_valid_session = CheckSession(TEMP);
+            temp.session = TEMP;
+        }
+
+        bool is_valid_maxstudents = false;
+        TEMP = MaxStudent_input.getText();
+        if (TEMP.size()){
+            is_valid_maxstudents = CheckID(TEMP);
+            if (is_valid_maxstudents) temp.max_students = stoi(TEMP);
+        }
+
+        bool is_add_success = false;
+        if (is_valid_credit && is_valid_dayofweek && is_valid_session && is_valid_maxstudents) is_add_success = Add_A_Course(ListYear.Head->data.sem_list.Head->data,temp);
+        if (is_add_success && is_valid_credit && is_valid_dayofweek && is_valid_session && is_valid_maxstudents){
+            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+            is_AddCourse = false;
+            is_MainMenu = true;
+        }
+        else if (is_valid_credit && is_valid_dayofweek && is_valid_session && is_valid_maxstudents){
+            TextBox Info(400,325,400,150,_Font,"Course has already been added",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else{
+            if (is_valid_credit) setText(addcourse_credits,"Credits",_Font,20,100,210,sf::Color::Black);
+            else setText(addcourse_credits,"Credits",_Font,20,100,210,sf::Color::Red);
+
+            if (is_valid_maxstudents) setText(addcourse_maxstu,"Max students",_Font,20,100,310,sf::Color::Black);
+            else setText(addcourse_maxstu,"Max students",_Font,20,100,310,sf::Color::Red);
+
+            if (is_valid_dayofweek) setText(addcourse_dayweek,"Day of week",_Font,20,100,410,sf::Color::Black);
+            else setText(addcourse_dayweek,"Day of week",_Font,20,100,410,sf::Color::Red);
+
+            if (is_valid_session) setText(addcourse_sess,"Session",_Font,20,100,510,sf::Color::Black);
+            else setText(addcourse_sess,"Session",_Font,20,100,510,sf::Color::Red);
+
+            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
 }
 //Handle Add Semester
-void HandleAddSemester(){
-    string cur_sem_id = IDSem.getText();
-    string start_day = StDay.getText();
-    string end_day = EnDay.getText();
-    Semester NS;
-    int ID = 0; for(int i=0; i<cur_sem_id.size(); i++) ID = ID*10+cur_sem_id[i]-'0';
-    NS.IDsemester = ID;
-    NS.start_day = start_day;
-    NS.end_day = end_day;
-    if (ID) Add_A_Semester(ListYear.Head->data,NS);
-    setText(default_semester,"Current semester: " + to_string(ListYear.Head->data.sem_list.Head->data.IDsemester),_Font,20,300,50,sf::Color::Black);
-    IDSem.clear_str();
-    StDay.clear_str();
-    EnDay.clear_str();
-    is_AddSemester = false;
-    is_MainMenu = true;
+void HandleAddSemester(sf::RenderWindow &window){
+    string temp;
+        Semester NS;
+        temp = IDSem.getText();
+        bool is_valid_temp = false;
+        if (temp.size()){
+            is_valid_temp = ValidSemester(temp);
+            if (is_valid_temp) NS.IDsemester = stoi(temp);
+        }
+
+        string start_day = StDay.getText();
+        bool is_valid_start = false;
+        if (start_day.size()){
+            is_valid_start = CheckDOB(start_day);
+            if (is_valid_start) NS.start_day = start_day;
+        }
+        string end_day = EnDay.getText();
+        bool is_valid_end = false;
+        if (end_day.size()){
+            is_valid_end = CheckDOB(end_day);
+            if (is_valid_end) NS.end_day = end_day;
+        }
+        bool is_add_success = false;
+        if (is_valid_temp && is_valid_start && is_valid_end) is_add_success = Add_A_Semester(ListYear.Head->data,NS);
+        if (is_add_success){
+            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+            setText(default_semester,"Current semester: " + to_string(ListYear.Head->data.sem_list.Head->data.IDsemester),_Font,20,300,50,sf::Color::Black);
+            IDSem.clear_str();
+            StDay.clear_str();
+            EnDay.clear_str();
+            is_AddSemester = false;
+            is_MainMenu = true;
+            setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
+            setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
+            setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
+        }
+        else{
+            if (is_valid_temp) setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
+            else setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Red);
+            if (is_valid_start) setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
+            else setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Red);
+            if (is_valid_end) setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
+            else setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Red);
+            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
 }
 
+void HandleAddIndi(sf::RenderWindow &window){
+    Student NS;
+        bool is_valid_ID = true;
+        string temp;
+
+        temp = addstudent_ID_input.getText();
+        if (temp.size()){
+            is_valid_ID = CheckID(temp);
+            NS.ID = temp;
+        }
+        else is_valid_ID = false;
+
+        bool is_valid_FN;
+        temp = addstudent_FirstName_input.getText();
+        if (temp.size()){
+            is_valid_FN = CheckFullName(temp);
+            NS.FirstName = temp;
+        }
+        else is_valid_FN = false;
+
+        bool is_valid_LN;
+        temp = addstudent_LastName_input.getText();
+        if (temp.size()){
+            is_valid_LN = CheckFullName(temp);
+            NS.LastName = temp;
+        }
+        else is_valid_LN = false;
+
+        bool is_valid_Gender;
+        temp = addstudent_Gender_input.getText();
+        if (temp.size()){
+            is_valid_Gender = ValidSemester(temp);
+            if (is_valid_Gender) NS.Gender = stoi(addstudent_Gender_input.getText());
+        }
+        else is_valid_Gender = false;
+
+        bool is_valid_dob;
+        temp = addstudent_Dob_input.getText();
+        if (temp.size()){
+            is_valid_dob = CheckDOB(temp);
+            NS.dob = temp;
+        }
+        else is_valid_dob = false;
+
+        bool is_valid_social;
+        temp = addstudent_Social_input.getText();
+        if (temp.size()){
+            is_valid_social = CheckID(temp);
+            NS.Social_ID = temp;
+        }
+        else is_valid_social = false;
+
+        bool is_add_success = false;
+        bool is_valid_student = false;
+        if (!is_AddStudentToCourse && is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender){
+            DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
+            while (Cur){
+                if (Cur->data.class_name == all_class_name[ID_chosen_class]) break;
+                Cur = Cur->pNext;
+            }
+            is_add_success = AddStudent(Cur->data,NS);
+        }
+        else if (is_AddStudentToCourse && is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender){
+            DLLNode<Course> *Cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
+            while (Cur){
+                if (all_course_id[ID_chosen_course] == Cur->data.ID + " - " + Cur->data.course_name) break;
+                Cur = Cur->pNext;
+            }
+            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student,ListYear);
+        }
+        if (is_add_success){
+            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+            is_MainMenu = true;
+            if (is_AddStudentToCourse) is_AddStudentToCourse = false;
+            is_AddIndividual  = false;
+        }
+        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender && !is_valid_student && is_AddStudentToCourse){
+            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
+            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
+            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
+            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
+            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
+            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
+            TextBox info(250,325,700,100,_Font,"Student is not in any class",30);
+            info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender && is_AddStudentToCourse){
+            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
+            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
+            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
+            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
+            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
+            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
+            TextBox info(250,325,700,100,_Font,"This student has already been in the course",30);
+            info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && !is_AddStudentToCourse){
+            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
+            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
+            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
+            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
+            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
+            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
+            TextBox info(250,325,700,100,_Font,"This student has already been in the class",30);
+            info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else{
+            if (is_valid_ID) setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
+            else setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Red);
+            if (is_valid_FN) setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
+            else setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Red);
+            if (is_valid_LN) setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
+            else setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Red);
+            if (is_valid_dob) setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
+            else setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Red);
+            if (is_valid_social) setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
+            else setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Red);
+            if (is_valid_Gender) setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
+            else setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Red);
+            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+}
+
+void HandleAddCSV(sf::RenderWindow &window){
+string folderpath = addstudent_folderpath_input.getText();
+        DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
+        if (!is_AddStudentToCourse){
+            while (Cur){
+                if (Cur->data.class_name == all_class_name[ID_chosen_class]) break;
+                Cur = Cur->pNext;
+            }
+        }
+        DLLNode<Course> *cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
+        if (is_AddStudentToCourse){
+            while(cur){
+                if (cur->data.ID + " - " + cur->data.course_name == all_course_id[ID_chosen_course]) break;
+                cur = cur->pNext;
+            }
+        }
+        cout << cur->data.course_name << '\n';
+        bool is_add_success;
+        if (!is_AddStudentToCourse) is_add_success = QuickInputClass(folderpath,Cur->data);
+        else is_add_success = QInputStuInCourse(folderpath,cur->data,ListYear);
+        if (is_add_success){
+            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+            is_MainMenu = true;
+            if (is_AddStudentToCourse) is_AddStudentToCourse = false;
+            is_AddFromCSV = false;
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Invalid folder path, please try again",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+}
 
 void ProcessDetailCourse(){
     DLLNode<Year> *Cur = ListYear.Head;
@@ -382,6 +739,8 @@ void DrawWindow(sf::RenderWindow &window){
         Course_ID.draw(window);
         Course_Name.draw(window);
         Total_Point.draw(window);
+        OveGPA.draw(window);
+        SemGPA.draw(window);
         for(int i=0; i<ScorePage.size(); i++){
             for(int j=0; j<ScorePage[i].size(); j++){
                 ScorePage[i][j].draw(window);
@@ -525,43 +884,69 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
         addschoolyear_vecbutton.handleEvent(event);
         addschoolyear_textfield.handleEvent(event);
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-            string cur_year_id = addschoolyear_textfield.getText();
-            int ID = 0;
-            for(int i=0; i<cur_year_id.size(); i++) ID = ID * 10 + cur_year_id[i]-'0';
-            Year NY;
-            NY.IDyear = ID;
-            CreateNewYear(ListYear,NY);
-            addschoolyear_textfield.clear_str();
-            setText(default_year,"Current year: " + to_string(ListYear.Head->data.IDyear),_Font,20,50,50,sf::Color::Black);
-            is_MainMenu = true;
-            is_AddSchoolYear = false;
+            HandleAddSchoolYear(window);
         }
     }
 
     if (is_AddClass){
         addclass_vecbutton.handleEvent(event);
         addclass_classname_input.handleEvent(event);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleAddClass();
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleAddClass(window);
     }
 
     if (is_AddCourse){
         addcourse_vecbutton.handleEvent(event);
         if (cur_addcourse_page==0){
+            p1.handleEvent(event);
             ID_input.handleEvent(event);
             Class_input.handleEvent(event);
             Teacher_input.handleEvent(event);
             Name_input.handleEvent(event);
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleOK1(window);
         }
         else{
+            p2.handleEvent(event);
             MaxStudent_input.handleEvent(event);
             Session_input.handleEvent(event);
             Credits_input.handleEvent(event);
             DayWeek_input.handleEvent(event);
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleOK2(window);
         }
-        if (cur_addcourse_page==0) p1.handleEvent(event);
-        else p2.handleEvent(event);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter && cur_addcourse_page==0) HandleOK1();
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter && cur_addcourse_page==1) HandleOK2();
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Tab){
+            if (ID_input.cur_state()){
+                ID_input.Tab_handle();
+                Name_input.Tab_handle();
+            }
+            else if (Name_input.cur_state()){
+                Name_input.Tab_handle();
+                Class_input.Tab_handle();
+            }
+            else if (Class_input.cur_state()){
+                Class_input.Tab_handle();
+                Teacher_input.Tab_handle();
+            }
+            else if (Teacher_input.cur_state()){
+                Teacher_input.Tab_handle();
+                ID_input.Tab_handle();
+            }
+
+            if (Credits_input.cur_state()){
+                Credits_input.Tab_handle();
+                MaxStudent_input.Tab_handle();
+            }
+            else if (MaxStudent_input.cur_state()){
+                MaxStudent_input.Tab_handle();
+                DayWeek_input.Tab_handle();
+            }
+            else if (DayWeek_input.cur_state()){
+                DayWeek_input.Tab_handle();
+                Session_input.Tab_handle();
+            }
+            else if (Session_input.cur_state()){
+                Session_input.Tab_handle();
+                Credits_input.Tab_handle();
+            }
+        }
     }
 
     if (is_AddSemester){
@@ -569,7 +954,21 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
         IDSem.handleEvent(event);
         StDay.handleEvent(event);
         EnDay.handleEvent(event);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleAddSemester();
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleAddSemester(window);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Tab){
+            if (IDSem.cur_state()){
+                IDSem.Tab_handle();
+                StDay.Tab_handle();
+            }
+            else if (StDay.cur_state()){
+                StDay.Tab_handle();
+                EnDay.Tab_handle();
+            }
+            else if (EnDay.cur_state()){
+                EnDay.Tab_handle();
+                IDSem.Tab_handle();
+            }
+        }
     }
 
 
@@ -586,10 +985,38 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
         addstudent_Dob_input.handleEvent(event);
         addstudent_Social_input.handleEvent(event);
         addindi_vecbutton.handleEvent(event);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleAddIndi(window);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Tab){
+            if (addstudent_ID_input.cur_state()){
+                addstudent_ID_input.Tab_handle();
+                addstudent_FirstName_input.Tab_handle();
+            }
+            else if (addstudent_FirstName_input.cur_state()){
+                addstudent_FirstName_input.Tab_handle();
+                addstudent_LastName_input.Tab_handle();
+            }
+            else if (addstudent_LastName_input.cur_state()){
+                addstudent_LastName_input.Tab_handle();
+                addstudent_Gender_input.Tab_handle();
+            }
+            else if (addstudent_Gender_input.cur_state()){
+                addstudent_Gender_input.Tab_handle();
+                addstudent_Dob_input.Tab_handle();
+            }
+            else if (addstudent_Dob_input.cur_state()){
+                addstudent_Dob_input.Tab_handle();
+                addstudent_Social_input.Tab_handle();
+            }
+            else if (addstudent_Social_input.cur_state()){
+                addstudent_Social_input.Tab_handle();
+                addstudent_ID_input.Tab_handle();
+            }
+        }
     }
     else if (is_AddFromCSV && !is_AddStudent){
         addstudent_csv.handleEvent(event);
         addstudent_folderpath_input.handleEvent(event);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) HandleAddCSV(window);
     }
     else if (is_AddStudent && !is_ChoseClass){
         addstudent_vecbutton.handleEvent(event);
@@ -608,6 +1035,11 @@ void ProcessScoreBoardOfStudent(){
     int Numcredit;
     double Total_point;
     ViewResultInSemester(CurChoseStudent->data,CurYear->data.IDyear,CurSem->data.IDsemester,ListYear,ListCourse,ListScore,Numcredit,Total_point);
+
+    double gpa = Total_point/Numcredit;
+    double OveGpa = CurChoseStudent->data.TotalScore/CurChoseStudent->data.Number_Of_Credits;
+    SemGPA.SetDetail(200,100,150,50,_Font,"GPA: " + Point(gpa),24);
+    OveGPA.SetDetail(400,100,600,50,_Font,"Overall GPA: " + Point(OveGpa),24);
     Course_ID.SetDetail(200,200,100,50,_Font,"ID",24);
     Course_Name.SetDetail(300,200,600,50,_Font,"Course name",24);
     Total_Point.SetDetail(900,200,100,50,_Font,"Total",24);
@@ -632,6 +1064,7 @@ void ProcessScoreBoardOfStudent(){
         }
         ScorePage.push_back(current_page);
     }
+    cur_score_page = 0;
 }
 
 void ProcessListOfStudent(){
@@ -999,12 +1432,12 @@ void UpdateScoreWindow(sf::RenderWindow &window){
     }
     Button OK(Non,24,700,460,200,50,"OK",[&](){
         Student *StudentPointer = &CurChoseStudent->data;
-        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,-1);
+        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,-1,false);
         UpdateScoreOther(Cur,OtherMark.getText());
         UpdateScoreMidterm(Cur,MidMark.getText());
         UpdateScoreFinal(Cur,FinMark.getText());
         UpdateScoreTotal(Cur,TotMark.getText());
-        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,1);
+        UpdateStudentResult(StudentPointer,CurChosenCourse->data,Cur->data,1,false);
         stop = true;
         TextBox Info(300,350,600,100,_Font,"Update successfully",30);
         Info.draw(window);
@@ -1145,33 +1578,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         curpage = 0;
     });
     Button addschoolyear_okbutton(Non,24,550,600,100,50,"OK",[&](){
-        string cur_year_id = addschoolyear_textfield.getText();
-        int ID = 0;
-        for(int i=0; i<cur_year_id.size(); i++) ID = ID * 10 + cur_year_id[i]-'0';
-        Year NY;
-        NY.IDyear = ID;
-        bool is_add_success = CreateNewYear(ListYear,NY);
-        if (is_add_success){
-            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-            addschoolyear_textfield.clear_str();
-            setText(default_year,"Current year: " + to_string(ListYear.Head->data.IDyear),_Font,20,50,50,sf::Color::Black);
-            setText(default_semester,"",_Font,20,300,50,sf::Color::Black);
-            is_MainMenu = true;
-            is_AddSchoolYear = false;
-        }
-        else{
-            TextBox Info(400,325,400,150,_Font,"Invalid year",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
+        HandleAddSchoolYear(window);
     });
     Button Back_From_Chose_Semester(Non,20,105,100,70,50,"Back",[=](){
         is_ViewCourse2 = false;
@@ -1183,6 +1590,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         if (chose_year_curpage > 0) chose_year_curpage--;
         if (chose_student_curpage > 0) chose_student_curpage--;
         if (chose_course_curpage > 0) chose_course_curpage--;
+        if (cur_score_page > 0) cur_score_page--;
     });
     Button NextPage(cursor,20,950,600,150,50,"Next Page",[=](){
         if (curpage < 1) curpage++;
@@ -1190,62 +1598,10 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         if (chose_year_curpage < chose_year_page.getSize()-1) chose_year_curpage++;
         if (chose_student_curpage < chose_student_page.getSize()-1) chose_student_curpage++;
         if (chose_course_curpage < chose_course_page.getSize()-1) chose_course_curpage++;
+        if (cur_score_page < ScorePage.size()-1) cur_score_page++;
     });
     Button addsemester_okbutton(Non,24,550,700,100,50,"OK",[&](){
-        string temp;
-        Semester NS;
-        temp = IDSem.getText();
-        bool is_valid_temp = false;
-        if (temp.size()){
-            is_valid_temp = ValidSemester(temp);
-            if (is_valid_temp) NS.IDsemester = stoi(temp);
-        }
-
-        string start_day = StDay.getText();
-        bool is_valid_start = false;
-        if (start_day.size()){
-            is_valid_start = CheckDOB(start_day);
-            if (is_valid_start) NS.start_day = start_day;
-        }
-        string end_day = EnDay.getText();
-        bool is_valid_end = false;
-        if (end_day.size()){
-            is_valid_end = CheckDOB(end_day);
-            if (is_valid_end) NS.end_day = end_day;
-        }
-        bool is_add_success = false;
-        if (is_valid_temp && is_valid_start && is_valid_end) is_add_success = Add_A_Semester(ListYear.Head->data,NS);
-        if (is_add_success){
-            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-            setText(default_semester,"Current semester: " + to_string(ListYear.Head->data.sem_list.Head->data.IDsemester),_Font,20,300,50,sf::Color::Black);
-            IDSem.clear_str();
-            StDay.clear_str();
-            EnDay.clear_str();
-            is_AddSemester = false;
-            is_MainMenu = true;
-            setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
-            setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
-            setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
-        }
-        else{
-            if (is_valid_temp) setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Black);
-            else setText(addsem_box,"Semester ID:",_Font,24,100,310,sf::Color::Red);
-            if (is_valid_start) setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Black);
-            else setText(addsem_stday,"Start day:",_Font,24,100,410,sf::Color::Red);
-            if (is_valid_end) setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Black);
-            else setText(addsem_enday,"End day:",_Font,24,100,510,sf::Color::Red);
-            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
+        HandleAddSemester(window);
     });
     Button Logout(Non,20,1100,720,80,50,"Logout",[&](){
         logout = true;
@@ -1358,136 +1714,13 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_MainMenu = false;
     });
     Button OK1(Non,24,550,600,100,50,"OK",[&](){
-        bool is_valid_id = ID_input.getText().size();
-        temp.ID = ID_input.getText();
-        bool is_valid_class = Class_input.getText().size();
-        temp.class_name = Class_input.getText();
-        bool is_valid_course = Name_input.getText().size();
-        temp.course_name = Name_input.getText();
-
-        string TEMP;
-
-        TEMP = Teacher_input.getText();
-        bool is_valid_teacher = false;
-        if (TEMP.size()){
-            is_valid_teacher = CheckFullName(TEMP);
-            temp.teacher_name = TEMP;
-        }
-        if (is_valid_teacher && is_valid_id && is_valid_class && is_valid_course){
-            cur_addcourse_page = 1;
-        }
-        else{
-            if (is_valid_teacher) setText(addcourse_teacher,"Teacher Name",_Font,20,100,510,sf::Color::Black);
-            else setText(addcourse_teacher,"Teacher Name",_Font,20,100,510,sf::Color::Red);
-            if (is_valid_id) setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Black);
-            else setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Red);
-            if (is_valid_course) setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Black);
-            else setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Red);
-            if (is_valid_class) setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Black);
-            else setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Red);
-
-            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
+        HandleOK1(window);
     });
     Button OK2(Non,24,550,600,100,50,"OK",[&](){
-        string TEMP = Credits_input.getText();
-
-        bool is_valid_credit = false;
-        if (TEMP.size()){
-            is_valid_credit = CheckID(TEMP);
-            if (is_valid_credit) temp.credits_num = stoi(TEMP);
-        }
-
-        bool is_valid_dayofweek = false;
-        TEMP = DayWeek_input.getText();
-        if (TEMP.size()){
-            is_valid_dayofweek = CheckDOW(TEMP);
-            temp.day_of_week = TEMP;
-        }
-
-        bool is_valid_session = false;
-        TEMP = Session_input.getText();
-        if (TEMP.size()){
-            is_valid_session = CheckSession(TEMP);
-            temp.session = TEMP;
-        }
-
-        bool is_valid_maxstudents = false;
-        TEMP = MaxStudent_input.getText();
-        if (TEMP.size()){
-            is_valid_maxstudents = CheckID(TEMP);
-            if (is_valid_maxstudents) temp.max_students = stoi(TEMP);
-        }
-
-        bool is_add_success = false;
-        if (is_valid_credit && is_valid_dayofweek && is_valid_session && is_valid_maxstudents) is_add_success = Add_A_Course(ListYear.Head->data.sem_list.Head->data,temp);
-        if (is_add_success && is_valid_credit && is_valid_dayofweek && is_valid_session && is_valid_maxstudents){
-            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-            is_AddCourse = false;
-            is_MainMenu = true;
-        }
-        else if (is_valid_credit && is_valid_dayofweek && is_valid_session && is_valid_maxstudents){
-            TextBox Info(400,325,400,150,_Font,"Course has already been added",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        else{
-            if (is_valid_credit) setText(addcourse_credits,"Credits",_Font,20,100,210,sf::Color::Black);
-            else setText(addcourse_credits,"Credits",_Font,20,100,210,sf::Color::Red);
-
-            if (is_valid_maxstudents) setText(addcourse_maxstu,"Max students",_Font,20,100,310,sf::Color::Black);
-            else setText(addcourse_maxstu,"Max students",_Font,20,100,310,sf::Color::Red);
-
-            if (is_valid_dayofweek) setText(addcourse_dayweek,"Day of week",_Font,20,100,410,sf::Color::Black);
-            else setText(addcourse_dayweek,"Day of week",_Font,20,100,410,sf::Color::Red);
-
-            if (is_valid_session) setText(addcourse_sess,"Session",_Font,20,100,510,sf::Color::Black);
-            else setText(addcourse_sess,"Session",_Font,20,100,510,sf::Color::Red);
-
-            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
+        HandleOK2(window);
     });
     Button addclass_okbutton(Non,24,550,600,100,50,"OK",[&](){
-        string TEMP = addclass_classname_input.getText();
-        Class NC; NC.class_name = TEMP;
-        bool is_add_success = AddClass(ListYear.Head->data,NC);
-        if (is_add_success){
-            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        else{
-            TextBox Info(400,325,400,150,_Font,"Invalid year",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        addclass_classname_input.clear_str();
-        is_MainMenu = true;
-        is_AddClass = false;
+        HandleAddClass(window);
     });
     Button Back_From_Chose_Class(Non,20,105,100,70,50,"Back",[&](){
         is_ChoseClass = false;
@@ -1556,174 +1789,10 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_AddStudent = false;
     });
     Button addstudent_okbutton(Non,24,550,700,100,50,"OK",[&](){
-        Student NS;
-        bool is_valid_ID = true;
-        string temp;
-
-        temp = addstudent_ID_input.getText();
-        if (temp.size()){
-            is_valid_ID = CheckID(temp);
-            NS.ID = temp;
-        }
-        else is_valid_ID = false;
-
-        bool is_valid_FN;
-        temp = addstudent_FirstName_input.getText();
-        if (temp.size()){
-            is_valid_FN = CheckFullName(temp);
-            NS.FirstName = temp;
-        }
-        else is_valid_FN = false;
-
-        bool is_valid_LN;
-        temp = addstudent_LastName_input.getText();
-        if (temp.size()){
-            is_valid_LN = CheckFullName(temp);
-            NS.LastName = temp;
-        }
-        else is_valid_LN = false;
-
-        bool is_valid_Gender;
-        temp = addstudent_Gender_input.getText();
-        if (temp.size()){
-            is_valid_Gender = ValidSemester(temp);
-            if (is_valid_Gender) NS.Gender = stoi(addstudent_Gender_input.getText());
-        }
-        else is_valid_Gender = false;
-
-        bool is_valid_dob;
-        temp = addstudent_Dob_input.getText();
-        if (temp.size()){
-            is_valid_dob = CheckDOB(temp);
-            NS.dob = temp;
-        }
-        else is_valid_dob = false;
-
-        bool is_valid_social;
-        temp = addstudent_Social_input.getText();
-        if (temp.size()){
-            is_valid_social = CheckID(temp);
-            NS.Social_ID = temp;
-        }
-        else is_valid_social = false;
-
-        bool is_add_success = false;
-        bool is_valid_student = false;
-        if (!is_AddStudentToCourse && is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob){
-            DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
-            while (Cur){
-                if (Cur->data.class_name == all_class_name[ID_chosen_class]) break;
-                Cur = Cur->pNext;
-            }
-            is_add_success = AddStudent(Cur->data,NS);
-        }
-        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob){
-            DLLNode<Course> *Cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
-            while (Cur){
-                if (all_course_id[ID_chosen_course] == Cur->data.ID + " - " + Cur->data.course_name) break;
-                Cur = Cur->pNext;
-            }
-            is_add_success = AddStudentToCourse(Cur->data,NS,is_valid_student,ListYear);
-        }
-        cout << is_valid_student << '\n';
-        if (is_add_success){
-            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-            is_MainMenu = true;
-            if (is_AddStudentToCourse) is_AddStudentToCourse = false;
-            is_AddIndividual  = false;
-        }
-        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && !is_valid_student){
-            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
-            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
-            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
-            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
-            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
-            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
-            TextBox info(250,325,700,100,_Font,"Student is not in any class",30);
-            info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob){
-            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
-            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
-            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
-            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
-            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
-            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
-            TextBox info(250,325,700,100,_Font,"This student has already enrolled in this course",30);
-            info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        else{
-            if (is_valid_ID) setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
-            else setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Red);
-            if (is_valid_FN) setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
-            else setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Red);
-            if (is_valid_LN) setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
-            else setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Red);
-            if (is_valid_dob) setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
-            else setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Red);
-            if (is_valid_social) setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
-            else setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Red);
-            if (is_valid_Gender) setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
-            else setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Red);
-            TextBox Info(400,325,400,150,_Font,"Invalid information",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
+        HandleAddIndi(window);
     });
     Button addstudentcsv_okbutton(Non,24,550,700,100,50,"OK",[&](){
-        string folderpath = addstudent_folderpath_input.getText();
-        DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
-        if (!is_AddStudentToCourse){
-            while (Cur){
-                if (Cur->data.class_name == all_class_name[ID_chosen_class]) break;
-                Cur = Cur->pNext;
-            }
-        }
-        DLLNode<Course> *cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
-        if (is_AddStudentToCourse){
-            while(cur){
-                if (cur->data.ID + " - " + cur->data.course_name == all_course_id[ID_chosen_course]) break;
-                cur = cur->pNext;
-            }
-        }
-        bool is_add_success;
-        if (!is_AddStudentToCourse) is_add_success = QuickInputClass(folderpath,Cur->data);
-        else is_add_success = QInputStuInCourse(folderpath,cur->data,ListYear);
-        if (is_add_success){
-            TextBox Info(400,325,400,150,_Font,"Added successfully",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        else{
-            TextBox Info(400,325,400,150,_Font,"Invalid year",30);
-            Info.draw(window);
-            window.display();
-            sf::sleep(sf::seconds(2));
-            window.clear();
-            window.display();
-        }
-        is_MainMenu = true;
-        if (is_AddStudentToCourse) is_AddStudentToCourse = false;
-        is_AddFromCSV = false;
+        HandleAddCSV(window);
     });
     Button Back_To_Chose_Year(Non,20,105,100,70,50,"Back",[&](){
         is_ViewClass2 = false;
@@ -1864,12 +1933,46 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     });
     Button ExportStudentCourseToCSV(Non,24,350,600,200,50,"Export scoreboard",[&](){
         string filename = GetDir(window);
-        if (filename.size()) ExportToCSV(CurChosenCourse->data,filename);
+        bool export_success = false;
+        if (filename.size()) export_success = ExportToCSV(CurChosenCourse->data,filename);
+        if (export_success){
+            TextBox Info(300,325,600,150,_Font,"Export successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Invalid folder path",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button ImportScore(Non,24,650,600,200,50,"Import scoreboard",[&](){
         string filename = GetDir(window);
         DLinkedList<Score> NewScore;
-        if (filename.size()) ImpScoreCSV(filename,ListYear,ListYear.Head->data.IDyear,CurChosenCourse->data,CurChosenCourse->data.score_list.Head,NewScore);
+        bool is_success = false;
+        if (filename.size()) is_success = ImpScoreCSV(filename,ListYear,ListYear.Head->data.IDyear,CurChosenCourse->data,CurChosenCourse->data.score_list.Head,NewScore);
+        if (is_success){
+            TextBox Info(300,325,600,150,_Font,"Import successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Invalid folder path",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
     });
     Button Back_To_View_Class3(Non,20,105,100,70,50,"Back",[&](){
         is_ViewScoreOfClass = false;
@@ -1933,6 +2036,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
 
     //view score of class
     viewscoreboard_vecbutton.addButton(Back_To_View_Class3);
+    viewscoreboard_vecbutton.addButton(NextPage);
+    viewscoreboard_vecbutton.addButton(BackPage);
 
     //add school year
     addschoolyear_vecbutton.addButton(addschoolyear_okbutton);
@@ -1990,5 +2095,5 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         }
         DrawWindow(window);
     }
-    cout << Save_Data("Information/SystemData",ListYear);
+    Save_Data("Information/SystemData",ListYear);
 }
