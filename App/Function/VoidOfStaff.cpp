@@ -2,6 +2,7 @@
 
 void AutoAddClasses(DLinkedList<Year>& listyear, int latestyear)
 {
+    if(!listyear.Head) return;
     DLLNode<Year> *prev_year = listyear.Head->pNext;
     if(listyear.ListSize <= 4)
     {
@@ -45,7 +46,7 @@ bool Add_A_Course(Semester& sem, Course& cou)
     return true;
 }
 
-bool QInputStuInCourse(const string& filename,Course& cur_course)
+bool QInputStuInCourse(const string& filename,Course& cur_course, DLinkedList<Year>& listyear)
 {
     ifstream fin(filename);
     if(!fin.is_open()) return false;
@@ -76,9 +77,11 @@ bool QInputStuInCourse(const string& filename,Course& cur_course)
         if(!CheckID(cur_student.Social_ID)) continue;
         if(cur_course.stu_list.GetByValue(cur_student)) continue;
         cur_course.stu_list.push(cur_student);
-        CreateDefaultScore(cur_course,cur_student);
+        Score sc;
+        CreateDefaultScore(cur_course,cur_student, sc);
     }
     fin.close();
+    Update(cur_course, nullptr, cur_course.score_list.Head, listyear, false);
     return true;
 }
 
@@ -166,9 +169,8 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
     return true;
 }
 
-void CreateDefaultScore(Course& cur_cou, Student& cur_stu)
+void CreateDefaultScore(Course& cur_cou, Student& cur_stu, Score& sc)
 {
-    Score sc;
     sc.stu_id = cur_stu.ID;
     sc.first_name = cur_stu.FirstName;
     sc.last_name = cur_stu.LastName;
@@ -211,7 +213,7 @@ void UpdateSession(Course& CourseList, string newSession)
 {
     CourseList.session = newSession;
 }
-bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass)
+bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass, DLinkedList<Year>& listyear)
 {
     string filename = "Information/User/" + newStudent.ID + ".dat";
     ifstream fin(filename.c_str());
@@ -224,20 +226,30 @@ bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass)
     isinclass = true;
     if (CourseList.stu_list.GetByValue(newStudent)) return false;
     CourseList.stu_list.push(newStudent);
-    CreateDefaultScore(CourseList,newStudent);
+    Score sc;
+    CreateDefaultScore(CourseList,newStudent, sc);
+    DLLNode <Score> *sc_ptr = CourseList.score_list.GetByValue(sc);
+    Update(CourseList, nullptr, sc_ptr, listyear, false);
     return true;
 }
 
-void RemoveStudent(DLinkedList <Student>& StudentList, Student DeleteStudent)
+void RemoveStudent(Course& cur_cou, Student DeleteStudent, DLinkedList<Year> ListYear)
 {
-    StudentList.remove(DeleteStudent);
+    Score sc;
+    sc.stu_id = DeleteStudent.ID;
+    DLLNode<Score> *sc_ptr = cur_cou.score_list.GetByValue(sc);
+    Update(cur_cou, sc_ptr, nullptr, ListYear, false);
+    cur_cou.score_list.remove(sc);
+    cur_cou.stu_list.remove(DeleteStudent);
 }
-void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse)
+void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse, DLinkedList<Year>& listyear)
 {
+    Update(DeleteCourse, DeleteCourse.score_list.Head, nullptr, listyear, false);
     CourseList.remove(DeleteCourse);
 }
 bool UpdateScoreFinal(DLLNode <Score> *newSco, string x)
 {
+    
     if(!CheckGrade(x)) return false;
     newSco->data.fin_mark = stof(x);
     return true;
@@ -267,3 +279,4 @@ void PublicScoreboard(Course &CurCou, DLinkedList<Year> &ListYear){
     CurCou.unlocked = true;
     Update(CurCou,nullptr,CurCou.score_list.Head, ListYear, true);
 }
+
