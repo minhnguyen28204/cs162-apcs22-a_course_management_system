@@ -9,6 +9,7 @@
 #include "VoidOfYear.h"
 #include "VoidOfStaff.h"
 #include "DropdownBox.h"
+#include "ChangePass.h"
 #include <vector>
 
 string Point(double &a){
@@ -57,6 +58,9 @@ bool is_AddStudentToCourse;
 bool is_AddIndividual;
 bool is_AddFromCSV;
 bool is_ChoseClass;
+
+bool is_ChangePass;
+
 Vector<ButtonLibrary> Page;
 
 int curpage = 0;
@@ -212,6 +216,12 @@ sf::Text addstudent_folderpath;
 sf::Text addstudent_manual;
 TextField addstudent_folderpath_input(_Font,20,sf::Color::Black,300,375,700,50,true);
 
+//Change password
+TextField oldpass(_Font,24,sf::Color::Black,400,300,600,50,true);
+sf::Text Oldpass;
+TextField newpass(_Font,24,sf::Color::Black,400,400,600,50,true);
+sf::Text Newpass;
+ButtonLibrary changepass_vecbutton;
 
 void setText(sf::Text &m_text, string str, sf::Font& _Font, unsigned int Size, float x, float y, sf::Color color){
     m_text.setString(str);
@@ -741,9 +751,9 @@ void DrawWindow(sf::RenderWindow &window){
         Total_Point.draw(window);
         OveGPA.draw(window);
         SemGPA.draw(window);
-        for(int i=0; i<ScorePage.size(); i++){
-            for(int j=0; j<ScorePage[i].size(); j++){
-                ScorePage[i][j].draw(window);
+        if (ScorePage.size()){
+            for(int j=0; j<ScorePage[cur_score_page].size(); j++){
+                ScorePage[cur_score_page][j].draw(window);
             }
         }
     }
@@ -821,6 +831,11 @@ void DrawWindow(sf::RenderWindow &window){
     if (is_AddStudentToCourse && !is_AddStudent && !is_AddIndividual && !is_AddFromCSV){
         if (chose_course_page.getSize()) chose_course_page[chose_course_curpage].draw(window);
         chosecourse_vecbutton.draw(window);
+    }
+    if (is_ChangePass){
+        oldpass.draw(window); window.draw(Oldpass);
+        newpass.draw(window); window.draw(Newpass);
+        changepass_vecbutton.draw(window);
     }
     window.display();
 }
@@ -1024,6 +1039,11 @@ void HandleEvent(sf::Event event, sf::RenderWindow &window){
     if (is_AddStudentToCourse && !is_AddStudent && !is_AddIndividual && !is_AddFromCSV){
         if (chose_course_page.getSize()) chose_course_page[chose_course_curpage].handleEvent(event);
         chosecourse_vecbutton.handleEvent(event);
+    }
+    if (is_ChangePass){
+        changepass_vecbutton.handleEvent(event);
+        oldpass.handleEvent(event);
+        newpass.handleEvent(event);
     }
 }
 
@@ -1529,11 +1549,16 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     //set text for add class page
     setText(addclass_classname,"Class name",_Font,20,100,360,sf::Color::Black);
 
+    //set text for change pass
+    setText(Oldpass,"Old password",_Font,24,200,300,sf::Color::Black);
+    setText(Newpass,"New password",_Font,24,200,400,sf::Color::Black);
+
     //preprocess
     //Set all scene to default
     is_MainMenu = true;
     curpage = 0;
 
+    is_ChangePass=  false;
     is_ViewCourse2 = false;
     is_ViewCourse3 = false;
     is_ViewClass = false;
@@ -2029,6 +2054,36 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_ViewScoreOfClass = false;
         is_ViewClass3 = true;
     });
+    Button ChangePassword(cursor,24,490,450,220,50,"Change password",[&](){
+        is_MainMenu = false;
+        is_ChangePass = true;
+    });
+    Button Back_From_Change_Pass(Non,20,105,100,70,50,"Back",[&](){
+        is_ChangePass = false;
+        is_MainMenu = true;
+    });
+    Button OK_change_pass(Non,24,575,600,50,50,"OK",[&](){
+        bool is_change = ChangeUserPass("1",oldpass.getText(),newpass.getText());
+        if (is_change){
+            TextBox Info(300,325,600,150,_Font,"Change successfully",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else{
+            TextBox Info(300,325,600,150,_Font,"Incorrect old password",30);
+            Info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+    });
+    Button Exit(cursor,24,490,550,220,50,"Exit",[&](){
+        window.close();
+    });
 
     MainMenu.addButton(ViewClass);
     MainMenu.addButton(ViewCourse);
@@ -2039,6 +2094,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     MainMenu2.addButton(AddCourses);
     MainMenu2.addButton(AddNewStudent);
     MainMenu2.addButton(AddNewStudentToCourse);
+    MainMenu2.addButton(ChangePassword);
+    MainMenu2.addButton(Exit);
 
     CheckLogOut.addButton(Logout);
 
@@ -2134,6 +2191,10 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
     chosecourse_vecbutton.addButton(Back_From_Chose_Course_To_Main_Menu);
     chosecourse_vecbutton.addButton(NextPage);
     chosecourse_vecbutton.addButton(BackPage);
+
+    //change pass
+    changepass_vecbutton.addButton(Back_From_Change_Pass);
+    changepass_vecbutton.addButton(OK_change_pass);
 
 
     while (window.isOpen()){

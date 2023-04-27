@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void Checking(string user, string Password, bool &isLogin, int &id, bool &Stop, User &Who, bool &is_student){
+void Checking(string user, string Password, bool &isLogin, int &id, bool &Stop, Student &Who, bool &is_student){
     string temp = "Information/User/" + user + ".dat";
     ifstream ifs(temp);
     if (!ifs.is_open()){

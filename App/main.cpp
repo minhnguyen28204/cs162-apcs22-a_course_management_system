@@ -21,7 +21,7 @@ int main(){
     while(1){
         bool Stop = false, isLogin = false;
         bool is_student;
-        User CurrAccount;
+        Student CurrAccount;
         int ID;
         while(1){
             sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);

@@ -3,7 +3,7 @@
 #include "VoidOfUser.h"
 #include "DoublyLinkedList.hpp"
 
-DLinkedList<Course> View_Course_Default(User &CurUser, DLinkedList<Year> &ListYear){
+DLinkedList<Course> View_Course_Default(Student &CurUser, DLinkedList<Year> &ListYear){
     DLLNode<Course> *Cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
     DLinkedList<Course> CourseList;
     while (Cur){

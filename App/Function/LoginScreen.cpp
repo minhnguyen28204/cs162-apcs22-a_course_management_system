@@ -19,7 +19,7 @@ using namespace std;
 #define RIGHT 77
 #define DOWN 80
 
-void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop, User &Who, bool &is_student){
+void MenuFunc(sf::RenderWindow &window,bool& isLogin, int& ID,bool &Stop, Student &Who, bool &is_student){
     bool Menu = true;
     bool Login = false;
     bool GetPass = false;
