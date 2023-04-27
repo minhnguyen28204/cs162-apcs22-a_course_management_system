@@ -46,7 +46,7 @@ ButtonLibrary LogOut;
 //View Course
 ButtonLibrary StuCourse_vecbutton;
 Button CurrCourse;
-vector<ButtonLibrary> course_page;
+Vector<ButtonLibrary> course_page;
 int num_course_page;
 string ChoseCourseName;
 
@@ -96,12 +96,32 @@ sf::Text SOPass;
 TextField SNewpass(_font,24,sf::Color::Black,300,400,600,50,true);
 sf::Text SNPass;
 
+
 void SetText(sf::Text &m_text, string str, sf::Font& _font, unsigned int Size, float x, float y, sf::Color color){
     m_text.setString(str);
     m_text.setFont(_font);
     m_text.setCharacterSize(Size);
     m_text.setPosition(x,y);
     m_text.setColor(color);
+}
+
+void SetCourseText(Course Cur){
+    string temp = "ID: " + Cur.ID;
+    SetText(StuCID,temp,_font,24,150,200,sf::Color::Black);
+    temp = "Course name: " + Cur.course_name;
+    SetText(StuCName,temp,_font,24,150,250,sf::Color::Black);
+    temp = "Class name: " + Cur.class_name;
+    SetText(StuCClass,temp,_font,24,150,300,sf::Color::Black);
+    temp = "Teacher name: " + Cur.teacher_name;
+    SetText(STuCTeacher,temp,_font,24,150,350,sf::Color::Black);
+    temp = "Credits: " + to_string(Cur.credits_num);
+    SetText(StuCCredits,temp,_font,24,150,400,sf::Color::Black);
+    temp = "Max students: " + to_string(Cur.max_students);
+    SetText(StuCMax,temp,_font,24,150,450,sf::Color::Black);
+    temp = "Day of week: " + Cur.day_of_week;
+    SetText(StuCDOW,temp,_font,24,150,500,sf::Color::Black);
+    temp = "Session: " + Cur.session;
+    SetText(StuCSession,temp,_font,24,150,550,sf::Color::Black);
 }
 
 void PassEnter(sf::RenderWindow &window, string ID){
@@ -133,7 +153,7 @@ void ProcessEvent(sf::RenderWindow &window, sf::Event &event, string ID){
     if (is_StuMenu) StuMenu_vecbutton.handleEvent(event);
     else if (is_StuCourse) {
         StuCourse_vecbutton.handleEvent(event);
-        if (course_page.size()) course_page[num_course_page].handleEvent(event);
+        if (course_page.getSize()) course_page[num_course_page].handleEvent(event);
     }
     else if (is_StuDetailC){
         detailc_vecbutton.handleEvent(event);
@@ -174,7 +194,7 @@ void WindowDraw(sf::RenderWindow &window){
     if (is_StuMenu) StuMenu_vecbutton.draw(window);
     else if (is_StuCourse) {
         StuCourse_vecbutton.draw(window);
-        if (course_page.size()) course_page[num_course_page].draw(window);
+        if (course_page.getSize()) course_page[num_course_page].draw(window);
     }
     else if (is_StuDetailC){
         window.draw(StuCID);
@@ -250,30 +270,39 @@ void StudentScreen(sf::RenderWindow &window, Student Who, bool& logout){
     Button StuVCourse(Pointer,24,490,200,220,50,"View course",[&](){
         is_StuMenu  = false;
         is_StuCourse = true;
-        DLLNode<Course> *Cur = View_Course_Default(Who,listYear).Head;
-        while (Cur){
+        vector<Course> all_course_id;
+        DLLNode<Course> *TempCourse = listYear.Head->data.sem_list.Head->data.course_list.Head;
+        while (TempCourse){
+            DLLNode<Student> *cur = TempCourse->data.stu_list.Head;
+            bool ok = false;
+            while (cur){
+                if (cur->data.ID == Who.ID){
+                    ok = true;
+                    break;
+                }
+                cur = cur->pNext;
+            }
+            if (ok) all_course_id.push_back(TempCourse->data);
+            TempCourse = TempCourse->pNext;
+        }
+        int i = 0;
+        int cur_num = all_course_id.size();
+        while (i < cur_num){
             int cnt = 4;
             int UpperBound = 200;
             ButtonLibrary CurPage;
-            while (Cur && cnt){
+            while (i < cur_num && cnt){
                 CurrCourse.SetFunction([=](){
-                    ChoseCourseName = Cur->data.ID;
-                    SetText(StuCID,"ID: " + Cur->data.ID,_font,24,150,200,sf::Color::Black);
-                    SetText(StuCName,"Course name: " + Cur->data.course_name,_font,24,150,250,sf::Color::Black);
-                    SetText(StuCClass,"Class name: " + Cur->data.class_name,_font,24,150,300,sf::Color::Black);
-                    SetText(STuCTeacher,"Teacher name: " + Cur->data.teacher_name,_font,24,150,350,sf::Color::Black);
-                    SetText(StuCCredits,"Credits: " + to_string(Cur->data.credits_num),_font,24,150,400,sf::Color::Black);
-                    SetText(StuCMax,"Max students: " + to_string(Cur->data.max_students),_font,24,150,450,sf::Color::Black);
-                    SetText(StuCDOW,"Day of week: " + Cur->data.day_of_week,_font,24,150,500,sf::Color::Black);
-                    SetText(StuCSession,"Session: " + Cur->data.session,_font,24,150,550,sf::Color::Black);
+                    ChoseCourseName = all_course_id[i].ID;
+                    SetCourseText(all_course_id[i]);
                     is_StuCourse = false;
                     is_StuDetailC = true;
                 });
-                string TEMP = Cur->data.ID + " - " + Cur->data.course_name;
+                string TEMP = all_course_id[i].ID + " - " + all_course_id[i].course_name;
                 CurrCourse.ChangeText(TEMP);
-                CurrCourse.SetDetail(Nun,24,450,UpperBound,300,50);
+                CurrCourse.SetDetail(Nun,24,300,UpperBound,600,50);
                 cnt--;
-                Cur = Cur->pNext;
+                i++;
                 UpperBound+=100;
                 CurPage.addButton(CurrCourse);
             }
@@ -338,7 +367,7 @@ void StudentScreen(sf::RenderWindow &window, Student Who, bool& logout){
         window.close();
     });
     Button NextPage(Pointer,20,950,600,150,50,"Next Page",[=](){
-        if (num_course_page < course_page.size()-1) num_course_page++;
+        if (num_course_page < course_page.getSize()-1) num_course_page++;
         if (num_grade_page < grade_page.size()-1) num_grade_page++;
     });
     Button BackPage(Pointer,20,100,600,150,50,"Previous Page",[=](){
