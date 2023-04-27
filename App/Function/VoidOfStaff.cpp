@@ -35,6 +35,7 @@ void AutoAddClasses(DLinkedList<Year>& listyear, int latestyear)
 
 bool Add_A_Semester(Year& ye, Semester& sem)
 {
+    if(!ValidSemester(sem.IDsemester)) return false;
     if(ye.sem_list.GetByValue(sem)) return false;
     ye.sem_list.push_descending(sem);
     return true;
@@ -42,6 +43,7 @@ bool Add_A_Semester(Year& ye, Semester& sem)
 
 bool Add_A_Course(Semester& sem, Course& cou)
 {
+    
     if(sem.course_list.GetByValue(cou)) return false;
     sem.course_list.push(cou);
     return true;
@@ -161,6 +163,11 @@ bool ImpScoreCSV(const string folderpath, DLinkedList<Year> &ListYear, int IDYea
     }
     fin.close();
 
+bool UpdateScoreMidterm(DLLNode <Score>& newSco, string x)
+{
+    CheckGrade(x);
+    newSco->data.mid_mark = stof(x);
+}
 
     Update(CurCou, CurCou.score_list.Head, new_scorelist.Head, ListYear);
     CurCou.score_list.Delete();

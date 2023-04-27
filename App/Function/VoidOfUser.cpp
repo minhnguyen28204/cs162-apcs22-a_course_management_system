@@ -51,4 +51,5 @@ void View_Course(User& CurUser, int IDYear, int IDSem, DLinkedList<Year>& ListYe
     }
 };
 
+
 #endif // VOID_OF_USER_CPP

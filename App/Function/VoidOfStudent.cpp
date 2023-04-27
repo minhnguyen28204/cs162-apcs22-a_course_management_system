@@ -1,5 +1,7 @@
 #ifndef VOID_OF_STUDENT_CPP
 #define VOID_OF_STUDENT_CPP
+#ifndef VOID_OF_STUDENT_CPP
+#define VOID_OF_STUDENT_CPP
 #include "VoidOfStudent.h"
 void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLinkedList<Course> &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
    Number_Of_Credits = 0;

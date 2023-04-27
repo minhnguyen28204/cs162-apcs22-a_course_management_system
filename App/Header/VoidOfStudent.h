@@ -1,5 +1,7 @@
 #ifndef VOID_OF_STUDENT_H
 #define VOID_oF_STUDENT_H
+#ifndef VOID_OF_STUDENT_H
+#define VOID_oF_STUDENT_H
 #include "DoublyLinkedList.hpp"
 #include "Student.h"
 #include "Course.h"
