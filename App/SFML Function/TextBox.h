@@ -7,6 +7,8 @@
 class TextBox {
 public:
     TextBox(float x, float y, float width, float height, sf::Font& font, std::string str, int Size);
+    TextBox();
+    void SetDetail(float x, float y, float width, float height, sf::Font& font, std::string str, int Size);
     void draw(sf::RenderWindow& window);
 
 private:

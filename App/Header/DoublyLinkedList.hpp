@@ -27,6 +27,7 @@ struct DLinkedList{
     void push_back(const T &d);
     void pop_back();
     void pop_front();
+    void Reset();
     void Delete();
     bool isEmpty();
     void remove(const T &d);

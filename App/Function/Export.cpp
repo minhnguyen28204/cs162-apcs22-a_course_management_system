@@ -19,6 +19,8 @@ bool Save_Years(const string& folder_path,DLinkedList <Year>& year_list)
     {
         fout << cur->data.IDyear;
         if(cur->pNext) fout << '\n';
+        fout << cur->data.IDyear;
+        if(cur->pNext) fout << '\n';
         string yf_path = folder_path + "/" + to_string(cur->data.IDyear) + "-" + to_string(cur->data.IDyear + 1);
         
         struct stat db;
@@ -109,7 +111,9 @@ bool Save_Students(const string& cf_name, DLinkedList <Student>& student_list)
         fout << cur->data.LastName << '\n';
         fout << cur->data.Gender << '\n';
         fout << cur->data.dob << '\n';
-        fout << cur->data.Social_ID;
+        fout << cur->data.Social_ID << '\n';
+        fout << cur->data.Number_Of_Credits << '\n';
+        fout << cur->data.TotalScore;
         if(cur->pNext) fout << '\n';
         cur = cur->pNext;
     }
@@ -134,7 +138,7 @@ bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list)
         fout << cur->data.day_of_week << '\n';
         fout << cur->data.session;
         if(cur->pNext) fout << '\n';
-        
+
         string course_path = sf_path + "/" + cur->data.ID + "_" + cur->data.class_name;
         struct stat db;
         
@@ -181,4 +185,3 @@ bool RemoveFolderCourse(const string& saved_folder, int year, int sem, string co
     if(rmdir(folderpath.c_str()) != 0) return false;
     return true;
 }
-

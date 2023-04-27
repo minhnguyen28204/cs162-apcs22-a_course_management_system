@@ -15,12 +15,13 @@
 #include "AcademicMainMenu.h"
 #include <SFML/Graphics.hpp>
 #define y1 kdbfksdjfbkdjfb
+#include <bits/stdc++.h>
 
 int main(){
     while(1){
         bool Stop = false, isLogin = false;
         bool is_student;
-        User CurrAccount;
+        Student CurrAccount;
         int ID;
         while(1){
             sf::RenderWindow window(sf::VideoMode(1200, 800), "Course Management System",sf::Style::Titlebar | sf::Style::Close);
@@ -38,5 +39,6 @@ int main(){
         }
         if (LogOut==false) break;
     }
+
     return 0;
 }

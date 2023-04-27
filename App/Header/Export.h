@@ -21,6 +21,4 @@ bool Save_Courses(const string& sf_path, DLinkedList <Course>& course_list);
 bool Save_Scoreboards(const string& course_path, DLinkedList<Score>& sco_list);
 bool RemoveFolderCourse(const string& saved_folder, int year, int sem, string course_id, string class_name);
 
-
-
 #endif

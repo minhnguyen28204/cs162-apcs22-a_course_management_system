@@ -3,7 +3,7 @@
 using namespace std;
 
 bool ChangeUserPass(string ID, string curpass, string newpass){
-    string temp = "Information/" + ID + ".dat";
+    string temp = "Information/User/" + ID + ".dat";
     ifstream ifs(temp);
     if (!ifs.is_open()){
         return false;

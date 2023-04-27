@@ -1,12 +1,16 @@
 #ifndef VOID_OF_STUDENT_CPP
 #define VOID_OF_STUDENT_CPP
+#ifndef VOID_OF_STUDENT_CPP
+#define VOID_OF_STUDENT_CPP
 #include "VoidOfStudent.h"
-void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLLNode<Course>* &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
+void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &ListYear, DLinkedList<Course> &ListCourse, DLLNode<Score>* &ListScore, int &Number_Of_Credits, double &TotalScore){
    Number_Of_Credits = 0;
    TotalScore = 0;
-   ListCourse =  View_Course(CurStudent,IDYear,IDSem,ListYear);
-   DLLNode<Course> *cur = ListCourse;
+   View_Course(CurStudent,IDYear,IDSem,ListYear,ListCourse);
+   DLLNode<Course> *cur = ListCourse.Head;
    DLinkedList<Score> Data;
+   //cur = CurCourse
+   //cur2 = cur score;
    while (cur){
         DLLNode<Score> *cur2 = cur->data.score_list.Head;
         bool check = false;
@@ -18,29 +22,32 @@ void ViewResult(Student &CurStudent, int IDYear, int IDSem, DLinkedList<Year> &L
                 check = true;
                 break;
             }
+            cur2 = cur2 -> pNext;
         }
         if (!check){
-            Score a;
-            Data.push_back(a);
+            cout << "Khong co diem trong course " << cur->data.course_name;
+            return;
         }
+        cur = cur -> pNext;
    }
    ListScore = Data.Head;
 }
-bool FindStudent(Student *&CurStudent, int IDYear, string StuID, DLinkedList<Year> &ListYear){
+bool FindStudent(Student *&CurStudent, string StuID, DLinkedList<Year> &ListYear){
     Student tmp;
     tmp.ID = StuID;
-    Year NewYear;
-    NewYear.IDyear = IDYear;
-    DLLNode<Year>* cur = ListYear.GetByValue(NewYear);
-    if (cur == nullptr) return false;
-    DLLNode<Class> *CurClass  = cur->data.classes_list.Head;
-    DLLNode<Student> *CurPointer;
-    while (CurClass){
-        CurPointer = CurClass->data.stu_list.GetByValue(tmp);
-        if (CurPointer!=nullptr){
-            CurStudent = &CurPointer->data;
-            return true;
+    DLLNode<Year>* cur = ListYear.Head;
+    while (cur){
+        DLLNode<Class> *CurClass  = cur->data.classes_list.Head;
+        DLLNode<Student> *CurPointer;
+        while (CurClass){
+            CurPointer = CurClass->data.stu_list.GetByValue(tmp);
+            if (CurPointer!=nullptr){
+                CurStudent = &CurPointer->data;
+                return true;
+            }
+            CurClass = CurClass->pNext;
         }
+        cur=cur->pNext;
     }
     return false;
 }
@@ -48,18 +55,26 @@ void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, 
     (*CurStudent).Number_Of_Credits += CurCou.credits_num*del;
     (*CurStudent).TotalScore += CurScore.tot_mark*CurCou.credits_num*del;
 }
-void Update(int IDYear, Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear){
+void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear){
     DLLNode<Score> *Cur = OldScore;
     while (Cur){
         Student *CurStudent;
-        FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear);
+        if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
+            cout << "No student in old ";
+            cout << Cur->data.stu_id;
+            return;
+        };
         UpdateStudentResult(CurStudent,CurCou,Cur->data,-1);
         Cur=Cur->pNext;
     }
     Cur = NewScore;
     while (Cur){
         Student *CurStudent;
-        FindStudent(CurStudent, IDYear, Cur->data.stu_id,ListYear);
+        if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
+            cout << "No student in new ";
+            cout << Cur->data.stu_id;
+            return;
+        }
         UpdateStudentResult(CurStudent,CurCou,Cur->data,1);
         Cur=Cur->pNext;
     }

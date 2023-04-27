@@ -14,10 +14,13 @@ public:
     void clear_str();
     void Tab_handle();
     bool cur_state();
+    void SetIniStr(std::string str);
     std::string getText() const;
 
 private:
     float pos_x, pos_y;
+    int m_cursorIndex;
+    sf::Text cursorText;
     sf::Font _font;
     sf::Color color;
     unsigned int Size;

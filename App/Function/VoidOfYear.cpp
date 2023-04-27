@@ -1,9 +1,9 @@
 #include "VoidOfYear.h"
-
-
+#include "VoidOfStaff.h"
 bool CreateNewYear(DLinkedList<Year> &ListYear, Year &NewYear){
     if (ListYear.GetByValue(NewYear)!=nullptr) return false;
     ListYear.push_descending(NewYear);
+    AutoAddClasses(ListYear,NewYear.IDyear);
     return true;
 }
 bool AddClass(Year &CurYear, Class &CurClass){
@@ -13,10 +13,10 @@ bool AddClass(Year &CurYear, Class &CurClass){
 }
 bool AddStudent(Class &CurClass, Student &CurStudent){
     if (CurClass.stu_list.GetByValue(CurStudent)!=nullptr) return false;
+    UpdateStudentAccount(CurStudent,"Information");
     CurClass.stu_list.push(CurStudent);
     return true;
 }
-
 bool UpdateStudentAccount(Student& stu, const string& folderpath)
 {
     string filename = folderpath + "/User/" + stu.ID + ".dat";
@@ -30,20 +30,17 @@ bool UpdateStudentAccount(Student& stu, const string& folderpath)
         if (stu.dob[i] != '/') pass.push_back(stu.dob[i]);
     }
 
-    fout << pass << endl
-        << true << endl
-        << stu.FirstName << ' '
-        << stu.LastName << ' '
-        << stu.Gender << ' '
-        << stu.dob << ' '
-        << stu.Social_ID << '\n';
-
-
+    fout << pass << '\n';
+    fout << 1 << '\n';
+    fout << stu.FirstName << '\n';
+    fout << stu.LastName << '\n';
+    fout << stu.Gender << '\n';
+    fout << stu.dob << '\n';
+    fout << stu.Social_ID;
     fout.close();
     return true;
 }
-
-bool QuickInputClass(const string& filename,Class &CurClass, const string& folderpath){
+bool QuickInputClass(const string& filename,Class &CurClass){
     ifstream fin(filename);
     if(!fin.is_open()) return false;
     string line, no, id, FName, LName, Gen, dofb, Soc_ID;
@@ -72,7 +69,7 @@ bool QuickInputClass(const string& filename,Class &CurClass, const string& folde
         cur_student.Social_ID= Soc_ID ;
         if(!CheckID(cur_student.Social_ID)) continue;
         AddStudent(CurClass,cur_student);
-        if(!UpdateStudentAccount(cur_student, folderpath)) continue;
+        if(!UpdateStudentAccount(cur_student, "Information")) continue;
     }
     fin.close();
     return true;
