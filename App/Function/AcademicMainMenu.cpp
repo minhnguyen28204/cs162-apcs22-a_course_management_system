@@ -612,7 +612,7 @@ void HandleAddIndi(sf::RenderWindow &window){
 }
 
 void HandleAddCSV(sf::RenderWindow &window){
-string folderpath = addstudent_folderpath_input.getText();
+    string folderpath = addstudent_folderpath_input.getText();
         DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
         if (!is_AddStudentToCourse){
             while (Cur){
@@ -620,14 +620,15 @@ string folderpath = addstudent_folderpath_input.getText();
                 Cur = Cur->pNext;
             }
         }
-        DLLNode<Course> *cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
+        DLLNode<Course> *cur;
         if (is_AddStudentToCourse){
+            cur = ListYear.Head->data.sem_list.Head->data.course_list.Head;
             while(cur){
                 if (cur->data.ID + " - " + cur->data.course_name == all_course_id[ID_chosen_course]) break;
                 cur = cur->pNext;
             }
         }
-        cout << cur->data.course_name << '\n';
+        //cout << cur->data.course_name << '\n';
         bool is_add_success;
         if (!is_AddStudentToCourse) is_add_success = QuickInputClass(folderpath,Cur->data);
         else is_add_success = QInputStuInCourse(folderpath,cur->data,ListYear);
