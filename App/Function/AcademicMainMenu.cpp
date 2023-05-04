@@ -1052,22 +1052,27 @@ void ProcessScoreBoardOfStudent(){
     DLLNode<Semester> *CurSem = CurYear->data.sem_list.Head;
     DLinkedList<Course> ListCourse;
     DLLNode<Score> *ListScore = nullptr;
-    int Numcredit;
-    double Total_point;
+    int Numcredit=0;
+    double Total_point=0;
+    //
     ViewResultInSemester(CurChoseStudent->data,CurYear->data.IDyear,CurSem->data.IDsemester,ListYear,ListCourse,ListScore,Numcredit,Total_point);
 
-    double gpa = Total_point/Numcredit;
-    double OveGpa = CurChoseStudent->data.TotalScore/CurChoseStudent->data.Number_Of_Credits;
-    SemGPA.SetDetail(200,100,150,50,_Font,"GPA: " + Point(gpa),24);
-    OveGPA.SetDetail(400,100,600,50,_Font,"Overall GPA: " + Point(OveGpa),24);
+    double gpa = 0;
+    if (Numcredit) gpa = Total_point/Numcredit;
+    double OveGpa =  0;
+    if (CurChoseStudent->data.Number_Of_Credits) OveGpa = CurChoseStudent->data.TotalScore/CurChoseStudent->data.Number_Of_Credits;
+    cout << CurChoseStudent->data.TotalScore << ' ' << CurChoseStudent->data.Number_Of_Credits << '\n';
+    SemGPA.SetDetail(500,100,150,50,_Font,"GPA: " + Point(gpa),24);
+    OveGPA.SetDetail(700,100,300,50,_Font,"Overall GPA: " + Point(OveGpa),24);
     Course_ID.SetDetail(200,200,100,50,_Font,"ID",24);
     Course_Name.SetDetail(300,200,600,50,_Font,"Course name",24);
     Total_Point.SetDetail(900,200,100,50,_Font,"Total",24);
     ScorePage.clear();
-    if (ListScore==nullptr) cout << "Wrong qua wrong roi\n";
+    if (ListScore==nullptr) {cout << "Wrong qua wrong roi\n";return;}
     DLLNode<Course> *cur = ListCourse.Head;
+    if (cur==nullptr) {cout << "Wrong double r\n"; return;}
     while (cur){
-        int cnt = 6;
+        int cnt = 5;
         int UpperBound = 250;
         current_page.clear();
         while (cnt && cur){
@@ -1275,7 +1280,7 @@ void ProcessListOfStudentInCourse(){
     chose_student_curpage = 0;
 }
 
-string GetDir(sf::RenderWindow &window){
+string GetDir(sf::RenderWindow &window, bool &is_backed){
     TextField Dir_Input(_Font,24,sf::Color::Black,150,375,900,50,true);
     sf::Text Manual;
     setText(Manual,"Input directory",_Font,24,150,200,sf::Color::Black);
@@ -1287,6 +1292,7 @@ string GetDir(sf::RenderWindow &window){
     Button Back(Non,20,105,100,70,50,"Back",[&](){
         stop = true;
         is_return = false;
+        is_backed = true;
     });
     ButtonLibrary AllButtons;
     AllButtons.addButton(OK);
@@ -1734,8 +1740,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             Teacher_input.clear_str();
             Session_input.clear_str();
             DayWeek_input.clear_str();
-            Credits_input.clear_str();
-            MaxStudent_input.clear_str();
+            Credits_input.clear_str(); Credits_input.SetIniStr("4");
+            MaxStudent_input.clear_str(); MaxStudent_input.SetIniStr("50");
             setText(addcourse_id,"Course ID",_Font,20,100,210,sf::Color::Black);
             setText(addcourse_name,"Course name",_Font,20,100,310,sf::Color::Black);
             setText(addcourse_class,"Class name",_Font,20,100,410,sf::Color::Black);
@@ -2008,7 +2014,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_ChoseAction = false;
     });
     Button ExportStudentCourseToCSV(Non,24,350,600,200,50,"Export scoreboard",[&](){
-        string filename = GetDir(window);
+        bool is_backed = false;
+        string filename = GetDir(window,is_backed);
         bool export_success = false;
         if (filename.size()) export_success = ExportToCSV(CurChosenCourse->data,filename);
         if (export_success){
@@ -2019,7 +2026,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             window.clear();
             window.display();
         }
-        else{
+        else if (!is_backed){
             TextBox Info(300,325,600,150,_Font,"Invalid folder path",30);
             Info.draw(window);
             window.display();
@@ -2029,7 +2036,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         }
     });
     Button ImportScore(Non,24,650,600,200,50,"Import scoreboard",[&](){
-        string filename = GetDir(window);
+        bool is_backed = false;
+        string filename = GetDir(window,is_backed);
         DLinkedList<Score> NewScore;
         bool is_success = false;
         if (filename.size()) is_success = ImpScoreCSV(filename,ListYear,ListYear.Head->data.IDyear,CurChosenCourse->data,CurChosenCourse->data.score_list.Head,NewScore);
@@ -2041,7 +2049,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             window.clear();
             window.display();
         }
-        else{
+        else if (!is_backed){
             TextBox Info(300,325,600,150,_Font,"Invalid folder path",30);
             Info.draw(window);
             window.display();
@@ -2063,7 +2071,7 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
         is_MainMenu = true;
     });
     Button OK_change_pass(Non,24,575,600,50,50,"OK",[&](){
-        bool is_change = ChangeUserPass("1",oldpass.getText(),newpass.getText());
+        bool is_change = ChangeUserPass(Who.ID,oldpass.getText(),newpass.getText());
         if (is_change){
             TextBox Info(300,325,600,150,_Font,"Change successfully",30);
             Info.draw(window);

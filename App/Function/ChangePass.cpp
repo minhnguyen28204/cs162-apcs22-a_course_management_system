@@ -1,5 +1,6 @@
 #include <string>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 bool ChangeUserPass(string ID, string curpass, string newpass){

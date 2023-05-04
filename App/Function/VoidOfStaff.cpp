@@ -53,6 +53,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course, DLinkedList<Ye
     if(!fin.is_open()) return false;
     string line, no, id, FName, LName, Gen, dofb, Soc_ID;
     getline(fin,line);
+    int CurSize = cur_course.stu_list.size();
     while(getline(fin,line))
     {
         stringstream ss(line);
@@ -75,8 +76,10 @@ bool QInputStuInCourse(const string& filename,Course& cur_course, DLinkedList<Ye
         cur_student.dob=dofb;
         if(!CheckDOB(cur_student.dob)) continue;
         cur_student.Social_ID= Soc_ID ;
-        if(!CheckID(cur_student.Social_ID)) continue;
-        if(cur_course.stu_list.GetByValue(cur_student)) continue;
+        if (!CheckID(cur_student.Social_ID)) continue;
+        if (cur_course.stu_list.GetByValue(cur_student)) continue;
+        if (CurSize == cur_course.max_students) break;
+        CurSize++;
         cur_course.stu_list.push(cur_student);
         Score sc;
         CreateDefaultScore(cur_course,cur_student, sc);
@@ -216,6 +219,7 @@ void UpdateSession(Course& CourseList, string newSession)
 }
 bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass, DLinkedList<Year>& listyear)
 {
+    if (CourseList.stu_list.size() == CourseList.max_students) return false;
     string filename = "Information/User/" + newStudent.ID + ".dat";
     ifstream fin(filename.c_str());
     if(!fin.is_open())

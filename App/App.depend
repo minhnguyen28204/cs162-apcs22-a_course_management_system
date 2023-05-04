@@ -672,7 +672,7 @@
 1681722984 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\student.cpp
 	"Student.h"
 
-1682594674 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
+1683188844 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofuser.cpp
 	"VoidOfUser.h"
 	"DoublyLinkedList.hpp"
 
@@ -754,7 +754,7 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1682594670 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
+1682595172 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\studentmainmenu.cpp
 	"StudentMainMenu.h"
 	"TextBox.h"
 	"TextField.h"
@@ -785,9 +785,10 @@
 	<string>
 	<fstream>
 
-1682339266 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\changepass.cpp
+1682678978 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\changepass.cpp
 	<string>
 	<fstream>
+	<iostream>
 
 1681719915 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\changepass.h
 	<string>
@@ -810,7 +811,7 @@
 1680949964 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\sfml function\listoftext.cpp
 	"ListOfText.hpp"
 
-1682589336 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\academicmainmenu.cpp
+1683195603 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\academicmainmenu.cpp
 	"AcademicMainMenu.h"
 	"TextField.h"
 	"TextBox.h"
@@ -830,10 +831,10 @@
 	"User.h"
 	<string>
 
-1682593289 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstaff.cpp
+1683194520 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstaff.cpp
 	"VoidOfStaff.h"
 
-1682593072 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofstaff.h
+1683194520 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofstaff.h
 	"Semester.h"
 	"year.h"
 	"Checker.h"
@@ -1122,7 +1123,7 @@
 	"VoidOfYear.h"
 	"VoidOfStaff.h"
 
-1682593289 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstudent.cpp
+1683193095 source:e:\cs162\project\cs162-apcs22-a_course_management_system\app\function\voidofstudent.cpp
 	"VoidOfStudent.h"
 
 1682593289 e:\cs162\project\cs162-apcs22-a_course_management_system\app\header\voidofstudent.h

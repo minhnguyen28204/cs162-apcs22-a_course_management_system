@@ -5,6 +5,9 @@ void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedLis
    Number_Of_Credits = 0;
    TotalScore = 0;
    View_Course(CurStudent,IDYear,IDSem,ListYear,ListCourse);
+   //god cout
+   //cout << ListCourse.Head->data.credits_num << '\n';
+   //
    DLLNode<Course> *cur = ListCourse.Head;
    DLinkedList<Score> Data;
    //cur = CurCourse
@@ -23,7 +26,6 @@ void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedLis
             cur2 = cur2 -> pNext;
         }
         if (!check){
-            cout << "Khong co diem trong course " << cur->data.course_name;
             return;
         }
         cur = cur -> pNext;
@@ -58,8 +60,6 @@ void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, 
     while (Cur){
         Student *CurStudent;
         if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
-            cout << "No student in old ";
-            cout << Cur->data.stu_id;
             return;
         };
         UpdateStudentResult(CurStudent,CurCou,Cur->data,-1);
@@ -69,8 +69,6 @@ void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, 
     while (Cur){
         Student *CurStudent;
         if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
-            cout << "No student in new ";
-            cout << Cur->data.stu_id;
             return;
         }
         UpdateStudentResult(CurStudent,CurCou,Cur->data,1);
