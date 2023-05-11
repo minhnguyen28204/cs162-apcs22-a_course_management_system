@@ -319,18 +319,17 @@ void StudentScreen(sf::RenderWindow &window, Student Who, bool& logout){
     Button StuVGrade(Pointer,24,490,300,220,50,"View grade",[&](){
         is_StuGrade = true;
         is_StuMenu = false;
+        Student* CurStuu;
+        FindStudent(CurStuu,Who.ID,listYear);
         DLinkedList<Course> CL;
         DLLNode<Score> *cur_score;
-        DLLNode<Student> *cur_stu = listYear.Head->data.classes_list.Head->data.stu_list.Head;
-        while (cur_stu){
-            if (cur_stu->data.ID == Who.ID) break;
-            cur_stu = cur_stu->pNext;
-        }
         int NumCre;
         double TotSco;
-        ViewResultInSemester(cur_stu->data,listYear.Head->data.IDyear,listYear.Head->data.sem_list.Head->data.IDsemester,listYear,CL,cur_score,NumCre,TotSco);
-        double gpa = TotSco/NumCre;
-        double OveGpa = (cur_stu->data).TotalScore / (cur_stu->data).Number_Of_Credits;
+        ViewResultInSemester(*CurStuu,listYear.Head->data.IDyear,listYear.Head->data.sem_list.Head->data.IDsemester,listYear,CL,cur_score,NumCre,TotSco);
+        double gpa = 0;
+        if (NumCre) gpa = TotSco/NumCre;
+        double OveGpa = 0;
+        if ((*CurStuu).Number_Of_Credits) OveGpa = (*CurStuu).TotalScore / (*CurStuu).Number_Of_Credits;
 
         StuGPA.SetDetail(200,100,150,50,_font,"GPA: " + SPoint(gpa),24);
         StuOGPA.SetDetail(400,100,600,50,_font,"Overall GPA: " + SPoint(OveGpa),24);
@@ -340,7 +339,7 @@ void StudentScreen(sf::RenderWindow &window, Student Who, bool& logout){
         grade_page.clear();
         DLLNode<Course> *cur = CL.Head;
         while (cur){
-            int cnt = 6;
+            int cnt = 5;
             int UpperBound = 250;
             currpage.clear();
             while (cnt && cur){

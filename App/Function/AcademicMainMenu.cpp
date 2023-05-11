@@ -519,7 +519,7 @@ void HandleAddIndi(sf::RenderWindow &window){
         else is_valid_social = false;
 
         bool is_add_success = false;
-        bool is_valid_student = false;
+        int is_valid_student = 0;
         if (!is_AddStudentToCourse && is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender){
             DLLNode<Class> *Cur = ListYear.Head->data.classes_list.Head;
             while (Cur){
@@ -547,7 +547,21 @@ void HandleAddIndi(sf::RenderWindow &window){
             if (is_AddStudentToCourse) is_AddStudentToCourse = false;
             is_AddIndividual  = false;
         }
-        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender && !is_valid_student && is_AddStudentToCourse){
+        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender && is_valid_student==1 && is_AddStudentToCourse){
+            setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
+            setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
+            setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
+            setText(addstudent_Gender,"Gender (1. Male, 2. Female, 3. Other)",_Font,25,100,420,sf::Color::Black);
+            setText(addstudent_Dob,"Date of Birth",_Font,25,100,490,sf::Color::Black);
+            setText(addstudent_Social,"Social ID",_Font,25,100,560,sf::Color::Black);
+            TextBox info(250,325,700,100,_Font,"Max students in this course",30);
+            info.draw(window);
+            window.display();
+            sf::sleep(sf::seconds(2));
+            window.clear();
+            window.display();
+        }
+        else if (is_valid_ID && is_valid_FN && is_valid_LN && is_valid_dob && is_valid_social && is_valid_Gender && is_valid_student==2 && is_AddStudentToCourse){
             setText(addstudent_ID,"ID",_Font,24,100,210,sf::Color::Black);
             setText(addstudent_FirstName,"First Name",_Font,25,100,280,sf::Color::Black);
             setText(addstudent_LastName,"Last Name",_Font,25,100,350,sf::Color::Black);
@@ -1062,14 +1076,16 @@ void ProcessScoreBoardOfStudent(){
     if (Numcredit) gpa = Total_point/Numcredit;
     double OveGpa =  0;
     if (CurChoseStudent->data.Number_Of_Credits) OveGpa = CurChoseStudent->data.TotalScore/CurChoseStudent->data.Number_Of_Credits;
-    cout << CurChoseStudent->data.TotalScore << ' ' << CurChoseStudent->data.Number_Of_Credits << '\n';
+    //CurChoseStudent->data.TotalScore = 0;
+    //CurChoseStudent->data.Number_Of_Credits = 0;
+    cout << "Score and credits: " << CurChoseStudent->data.TotalScore << ' ' << CurChoseStudent->data.Number_Of_Credits << '\n';
     SemGPA.SetDetail(500,100,150,50,_Font,"GPA: " + Point(gpa),24);
     OveGPA.SetDetail(700,100,300,50,_Font,"Overall GPA: " + Point(OveGpa),24);
     Course_ID.SetDetail(200,200,100,50,_Font,"ID",24);
     Course_Name.SetDetail(300,200,600,50,_Font,"Course name",24);
     Total_Point.SetDetail(900,200,100,50,_Font,"Total",24);
     ScorePage.clear();
-    if (ListScore==nullptr) {cout << "Wrong qua wrong roi\n";return;}
+    if (ListScore==nullptr) {cout << "This student is not belong to any course\n";return;}
     DLLNode<Course> *cur = ListCourse.Head;
     if (cur==nullptr) {cout << "Wrong double r\n"; return;}
     while (cur){
@@ -1117,6 +1133,7 @@ void ProcessListOfStudent(){
             all_student_name.push_back(head->data.ID + " - " + head->data.FirstName + " " + head->data.LastName);
             CurStu.SetFunction([=](){
                 CurChoseStudent = head;
+                cout << CurChoseStudent->data.ID << endl;
                 is_ViewClass3 = false;
                 is_ViewScoreOfClass  = true;
                 ProcessScoreBoardOfStudent();
@@ -1964,7 +1981,8 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
                                ListYear.Head->data.sem_list.Head->data.IDsemester,
                                Cur->data.ID,
                                Cur->data.class_name);
-            ListYear.Head->data.sem_list.Head->data.course_list.remove(CurChosenCourse->data);
+            DeleteCourse(ListYear.Head->data.sem_list.Head->data.course_list,CurChosenCourse->data,ListYear);
+            //ListYear.Head->data.sem_list.Head->data.course_list.remove(CurChosenCourse->data);
             TextBox Info(400,325,400,150,_Font,"Deleted successfully",30);
             Info.draw(window);
             window.display();
@@ -2004,6 +2022,11 @@ void AcademicScreen(sf::RenderWindow &window, User Who, bool &logout){
             if (Cur->data.stu_id == CurChoseStudent->data.ID) break;
             Cur = Cur->pNext;
         }
+        Score sc;
+        sc.stu_id = CurChoseStudent->data.ID;
+        DLLNode<Score> *sc_ptr = CurChosenCourse->data.score_list.GetByValue(sc);
+        cout << "Xoa diem ne\n";
+        Update(CurChosenCourse->data, sc_ptr, nullptr, ListYear);
         CurChosenCourse->data.score_list.remove(Cur->data);
         CurChosenCourse->data.stu_list.remove(CurChoseStudent->data);
         is_ChoseAction = false;

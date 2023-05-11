@@ -54,6 +54,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course, DLinkedList<Ye
     string line, no, id, FName, LName, Gen, dofb, Soc_ID;
     getline(fin,line);
     int CurSize = cur_course.stu_list.size();
+    DLinkedList<Score> OldScore(cur_course.score_list);
     while(getline(fin,line))
     {
         stringstream ss(line);
@@ -85,7 +86,7 @@ bool QInputStuInCourse(const string& filename,Course& cur_course, DLinkedList<Ye
         CreateDefaultScore(cur_course,cur_student, sc);
     }
     fin.close();
-    Update(cur_course, nullptr, cur_course.score_list.Head, listyear);
+    Update(cur_course, OldScore.Head, cur_course.score_list.Head, listyear);
     return true;
 }
 
@@ -217,36 +218,29 @@ void UpdateSession(Course& CourseList, string newSession)
 {
     CourseList.session = newSession;
 }
-bool AddStudentToCourse(Course& CourseList, Student newStudent, bool& isinclass, DLinkedList<Year>& listyear)
+bool AddStudentToCourse(Course& CourseList, Student newStudent, int& isinclass, DLinkedList<Year>& listyear)
 {
-    if (CourseList.stu_list.size() == CourseList.max_students) return false;
+    if (CourseList.stu_list.size() == CourseList.max_students) {isinclass=1;return false;}
     string filename = "Information/User/" + newStudent.ID + ".dat";
     ifstream fin(filename.c_str());
     if(!fin.is_open())
     {
-        isinclass = false;
+        cout << "Meo mo dc file nha! \n";
+        isinclass = 2;
         return false;
     }
     fin.close();
     isinclass = true;
-    if (CourseList.stu_list.GetByValue(newStudent)) return false;
+    if (CourseList.stu_list.GetByValue(newStudent)) {isinclass=3;return false;}
     CourseList.stu_list.push(newStudent);
     Score sc;
     CreateDefaultScore(CourseList,newStudent, sc);
     DLLNode <Score> *sc_ptr = CourseList.score_list.GetByValue(sc);
     Update(CourseList, nullptr, sc_ptr, listyear);
+    cout << "Updated! \n";
     return true;
 }
 
-void RemoveStudent(Course& cur_cou, Student DeleteStudent, DLinkedList<Year> ListYear)
-{
-    Score sc;
-    sc.stu_id = DeleteStudent.ID;
-    DLLNode<Score> *sc_ptr = cur_cou.score_list.GetByValue(sc);
-    Update(cur_cou, sc_ptr, nullptr, ListYear);
-    cur_cou.score_list.remove(sc);
-    cur_cou.stu_list.remove(DeleteStudent);
-}
 void DeleteCourse(DLinkedList <Course>& CourseList, Course DeleteCourse, DLinkedList<Year>& listyear)
 {
     Update(DeleteCourse, DeleteCourse.score_list.Head, nullptr, listyear);

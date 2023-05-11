@@ -57,12 +57,24 @@ void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, 
 }
 void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear){
     DLLNode<Score> *Cur = OldScore;
+    cout << "Hoc sinh can xoa trong old: \n";
+    while (Cur){
+        cout << Cur->data.stu_id << ' ' << Cur->data.tot_mark << ' ' << CurCou.credits_num << endl;
+        Cur=Cur->pNext;
+    }
+    Cur = OldScore;
     while (Cur){
         Student *CurStudent;
         if (!FindStudent(CurStudent, Cur->data.stu_id,ListYear)){
             return;
         };
         UpdateStudentResult(CurStudent,CurCou,Cur->data,-1);
+        Cur=Cur->pNext;
+    }
+    Cur = NewScore;
+    cout << "Hoc sinh can xoa trong new: \n";
+    while (Cur){
+        cout << Cur->data.stu_id << ' ' << Cur->data.tot_mark << ' ' << CurCou.credits_num << endl;
         Cur=Cur->pNext;
     }
     Cur = NewScore;
