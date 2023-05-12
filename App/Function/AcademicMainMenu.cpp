@@ -642,6 +642,7 @@ void HandleAddCSV(sf::RenderWindow &window){
                 cur = cur->pNext;
             }
         }
+
         //cout << cur->data.course_name << '\n';
         bool is_add_success;
         if (!is_AddStudentToCourse) is_add_success = QuickInputClass(folderpath,Cur->data);
@@ -784,6 +785,7 @@ void DrawWindow(sf::RenderWindow &window){
         addclass_classname_input.draw(window);
         window.draw(addclass_classname);
     }
+
 
     if (is_AddCourse){
         addcourse_vecbutton.draw(window);

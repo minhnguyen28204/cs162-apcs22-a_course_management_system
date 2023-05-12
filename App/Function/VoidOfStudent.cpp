@@ -5,13 +5,8 @@ void ViewResultInSemester(Student &CurStudent, int IDYear, int IDSem, DLinkedLis
    Number_Of_Credits = 0;
    TotalScore = 0;
    View_Course(CurStudent,IDYear,IDSem,ListYear,ListCourse);
-   //god cout
-   //cout << ListCourse.Head->data.credits_num << '\n';
-   //
    DLLNode<Course> *cur = ListCourse.Head;
    DLinkedList<Score> Data;
-   //cur = CurCourse
-   //cur2 = cur score;
    while (cur){
         DLLNode<Score> *cur2 = cur->data.score_list.Head;
         bool check = false;
@@ -57,9 +52,7 @@ void UpdateStudentResult(Student *&CurStudent, Course &CurCou, Score &CurScore, 
 }
 void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, DLinkedList<Year> &ListYear){
     DLLNode<Score> *Cur = OldScore;
-    cout << "Hoc sinh can xoa trong old: \n";
     while (Cur){
-        cout << Cur->data.stu_id << ' ' << Cur->data.tot_mark << ' ' << CurCou.credits_num << endl;
         Cur=Cur->pNext;
     }
     Cur = OldScore;
@@ -72,9 +65,7 @@ void Update(Course &CurCou, DLLNode<Score> *OldScore, DLLNode<Score> *NewScore, 
         Cur=Cur->pNext;
     }
     Cur = NewScore;
-    cout << "Hoc sinh can xoa trong new: \n";
     while (Cur){
-        cout << Cur->data.stu_id << ' ' << Cur->data.tot_mark << ' ' << CurCou.credits_num << endl;
         Cur=Cur->pNext;
     }
     Cur = NewScore;
